@@ -26,7 +26,7 @@ public class Contract implements Serializable {
     private String projectName;
 
     @NotEmpty
-    @Column(name = "ciudad_contracto")
+    @Column(name = "ciudad_contrato")
     private String city;
 
     @NotEmpty

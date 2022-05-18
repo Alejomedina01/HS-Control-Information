@@ -2,13 +2,11 @@ package com.hs.hscontrolinformation.domain;
 
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
+import java.util.List;
 
 @Data
 @Entity
@@ -31,4 +29,8 @@ public class Client implements Serializable {
 
     @Column(name = "numero_telefono_cliente")
     private String numberPhone;
+
+    @OneToMany
+    @JoinColumn(name = "id_cliente")
+    private List<Contract> contractList;
 }
