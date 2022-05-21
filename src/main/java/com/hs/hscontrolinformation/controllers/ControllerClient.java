@@ -24,7 +24,7 @@ public class ControllerClient {
     }
 
     @PostMapping("/saveClient")
-    public String guardar(Client data) {
+    public String saveClient(Client data) {
         service.guardar(data);
         return "index";
     }

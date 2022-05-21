@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html 
+    xmlns="http://www.w3.org/1999/xhtml" 
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8" />
+</head>
+
+<body>
+    <section th:fragment="registroClientes" id="rgcliente">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-9">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 >Registrar nuevo cliente</h4>
+                        </div>
+                        <form th:action="@{/saveClient}" th:object="${client}" method="POST" class="was-validated">
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="clientName" >Nombre cliente</label>
+                                    <input type="text" class="form-control" name="clientName" required="true">
+                                </div>
+                                <div class="form-group">
+                                    <label for="numberPhone">numero de telefono</label>
+                                    <input type="tel" class="form-control" name="numberPhone">
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Correo electronico</label>
+                                    <input type="email" class="form-control" name="email" required="true">
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="btn btn-primary" type="submit"
+                                        >Agregar Cliente</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>
