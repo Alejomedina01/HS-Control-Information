@@ -1,12 +1,11 @@
 package com.hs.hscontrolinformation.domain;
 
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -29,32 +28,39 @@ public class Contract implements Serializable {
     @Column(name = "ciudad_contrato")
     private String city;
 
-    @NotEmpty
+
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @NotNull
     @Column(name = "fecha_contrato")
     private Date contractDate;
 
-    @NotEmpty
+    @NotNull
     @Column(name = "valor_inicial")
     private Long initialValue;
 
     @Column(name = "valor_adicional")
     private Long aditionalValue;
 
-    @NotEmpty
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @NotNull
     @Column(name = "fecha_acta_inicio")
     private Date initialDateAct;
 
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     @Column(name = "fecha_acta_recibo")
     private Date receivalDateAct;
 
-    @NotEmpty
+    @NotNull
     @Column(name = "valor_facturado")
     private Long invoicedValue;
 
     @Column(name = "valor_pendiente")
     private Long pendingValue;
 
-    @NotEmpty
+    @NotNull
     @Column(name = "valor_retegarantia")
     private Long warratyValue;
 

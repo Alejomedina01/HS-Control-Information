@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/template :: head"></head>
+<header th:replace="layout/template :: header"></header>
+<body>
+
+<!--<section th:fragment="findClient" class="py-4 mb-4 bg-light">
+    <form th:action="@{/findClientById}" th:object="${id}" method="POST" class="was-validated">
+    <div class="container">
+        <div class="row">
+                <div class="col-2">
+                    <label for="idClient" class="p-1">
+                        Identificacion Cliente</label>
+                </div>
+                <div class="col">
+                    <input type="text" class="form-control" name="id" required="true">
+                </div>
+                <div class="col">
+                    <button class="btn btn-primary" type="submit"
+                    > <i class="fas fa-search"></i> Buscar</button>
+                </div>
+        </div>
+    </div>
+    </form>
+</section>-->
+
+<section th:fragment="registroContratos" id="rgcontrato">
+    <br>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 >Registrar Contrato</h4>
+                    </div>
+                    <form th:action="@{/saveContract}" th:object="${contract}" method="POST" class="was-validated">
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="idContract" >Id contrato</label>
+                                <input type="text" class="form-control" name="idContract" required="true">
+                            </div>
+                            <div class="form-group">
+                                <label for="projectName" >Nombre proyecto</label>
+                                <input type="text" class="form-control" name="projectName" required="true">
+                            </div>
+                            <div class="form-group">
+                                <label for="city" >Ciudad</label>
+                                <input type="text" class="form-control" name="city" required="true">
+                            </div>
+                            <div class="form-group">
+                                <label for="contractDate">Fecha contrato</label>
+                                <input type="date" class="form-control" name="contractDate" required="true">
+                            </div>
+                            <div class="form-group">
+                                <label for="initialValue">Valor inicial</label>
+                                <input type="number" class="form-control" name="initialValue" required="true">
+                            </div>
+                            <div class="form-group">
+                                <label for="aditionalValue">Valor adicional</label>
+                                <input type="text" class="form-control" name="aditionalValue">
+                            </div>
+                            <div style="float: left; margin-right: 20px;" class="form-group">
+                                <label for="initialDateAct">Acta inicio</label>
+                                <input type="date" class="form-control" name="initialDateAct" required="true">
+                            </div>
+                            <div style="float: left;" class="form-group">
+                                <label for="receivalDateAct">Acta recibido</label>
+                                <input type="date" class="form-control" name="receivalDateAct">
+                            </div>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <div class="form-group">
+                                <label for="invoicedValue">Valor facturado</label>
+                                <input type="number" class="form-control" name="invoicedValue" required="true">
+                            </div>
+                            <div class="form-group">
+                                <label for="pendingValue">Valor pendiente</label>
+                                <input type="number" class="form-control" name="pendingValue">
+                            </div>
+                            <div class="form-group">
+                                <label for="warratyValue">Valor garantía (Retegarantía)</label>
+                                <input type="number" class="form-control" name="warratyValue" required="true">
+                            </div>
+                            <div class="form-group">
+                                <label for="warrantyState">Estado garantía (Retegarantía)</label>
+                                <select name="warrantyState" class="form-control" required="true">
+                                    <option value="pagada">Pagada</option>
+                                    <option value="enproceso">En Proceso</option>
+                                    <option value="sinpagar">Sin Pagar</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="contractState">Estado contrato</label>
+                                <select name="contractState" class="form-control" required="true">
+                                    <option value="liquidado">Liquidado</option>
+                                    <option value="enejecucion">En Ejecución</option>
+                                    <option value="suspendido">Suspendido</option>
+                                    <option value="entregado">Entregado</option>
+                                </select>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-primary" type="submit"
+                                >Agregar Contrato</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<footer th:replace="layout/template :: footer"></footer>
+</body>
+</html>
