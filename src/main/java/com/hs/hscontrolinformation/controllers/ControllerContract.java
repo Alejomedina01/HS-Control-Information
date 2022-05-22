@@ -1,7 +1,7 @@
-package com.hs.hscontrolinformation.web;
+package com.hs.hscontrolinformation.controllers;
 
 import com.hs.hscontrolinformation.domain.Contract;
-import com.hs.hscontrolinformation.service.ContractServiceImp;
+import com.hs.hscontrolinformation.services.ContractServiceImp;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -13,7 +13,7 @@ import javax.validation.Valid;
 
 @org.springframework.stereotype.Controller
 @Slf4j
-public class Controller {
+public class ControllerContract {
 
     @Autowired
     private ContractServiceImp contractService;
@@ -34,7 +34,7 @@ public class Controller {
     @PostMapping("/saveContract")
     public String guardar(@Valid Contract contract, Errors errors){
         if (errors.hasErrors()){
-            return "";
+            return "addContract";
         }
         contractService.guardar(contract);
         return "redirect:/";

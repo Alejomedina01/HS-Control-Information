@@ -1,4 +1,4 @@
-package com.hs.hscontrolinformation.service;
+package com.hs.hscontrolinformation.services;
 
 import com.hs.hscontrolinformation.dao.ContractDao;
 import com.hs.hscontrolinformation.domain.Contract;
