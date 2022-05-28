@@ -1,6 +1,8 @@
 package com.hs.hscontrolinformation.controllers;
 
+import com.hs.hscontrolinformation.domain.Client;
 import com.hs.hscontrolinformation.domain.Contract;
+import com.hs.hscontrolinformation.services.ClientImplService;
 import com.hs.hscontrolinformation.services.ContractServiceImp;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 
@@ -18,17 +21,39 @@ public class ControllerContract {
     @Autowired
     private ContractServiceImp contractService;
 
+    @Autowired
+    private ClientImplService clientService;
+
+    private Client client;
+
     @GetMapping("/")
     public String initial(Model model){
-        var contracts = contractService.findBasicDataContract();
         log.info("Ejecutando el controlador Spring MVC");
-        model.addAttribute("contracts", contracts);
         return "index";
     }
 
     @GetMapping("/Contracts")
+    public String showContracts(Model model){
+        var contracts = contractService.findBasicDataContract();
+        model.addAttribute("contracts", contracts);
+        return "contracts";
+    }
+
+    @GetMapping("/addNewContract/")
+    public String findClienForContract(){
+        return "findClient";
+    }
+
+    @GetMapping("/addContract/")
     public String addNewContract(){
         return "addContract";
+    }
+
+    @GetMapping("/findClient/")
+    public String selectedClient(Model model, @RequestParam(required = false) Long idClient){
+        client = clientService.encontrar(idClient);
+        model.addAttribute("client", client);
+        return "findClient";
     }
 
     @PostMapping("/saveContract")
@@ -37,7 +62,7 @@ public class ControllerContract {
             return "addContract";
         }
         contractService.guardar(contract);
-        return "redirect:/";
+        contractService.updateContractToClientId(client.getIdClient(), contract.getIdContract());
+        return "redirect:/Contracts";
     }
-
 }

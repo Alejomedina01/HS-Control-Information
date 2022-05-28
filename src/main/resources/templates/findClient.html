@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://thymeleaf.org/extras/spring-security">
+<head th:replace="layout/template :: head"></head>
+<header th:replace="layout/template :: header"></header>
+<body>
+<div class="container text-center col-4">
+<div class="card">
+    <div class="card-header">
+            <h4>Buscar el cliente </h4>
+    </div>
+    <br>
+    <form class="form-inline" th:action="@{/findClient/}">
+        <div class="form-group mb-2">
+            &nbsp;
+            <label>Identificacion</label>
+        </div>
+        <div class="form-group mx-sm-3 mb-2">
+            <input type="number" name="idClient" class="form-control" id="idClient" th:value="${idClient}" required>
+        </div>
+        <input type="submit" class="btn btn-primary mb-2" value="Buscar">
+    </form>
+</div>
+</div>
+
+<br>
+<div class="container d-flex justify-content-center">
+    <div class="row">
+        <div class="col-lg-auto">
+            <div th:if="${client != null}">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Informacion del Cliente</h4>
+                </div>
+                    <table class="table table-striped">
+                        <tr>
+                            <td><b>Identificacion</b></td>
+                            <td th:text="${client.idClient}"></td>
+                        </tr>
+                        <tr>
+                            <td><b>Nombre</b></td>
+                            <td th:text="${client.clientName}"></td>
+                        </tr>
+                        <tr>
+                            <td><b>Telefono</b></td>
+                            <td th:text="${client.numberPhone}"></td>
+                        </tr>
+                        <tr>
+                            <td><b>Email</b></td>
+                            <td th:text="${client.email}"></td>
+                        </tr>
+                    </table>
+            </div>
+            <br>
+            <a class="btn btn-success d-flex justify-content-center" th:href="@{/addContract/}">
+                <i class="fas fa-arrow-alt-circle-right"></i>
+                &nbsp; Siguiente</a>
+        </div>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="layout/template :: footer"></footer>
+</body>
+</html>

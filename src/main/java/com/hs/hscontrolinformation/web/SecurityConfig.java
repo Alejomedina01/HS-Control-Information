@@ -30,7 +30,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/client/{idPersona}")
                 .hasRole("ADMIN")
-                .antMatchers("/", "/Clients", "/Contracts")
+                .antMatchers("/", "/Clients/", "/Contracts/", "/Contracts", "/Clients", "/addNewContract", "/addNewContract/")
                 .hasAnyRole("ADMIN")
                 .and()
                 .formLogin()

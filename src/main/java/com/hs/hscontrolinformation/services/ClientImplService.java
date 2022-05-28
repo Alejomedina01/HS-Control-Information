@@ -32,13 +32,12 @@ public class ClientImplService implements ServiceTemplate<Client>{
     @Transactional(readOnly = false)
     public void eliminar(Client data) {
         repository.delete(data);
-        
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Client encontrar(Client data) {
-        return repository.getById(data.getIdClient());
+    public Client encontrar(Long id) {
+        return repository.getById(id);
     }
     
 }
