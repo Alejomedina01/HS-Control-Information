@@ -1,11 +1,12 @@
 package com.hs.hscontrolinformation.controllers;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 
 import com.hs.hscontrolinformation.domain.Client;
@@ -14,7 +15,7 @@ import com.hs.hscontrolinformation.services.ClientImplService;
 import javax.validation.Valid;
 
 @Controller
-
+@Slf4j
 public class ControllerClient {
 
     @Autowired
@@ -41,11 +42,6 @@ public class ControllerClient {
         return "index";
     }
 
-    @GetMapping("/client/{idPersona}")
-    public String encontrar(Client data) {
-        service.encontrar(data);
-        return "index";
-    }
 
     @GetMapping("/Clients")
     public String addNewClient(){

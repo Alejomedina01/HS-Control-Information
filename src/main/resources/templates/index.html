@@ -6,41 +6,7 @@ xmlns:th="http://www.thymeleaf.org">
 <header th:replace="layout/template :: header"></header>
 <body>
 <section th:replace="layout/template :: buttons"></section>
-</br>
-<div class="container">
-    <div class="row">
-        <div class="col-md-11">
-            <div class="card">
-                <div class="card-header">
-                    <h4>Listado de contratos</h4>
-                </div>
-                <div th:if="${contracts != null and !contracts.empty}">
-                    <table class="table table-striped">
-                        <thead class="thead-dark">
-                        <tr>
-                            <th>id</th>
-                            <th>Nombre</th>
-                            <th>Estado</th>
-                            <th>Cliente</th>
-                            <th>Enlace</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr th:each="contract : ${contracts}">
-                            <td th:text="${contract.split(',')[0]}">Mostrar Id</td>
-                            <td th:text="${contract.split(',')[1]}">Mostrar Nombre</td>
-                            <td th:text="${contract.split(',')[2]}">Mostrar Estado</td>
-                            <td th:text="${contract.split(',')[3]}"></td>
-                            <td>
-                            <a th:href="link">Abrir</a>
-                            </td>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+<img src="https://firebasestorage.googleapis.com/v0/b/hs-control-information.appspot.com/o/logo_app-removebg-preview.png?alt=media&token=75aee931-85dd-4988-bc7f-c63a6e1be26a" class="mx-auto d-block" width="233px" height="257px"/>
 <footer th:replace="layout/template :: footer"></footer>
 </body>
 </html>
