@@ -26,6 +26,17 @@ public class ControllerClient {
         service.listar();
         return "index";
     }
+    @GetMapping("/Clients")
+    public String showClients(Model model){
+        var clients = service.listar();
+        model.addAttribute("clients", clients);
+        return "clients";
+    }
+
+    @GetMapping("/addNewClient/")
+    public String findClienForContract(){
+        return "addClients";
+    }
 
     @PostMapping("/saveClient")
     public String saveClient(@Valid Client data, Errors errors) {
@@ -42,8 +53,7 @@ public class ControllerClient {
         return "index";
     }
 
-
-    @GetMapping("/Clients")
+    @GetMapping("/addClient")
     public String addNewClient(){
         return "addClients";
     }
