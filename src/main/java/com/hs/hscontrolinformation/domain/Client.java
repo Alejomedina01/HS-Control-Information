@@ -3,8 +3,6 @@ package com.hs.hscontrolinformation.domain;
 import lombok.Data;
 
 import javax.persistence.*;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
@@ -18,8 +16,8 @@ public class Client implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idCliente;
+    @Column(name = "id_cliente")
+    private Long idClient;
 
     @NotEmpty
     @Column(name = "nombre_cliente")
