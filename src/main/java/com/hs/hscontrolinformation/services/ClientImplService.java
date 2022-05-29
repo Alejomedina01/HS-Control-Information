@@ -40,7 +40,12 @@ public class ClientImplService implements ServiceTemplate<Client>{
     @Override
     @Transactional(readOnly = true)
     public Client encontrar(Long id) {
-        return repository.getById(id);
+        return repository.findByIdClient(id);
+    }
+
+    @Transactional(readOnly = true)
+    public List<String> findBasicDataClient(){
+        return repository.findBasicDataClient();
     }
     
 }

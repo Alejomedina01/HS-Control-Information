@@ -6,22 +6,23 @@
 <header th:replace="layout/template :: header"></header>
 <body>
 <div class="container text-center col-4">
-<div class="card">
-    <div class="card-header">
-            <h4>Buscar el cliente </h4>
+    <div class="card">
+        <div class="card-header">
+            <h4>Buscar Cliente </h4>
+        </div>
+        <br>
+        <form class="form-inline" th:action="@{/findClient/}" th:object="${client}" method="get">
+            <div class="form-group mx-sm-3 mb-2">
+                <label>Identificación</label>
+<!--            </div>-->
+<!--            <div class="form-group mx-sm-3 mb-2">-->
+                &nbsp;
+                <input type="number" name="idClient" class="form-control" id="idClient" th:value="${idClient}" required>
+                &nbsp;
+                <input style="margin-top: 7px;" type="submit" class="btn btn-primary mb-2" value="Buscar">
+            </div>
+        </form>
     </div>
-    <br>
-    <form class="form-inline" th:action="@{/findClient/}">
-        <div class="form-group mb-2">
-            &nbsp;
-            <label>Identificacion</label>
-        </div>
-        <div class="form-group mx-sm-3 mb-2">
-            <input type="number" name="idClient" class="form-control" id="idClient" th:value="${idClient}" required>
-        </div>
-        <input type="submit" test-id="btnsearch" class="btn btn-primary mb-2" value="Buscar">
-    </form>
-</div>
 </div>
 
 <br>
@@ -29,10 +30,10 @@
     <div class="row">
         <div class="col-lg-auto">
             <div th:if="${client != null}">
-            <div class="card">
-                <div class="card-header">
-                    <h4>Informacion del Cliente</h4>
-                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Informacion del Cliente</h4>
+                    </div>
                     <table class="table table-striped">
                         <tr>
                             <td><b>Identificacion</b></td>
@@ -51,12 +52,13 @@
                             <td th:text="${client.email}"></td>
                         </tr>
                     </table>
+                </div>
+                <br>
+                <a class="btn btn-success d-flex justify-content-center" th:href="@{/addContract/}">
+                    <i style="margin-top: 4px;" class="fas fa-arrow-alt-circle-right"></i>
+                    &nbsp; Siguiente</a>
             </div>
-            <br>
-            <a class="btn btn-success d-flex justify-content-center" th:href="@{/addContract/}">
-                <i class="fas fa-arrow-alt-circle-right"></i>
-                &nbsp; Siguiente</a>
-        </div>
+            <h2 th:if="${client == null}">No hay coincidencias</h2>
         </div>
     </div>
 </div>

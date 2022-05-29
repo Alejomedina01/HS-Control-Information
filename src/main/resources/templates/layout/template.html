@@ -20,44 +20,44 @@
 <body>
 <header th:fragment="header">
     <div class="fixed-top">
-    <nav class="navbar navbar-expand-sm navbar-dark bg-dark p-0">
-        <div class="container">
-            <a th:href="@{/}" class="navbar-brand">HS CONTROL INFORMATION</a>
-            <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="#navbarCollapse">
-                <ul sec:authorize="isAuthenticated()" class="navbar-nav ml-auto">
-                    <li class="nav-item mr-3">
-                        <a href="#" class="nav-link">
-                            <i class="fas fa-user"></i>
-                            <span>Bienvenido</span>
-                            <span sec:authentication="name">User</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <form method="post" th:action="@{/logout}">
-                            <a href="#" onclick="this.parentNode.submit();" class="nav-link">
-                                <i class="fas fa-user-times"></i> Salir
+        <nav class="navbar navbar-expand-sm navbar-dark bg-dark p-0">
+            <div class="container">
+                <a th:href="@{/}" class="navbar-brand">HS CONTROL INFORMATION</a>
+                <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="#navbarCollapse">
+                    <ul sec:authorize="isAuthenticated()" class="navbar-nav ml-auto">
+                        <li class="nav-item mr-3">
+                            <a href="#" class="nav-link">
+                                <i class="fas fa-user"></i>
+                                <span>Bienvenido</span>
+                                <span sec:authentication="name">User</span>
                             </a>
-                        </form>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-    <section id="main-header" class="py-2 bg-primary text-light">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <h1>
-                        <img src="https://firebasestorage.googleapis.com/v0/b/hs-control-information.appspot.com/o/image.png?alt=media&token=d61c8b25-4ebd-4700-aeb6-a52ca26b4b56" width="52px" height="58px">
-                        Control de informacion
-                    </h1>
+                        </li>
+                        <li class="nav-item">
+                            <form method="post" th:action="@{/logout}">
+                                <a href="#" onclick="this.parentNode.submit();" class="nav-link">
+                                    <i class="fas fa-user-times"></i> Salir
+                                </a>
+                            </form>
+                        </li>
+                    </ul>
                 </div>
             </div>
-        </div>
-    </section>
+        </nav>
+        <section id="main-header" class="py-2 bg-primary text-light">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1>
+                            <img src="https://firebasestorage.googleapis.com/v0/b/hs-control-information.appspot.com/o/image.png?alt=media&token=d61c8b25-4ebd-4700-aeb6-a52ca26b4b56" width="52px" height="58px">
+                            Control de Información
+                        </h1>
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
     <br>
     <div class="p-xl-5">
