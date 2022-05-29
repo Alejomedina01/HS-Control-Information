@@ -23,7 +23,7 @@
                     <h4>Listado de contratos</h4>
                 </div>
                    <br>
-                <div th:if="${contracts != null and !contracts.empty}">
+                <div th:if="${contracts != null and !contracts.isEmpty()}">
                     <div class="search-box">
                         <div class="row">
                             <div class="col-md-3">
@@ -48,7 +48,7 @@
                 <table id="dtBasicExample" class="table table-striped">
                         <thead class="thead-dark">
                         <tr>
-                            <th>id</th>
+                            <th>Id</th>
                             <th>Nombre</th>
                             <th>Estado</th>
                             <th>Cliente</th>

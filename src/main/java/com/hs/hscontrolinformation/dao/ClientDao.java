@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface ClientDao extends JpaRepository<Client, Long> {
 
+    Client findByIdClient(Long idClient);
 }
