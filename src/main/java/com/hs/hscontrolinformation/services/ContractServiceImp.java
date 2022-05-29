@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-public class ContractServiceImp  implements ServiceTemplate<Contract> {
+public class ContractServiceImp implements ServiceTemplate<Contract> {
 
     @Autowired
     private ContractDao contractDao;

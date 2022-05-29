@@ -1,5 +1,6 @@
 package com.hs.hscontrolinformation.domain;
 
+
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
