@@ -33,7 +33,10 @@ public class ClientImplService implements ServiceTemplate<Client>{
     public void eliminar(Client data) {
         repository.delete(data);
     }
-
+    @Transactional(readOnly = false)
+    public void deleteforId(long id) {
+        repository.deleteById(id);
+    }
     @Override
     @Transactional(readOnly = true)
     public Client encontrar(Long id) {

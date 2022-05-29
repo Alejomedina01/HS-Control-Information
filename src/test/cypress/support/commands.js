@@ -11,5 +11,5 @@ Cypress.Commands.add('login',({username,password})=>{
     cy.visit('http://localhost:1367')
     cy.get('input[id="username"]').type(username)
     cy.get('input[id="password"]').type(password)
-    cy.get('input[value="Login"]').click()
+    cy.get('[value="Login"]').click()
 })
