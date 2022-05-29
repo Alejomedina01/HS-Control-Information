@@ -16,4 +16,6 @@ public interface ContractDao extends JpaRepository<Contract, Long> {
     @Query(nativeQuery = true,value = "UPDATE contrato SET id_cliente = ?1 WHERE id_contrato = ?2")
     void updateContractToClientId(Long idClient, Long idContract);
 
+    @Query(nativeQuery = true, value = "SELECT id_cliente FROM contrato WHERE id_contrato = ?1")
+    String findClientIdFromContract(Long idContract);
 }

@@ -32,9 +32,13 @@ public class ContractServiceImp  implements ServiceTemplate<Contract> {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public Contract encontrar(Long id) {
-        return contractDao.findById(id).orElse(null);
+        return null;
+    }
+
+    @Transactional(readOnly = true)
+    public Contract encontrar(Contract contract) {
+        return contractDao.findById(contract.getIdContract()).orElse(null);
     }
 
     @Transactional(readOnly = true)
@@ -45,5 +49,10 @@ public class ContractServiceImp  implements ServiceTemplate<Contract> {
     @Transactional
     public void updateContractToClientId(Long idClient, Long idContract){
         contractDao.updateContractToClientId(idClient, idContract);
+    }
+
+    @Transactional(readOnly = true)
+    public String findClientIdFromContract(Long idContract){
+        return contractDao.findClientIdFromContract(idContract);
     }
 }
