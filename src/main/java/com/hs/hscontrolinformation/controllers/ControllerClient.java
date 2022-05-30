@@ -43,7 +43,7 @@ public class ControllerClient {
             return "addClients";
         }
         service.guardar(data);
-        return "index";
+        return "redirect:/Clients";
     }
 
     @DeleteMapping("/deleteClient")
