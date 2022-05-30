@@ -52,7 +52,6 @@
                             <th>Nombre</th>
                             <th>Email</th>
                             <th>No. Teléfono</th>
-                            <th>Enlace</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -61,9 +60,6 @@
                             <td th:text="${client.clientName}"></td>
                             <td th:text="${client.email}"></td>
                             <td th:text="${client.numberPhone}"></td>
-                            <td>
-                                <a th:href="link" class="btn btn-outline-success">Abrir</a>
-                            </td>
                         </tbody>
                     </table>
                 </div>

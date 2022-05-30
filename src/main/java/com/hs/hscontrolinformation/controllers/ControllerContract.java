@@ -58,12 +58,44 @@ public class ControllerContract {
     }
 
     @PostMapping("/saveContract")
-    public String guardar(@Valid Contract contract, Errors errors){
+    public String saveContract(@Valid Contract contract, Errors errors){
         if (errors.hasErrors()){
             return "addContract";
         }
         contractService.guardar(contract);
         contractService.updateContractToClientId(client.getIdClient(), contract.getIdContract());
+        return "redirect:/Contracts";
+    }
+
+    @GetMapping("/abrir/{idContract}")
+    public String openContract(Contract contract, Model model){
+        contract = (Contract) contractService.encontrar(contract);
+        Long idClient = Long.parseLong(contractService.findClientIdFromContract(contract.getIdContract()));
+        Client clientContract = clientService.encontrar(idClient);
+        model.addAttribute("contract", contract);
+        model.addAttribute("client", clientContract);
+        return "specificDataContract";
+    }
+
+    @GetMapping("/editar/{idContract}")
+    public String editContract(Contract contract, Model model){
+        contract = (Contract) contractService.encontrar(contract);
+        model.addAttribute("contrato", contract);
+        return "modifyContract";
+    }
+
+    @PostMapping("/saveChangesContract")
+    public String saveChanges(@Valid Contract contract, Errors errores){
+        if (errores.hasErrors()){
+            return "modificar";
+        }
+        contractService.guardar(contract);
+        return "redirect:/Contracts";
+    }
+
+    @GetMapping("/eliminar")
+    public String deleteContract(Contract contract){
+        contractService.eliminar(contract);
         return "redirect:/Contracts";
     }
 }

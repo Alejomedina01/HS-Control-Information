@@ -9,4 +9,5 @@ public interface ServiceTemplate<T> {
     public void eliminar(T data);
     public T encontrar(Long id);
 
+
 }
