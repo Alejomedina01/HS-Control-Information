@@ -3,8 +3,6 @@ package com.hs.hscontrolinformation.domain;
 import lombok.Data;
 
 import javax.persistence.*;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;

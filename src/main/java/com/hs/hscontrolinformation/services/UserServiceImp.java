@@ -2,6 +2,7 @@ package com.hs.hscontrolinformation.services;
 
 import com.hs.hscontrolinformation.dao.UserDao;
 import com.hs.hscontrolinformation.domain.Rol;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;

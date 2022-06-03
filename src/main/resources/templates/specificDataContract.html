@@ -37,7 +37,7 @@
                         </tr>
                         <tr th:if="${contract.getAditionalValue() != null}">
                             <td><b>Valor Adicional</b></td>
-                            <td>[[${new java.text.DecimalFormat('$#,##0').format(contract.getAditionalValue())}]]</td>
+                            <td test-id="valuePending">[[${new java.text.DecimalFormat('$#,##0').format(contract.getAditionalValue())}]]</td>
                         </tr>
                         <tr>
                             <td><b>Acta Inicio</b></td>
@@ -92,7 +92,7 @@
                         </div>
                     </div>
                 </div>
-                <a class="btn btn-warning d-flex justify-content-center" th:href="@{/editar/} + ${contract.getIdContract()}">
+                <a class="btn btn-warning d-flex justify-content-center" test-id="editContract" th:href="@{/editar/} + ${contract.getIdContract()}">
                     <i class="fas fa-pencil"></i>
                     &nbsp; Editar</a>
             </div>
