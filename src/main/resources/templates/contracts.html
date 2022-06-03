@@ -30,7 +30,7 @@
                                 <h5>&nbsp;Buscar Contrato</h5>
                             </div>
                             <div class="col-md-9">
-                                <input type="text" id="myInput" onkeyup="myFunction()" class="form-control" placeholder="Ingrese palabra clave">
+                                <input type="text" id="myInput"  class="form-control" placeholder="Ingrese palabra clave">
                                 <script>
                                     $(document).ready(function () {
                                         $("#myInput").on("keyup", function () {
@@ -56,14 +56,15 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="contract : ${contracts}">
-                            <td th:text="${contract.split(',')[0]}">Mostrar Id</td>
+                        <tr test-id="rowtable" th:each="contract : ${contracts}">
+                            <td test-id="idContract" th:text="${contract.split(',')[0]}">Mostrar Id</td>
                             <td th:text="${contract.split(',')[1]}">Mostrar Nombre</td>
                             <td th:text="${contract.split(',')[2]}">Mostrar Estado</td>
                             <td th:text="${contract.split(',')[3]}"></td>
                             <td>
-                                <a th:href="@{/abrir/} + ${contract.split(',')[0]}" class="btn btn-outline-success">Abrir</a>
+                                <a th:href="@{/abrir/} + ${contract.split(',')[0]}" test-id="openContract" class="btn btn-outline-success">Abrir</a>
                             </td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>
