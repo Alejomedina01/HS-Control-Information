@@ -84,6 +84,9 @@ public class ControllerContract {
     @GetMapping("/editar/{idContract}")
     public String editContract(Contract contract, Model model){
         contract = (Contract) contractService.encontrar(contract);
+        LocalDate actual = LocalDate.now();
+        log.info("fecha " + actual.toString());
+        model.addAttribute("actual", actual);
         model.addAttribute("contrato", contract);
         return "modifyContract";
     }
