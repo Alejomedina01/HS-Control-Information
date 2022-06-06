@@ -17,7 +17,7 @@
                         <div class="modal-body">
                             <div class="form-group">
                                 <label for="idContract" >Id contrato</label>
-                                <input type="text" class="form-control" name="idContract" required="true">
+                                <input type="number" min="1" max="999999999999" class="form-control" name="idContract" required="true">
                             </div>
                             <div class="form-group">
                                 <label for="projectName" >Nombre proyecto</label>
@@ -33,11 +33,11 @@
                             </div>
                             <div class="form-group">
                                 <label for="initialValue">Valor inicial</label>
-                                <input type="number" class="form-control" name="initialValue" required="true">
+                                <input type="number" min="1" max="999999999999" class="form-control" name="initialValue" required="true">
                             </div>
                             <div class="form-group">
                                 <label for="aditionalValue">Valor adicional</label>
-                                <input type="text" class="form-control" name="aditionalValue">
+                                <input type="number" min="1" max="999999999999" class="form-control" name="aditionalValue">
                             </div>
                             <div style="float: left; margin-right: 20px;" class="form-group">
                                 <label for="initialDateAct">Acta inicio</label>
@@ -53,15 +53,15 @@
                             <br>
                             <div class="form-group">
                                 <label for="invoicedValue">Valor facturado</label>
-                                <input type="number" class="form-control" name="invoicedValue" required="true">
+                                <input type="number" min="1" max="999999999999" class="form-control" name="invoicedValue" required="true">
                             </div>
                             <div class="form-group">
                                 <label for="pendingValue">Valor pendiente</label>
-                                <input type="number" class="form-control" name="pendingValue">
+                                <input type="number" min="1" max="999999999999" class="form-control" name="pendingValue">
                             </div>
                             <div class="form-group">
                                 <label for="warratyValue">Valor garantía (Retegarantía)</label>
-                                <input type="number" class="form-control" name="warratyValue" required="true">
+                                <input type="number" min="1" max="999999999999" class="form-control" name="warratyValue" required="true">
                             </div>
                             <div class="form-group">
                                 <label for="warrantyState">Estado garantía (Retegarantía)</label>
