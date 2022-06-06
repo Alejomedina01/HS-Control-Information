@@ -29,7 +29,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="contractDate">Fecha contrato</label>
-                                <input type="date" class="form-control" name="contractDate" required="true">
+                                <input type="date" class="form-control" th:max="${actual}" name="contractDate" required="true">
                             </div>
                             <div class="form-group">
                                 <label for="initialValue">Valor inicial</label>
@@ -41,11 +41,11 @@
                             </div>
                             <div style="float: left; margin-right: 20px;" class="form-group">
                                 <label for="initialDateAct">Acta inicio</label>
-                                <input type="date" class="form-control" name="initialDateAct" required="true">
+                                <input type="date" th:max="${actual}" class="form-control" name="initialDateAct" required="true">
                             </div>
                             <div style="float: left;" class="form-group">
                                 <label for="receivalDateAct">Acta recibido</label>
-                                <input type="date" class="form-control" name="receivalDateAct">
+                                <input type="date" th:max="${actual}" class="form-control" name="receivalDateAct">
                             </div>
                             <br>
                             <br>

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
 
 @org.springframework.stereotype.Controller
 @Slf4j
@@ -46,7 +47,10 @@ public class ControllerContract {
     }
 
     @GetMapping("/addContract/")
-    public String addNewContract(){
+    public String addNewContract(Model model){
+        LocalDate actual = LocalDate.now();
+        log.info("fecha " + actual.toString());
+        model.addAttribute("actual", actual);
         return "addContract";
     }
 
