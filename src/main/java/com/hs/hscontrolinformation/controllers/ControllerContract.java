@@ -56,7 +56,7 @@ public class ControllerContract {
 
     @GetMapping("/findClient/")
     public String selectedClient(Model model, @RequestParam Long idClient, @ModelAttribute("client") Client client){
-        this.client = clientService.encontrar(idClient);
+        this.client = clientService.findById(idClient);
         model.addAttribute("client", this.client);
         return "findClient";
     }
@@ -66,7 +66,7 @@ public class ControllerContract {
         if (errors.hasErrors()){
             return "addContract";
         }
-        contractService.guardar(contract);
+        contractService.save(contract);
         contractService.updateContractToClientId(client.getIdClient(), contract.getIdContract());
         return "redirect:/Contracts";
     }
@@ -75,7 +75,7 @@ public class ControllerContract {
     public String openContract(Contract contract, Model model){
         contract = (Contract) contractService.encontrar(contract);
         Long idClient = Long.parseLong(contractService.findClientIdFromContract(contract.getIdContract()));
-        Client clientContract = clientService.encontrar(idClient);
+        Client clientContract = clientService.findById(idClient);
         model.addAttribute("contract", contract);
         model.addAttribute("client", clientContract);
         return "specificDataContract";
@@ -96,13 +96,13 @@ public class ControllerContract {
         if (errores.hasErrors()){
             return "modificar";
         }
-        contractService.guardar(contract);
+        contractService.save(contract);
         return "redirect:/Contracts";
     }
 
     @GetMapping("/eliminar")
     public String deleteContract(Contract contract){
-        contractService.eliminar(contract);
+        contractService.delete(contract);
         return "redirect:/Contracts";
     }
 }

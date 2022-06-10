@@ -4,10 +4,10 @@ import java.util.List;
 
 public interface ServiceTemplate<T> {
 
-    public List<T> listar();
-    public void guardar(T data);
-    public void eliminar(T data);
-    public T encontrar(Long id);
+    public List<T> list();
+    public void save(T data);
+    public void delete(T data);
+    public T findById(Long id);
 
 
 }

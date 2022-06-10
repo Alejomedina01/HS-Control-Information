@@ -22,12 +22,12 @@ public class ControllerClient {
 
     @GetMapping("/allClients")
     public String listar() {
-        service.listar();
+        service.list();
         return "index";
     }
     @GetMapping("/Clients")
     public String showClients(Model model){
-        var clients = service.listar();
+        var clients = service.list();
         model.addAttribute("clients", clients);
         return "clients";
     }
@@ -42,18 +42,13 @@ public class ControllerClient {
         if (errors.hasErrors()){
             return "addClients";
         }
-        service.guardar(data);
+        service.save(data);
         return "redirect:/Clients";
     }
 
     @DeleteMapping("/deleteClient")
     public String eliminar(Client data) {
-        service.eliminar(data);
+        service.delete(data);
         return "index";
-    }
-
-    @GetMapping("/addClient")
-    public String addNewClient(){
-        return "addClients";
     }
 }
