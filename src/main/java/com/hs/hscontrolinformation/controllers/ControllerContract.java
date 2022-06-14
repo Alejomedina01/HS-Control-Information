@@ -71,9 +71,9 @@ public class ControllerContract {
         return "redirect:/Contracts";
     }
 
-    @GetMapping("/abrir/{idContract}")
+    @GetMapping("/abrirContrato/{idContract}")
     public String openContract(Contract contract, Model model){
-        contract = (Contract) contractService.encontrar(contract);
+        contract = (Contract) contractService.find(contract);
         Long idClient = Long.parseLong(contractService.findClientIdFromContract(contract.getIdContract()));
         Client clientContract = clientService.findById(idClient);
         model.addAttribute("contract", contract);
@@ -83,7 +83,7 @@ public class ControllerContract {
 
     @GetMapping("/editar/{idContract}")
     public String editContract(Contract contract, Model model){
-        contract = (Contract) contractService.encontrar(contract);
+        contract = (Contract) contractService.find(contract);
         LocalDate actual = LocalDate.now();
         log.info("fecha " + actual.toString());
         model.addAttribute("actual", actual);

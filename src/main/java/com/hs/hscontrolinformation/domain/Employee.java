@@ -34,9 +34,12 @@ public class Employee {
     @Column(name = "direccion_empleado")
     private String adress;
 
-    @NotEmpty
-    @Column(name = "lugar_trabajo")
-    private String workPlace;
+    @Column(name = "telefono")
+    private String numberPhone;
+
+//    @NotEmpty
+//    @Column(name = "lugar_trabajo")
+//    private String workPlace;
 
     @Column(name = "eps")
     private String eps;

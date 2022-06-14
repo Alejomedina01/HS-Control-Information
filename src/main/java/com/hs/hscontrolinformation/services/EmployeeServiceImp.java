@@ -35,4 +35,9 @@ public class EmployeeServiceImp implements ServiceTemplate<Employee> {
     public Employee findById(Long id) {
         return employeeDao.findById(id).orElse(null);
     }
+
+    @Transactional(readOnly = true)
+    public Employee find(Employee employee) {
+        return employeeDao.findById(employee.getIdEmployee()).orElse(null);
+    }
 }

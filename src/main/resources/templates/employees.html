@@ -20,7 +20,7 @@
         <div class="col-md-11">
             <div class="card">
                 <div class="card-header">
-                    <h4>Listado Clientes</h4>
+                    <h4>Listado Empleados</h4>
                 </div>
                 <br>
                 <div th:if="${employees != null and !employees.isEmpty()}">
@@ -51,7 +51,8 @@
                             <th>Identificación</th>
                             <th>Nombres</th>
                             <th>Apodo</th>
-                            <th>Lugar de Trabajo</th>
+                            <th>Teléfono</th>
+                            <th>Enlace</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -59,7 +60,10 @@
                             <td th:text="${employee.getIdEmployee()}"></td>
                             <td th:text="${employee.getName() + ' ' + employee.getLastname()}"></td>
                             <td th:text="${employee.getNickname()}"></td>
-                            <td th:text="${employee.getWorkPlace()}"></td>
+                            <td th:text="${employee.getNumberPhone()}"></td>
+                            <td>
+                                <a th:href="@{/abrirEmpleado/} + ${employee.getIdEmployee()}" test-id="openEmployee" class="btn btn-outline-success">Abrir</a>
+                            </td>
                         </tbody>
                     </table>
                 </div>

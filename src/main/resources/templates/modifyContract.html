@@ -5,112 +5,110 @@
 <head th:replace="layout/template :: head"></head>
 <header th:replace="layout/template :: header"></header>
 <body>
-
-<section th:fragment="editarCliente">
+<section th:fragment="editarContrato">
     <form th:action="@{/saveChangesContract}" method="POST" class="was-validated" th:object="${contrato}">
-    <div id="actions" class="py-4 mb-4 bg-light">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-3">
-                    <a th:href="@{/abrir/} + ${contrato.idContract}" class="btn btn-light btn-block">
-                        <i class="fas fa-arrow-left"></i>
-                    </a>
-                </div>
-                <div class="col-md-3">
-                    <button type="submit" test-id="saveChangesContract" class="btn btn-success btn-block">
-                        <i class="fas fa-check"></i> Guardar
-                    </button>
-                </div>
-                <div class="col-md-3">
-                    <a th:href="@{/eliminar(idContract=${contrato.idContract})}"
-                       class="btn btn-danger btn-block">
-                        <i class="fas fa-trash"></i> Eliminar
-                    </a>
+        <div id="actions" class="py-4 mb-4 bg-light">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3">
+                        <a th:href="@{/abrirContrato/} + ${contrato.idContract}" class="btn btn-light btn-block">
+                            <i class="fas fa-arrow-left"></i>
+                        </a>
+                    </div>
+                    <div class="col-md-3">
+                        <button type="submit" test-id="saveChangesContract" class="btn btn-success btn-block">
+                            <i class="fas fa-check"></i> Guardar
+                        </button>
+                    </div>
+                    <div class="col-md-3">
+                        <a th:href="@{/eliminar(idContract=${contrato.idContract})}"
+                           class="btn btn-danger btn-block">
+                            <i class="fas fa-trash"></i> Eliminar
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div id="details">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h4 >Editar Contrato</h4>
-                    </div>
-                     <div class="card-body">
-                            <div class="form-group">
-                                <label for="idContract" >Id contrato</label>
-                                <input type="number" min="1" max="999999999999" th:field="*{idContract}" class="form-control" name="idContract" required="true" readonly>
+        <div id="details">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4>Editar Contrato</h4>
                             </div>
-                            <div class="form-group">
-                                <label for="projectName" >Nombre proyecto</label>
-                                <input type="text" th:field="*{projectName}" class="form-control" name="projectName" required="true">
-                            </div>
-                            <div class="form-group">
-                                <label for="city" >Ciudad</label>
-                                <input type="text" th:field="*{city}" class="form-control" name="city" required="true">
-                            </div>
-                            <div class="form-group">
-                                <label for="contractDate">Fecha contrato</label>
-                                <input type="date" th:max="${actual}" th:field="*{contractDate}" class="form-control" name="contractDate" required="true">
-                            </div>
-                            <div class="form-group">
-                                <label for="initialValue">Valor inicial</label>
-                                <input type="number" min="1" max="999999999999" th:field="*{initialValue}" class="form-control" name="initialValue" required="true">
-                            </div>
-                            <div class="form-group">
-                                <label for="aditionalValue">Valor adicional</label>
-                                <input type="number" min="1" max="999999999999" th:field="*{aditionalValue}" class="form-control" name="aditionalValue">
-                            </div>
-                            <div style="float: left; margin-right: 20px;" class="form-group">
-                                <label for="initialDateAct">Acta inicio</label>
-                                <input th:max="${actual}" type="date" th:field="*{initialDateAct}" class="form-control" name="initialDateAct" required="true">
-                            </div>
-                            <div style="float: left;" class="form-group">
-                                <label for="receivalDateAct">Acta recibido</label>
-                                <input th:max="${actual}" type="date" th:field="*{receivalDateAct}" class="form-control" name="receivalDateAct">
-                            </div>
-                            <br>git
-                            <br>
-                            <br>
-                            <br>
-                            <div class="form-group">
-                                <label for="invoicedValue">Valor facturado</label>
-                                <input type="number" min="1" max="999999999999" th:field="*{invoicedValue}" class="form-control" name="invoicedValue" required="true">
-                            </div>
-                            <div class="form-group">
-                                <label for="pendingValue">Valor pendiente</label>
-                                <input type="number" min="1" max="999999999999" th:field="*{pendingValue}" class="form-control" name="pendingValue">
-                            </div>
-                            <div class="form-group">
-                                <label for="warratyValue">Valor garantía (Retegarantía)</label>
-                                <input type="number" min="1" max="999999999999" th:field="*{warratyValue}" class="form-control" name="warratyValue" required="true">
-                            </div>
-                            <div class="form-group">
-                                <label for="warrantyState">Estado garantía (Retegarantía)</label>
-                                <select name="warrantyState" class="form-control" required="true" th:field="*{warrantyState}">
-                                    <option value="Pagada">Pagada</option>
-                                    <option value="En proceso">En Proceso</option>
-                                    <option value="Sin pagar">Sin Pagar</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="contractState">Estado contrato</label>
-                                <select name="contractState" class="form-control" required="true" th:field="*{contractState}" >
-                                    <option value="Liquidado">Liquidado</option>
-                                    <option value="En ejecucion">En Ejecución</option>
-                                    <option value="Suspendido">Suspendido</option>
-                                    <option value="Entregado">Entregado</option>
-                                </select>
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label for="idContract" >Id contrato</label>
+                                    <input type="number" min="1" max="999999999999" th:field="*{idContract}" class="form-control" name="idContract" required="true" readonly>
+                                </div>
+                                <div class="form-group">
+                                    <label for="projectName" >Nombre proyecto</label>
+                                    <input type="text" th:field="*{projectName}" class="form-control" name="projectName" required="true">
+                                </div>
+                                <div class="form-group">
+                                    <label for="city" >Ciudad</label>
+                                    <input type="text" th:field="*{city}" class="form-control" name="city" required="true">
+                                </div>
+                                <div class="form-group">
+                                    <label for="contractDate">Fecha contrato</label>
+                                    <input type="date" th:max="${actual}" th:field="*{contractDate}" class="form-control" name="contractDate" required="true">
+                                </div>
+                                <div class="form-group">
+                                    <label for="initialValue">Valor inicial</label>
+                                    <input type="number" min="1" max="999999999999" th:field="*{initialValue}" class="form-control" name="initialValue" required="true">
+                                </div>
+                                <div class="form-group">
+                                    <label for="aditionalValue">Valor adicional</label>
+                                    <input type="number" min="1" max="999999999999" th:field="*{aditionalValue}" class="form-control" name="aditionalValue">
+                                </div>
+                                <div style="float: left; margin-right: 20px;" class="form-group">
+                                    <label for="initialDateAct">Acta inicio</label>
+                                    <input th:max="${actual}" type="date" th:field="*{initialDateAct}" class="form-control" name="initialDateAct" required="true">
+                                </div>
+                                <div style="float: left;" class="form-group">
+                                    <label for="receivalDateAct">Acta recibido</label>
+                                    <input th:max="${actual}" type="date" th:field="*{receivalDateAct}" class="form-control" name="receivalDateAct">
+                                </div>
+                                <br>git
+                                <br>
+                                <br>
+                                <br>
+                                <div class="form-group">
+                                    <label for="invoicedValue">Valor facturado</label>
+                                    <input type="number" min="1" max="999999999999" th:field="*{invoicedValue}" class="form-control" name="invoicedValue" required="true">
+                                </div>
+                                <div class="form-group">
+                                    <label for="pendingValue">Valor pendiente</label>
+                                    <input type="number" min="1" max="999999999999" th:field="*{pendingValue}" class="form-control" name="pendingValue">
+                                </div>
+                                <div class="form-group">
+                                    <label for="warratyValue">Valor garantía (Retegarantía)</label>
+                                    <input type="number" min="1" max="999999999999" th:field="*{warratyValue}" class="form-control" name="warratyValue" required="true">
+                                </div>
+                                <div class="form-group">
+                                    <label for="warrantyState">Estado garantía (Retegarantía)</label>
+                                    <select name="warrantyState" class="form-control" required="true" th:field="*{warrantyState}">
+                                        <option value="Pagada">Pagada</option>
+                                        <option value="En proceso">En Proceso</option>
+                                        <option value="Sin pagar">Sin Pagar</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="contractState">Estado contrato</label>
+                                    <select name="contractState" class="form-control" required="true" th:field="*{contractState}" >
+                                        <option value="Liquidado">Liquidado</option>
+                                        <option value="En ejecucion">En Ejecución</option>
+                                        <option value="Suspendido">Suspendido</option>
+                                        <option value="Entregado">Entregado</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    </div>
     </form>
 </section>
 <footer th:replace="layout/template :: footer"></footer>

@@ -62,7 +62,7 @@
                             <td th:text="${contract.split(',')[2]}">Mostrar Estado</td>
                             <td th:text="${contract.split(',')[3]}"></td>
                             <td>
-                                <a th:href="@{/abrir/} + ${contract.split(',')[0]}" test-id="openContract" class="btn btn-outline-success">Abrir</a>
+                                <a th:href="@{/abrirContrato/} + ${contract.split(',')[0]}" test-id="openContract" class="btn btn-outline-success">Abrir</a>
                             </td>
                         </tr>
                         </tbody>

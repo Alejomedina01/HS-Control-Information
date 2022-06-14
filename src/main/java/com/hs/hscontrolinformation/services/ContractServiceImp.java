@@ -37,7 +37,7 @@ public class ContractServiceImp implements ServiceTemplate<Contract> {
     }
 
     @Transactional(readOnly = true)
-    public Contract encontrar(Contract contract) {
+    public Contract find(Contract contract) {
         return contractDao.findById(contract.getIdContract()).orElse(null);
     }
 
