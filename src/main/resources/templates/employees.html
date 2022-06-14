@@ -8,9 +8,9 @@
     <div class="container">
         <div class="row">
             <div class="col">
-                <a class="btn btn-success" th:href="@{/addNewContract/}" test-id="addContract">
+                <a class="btn btn-success" test-id="addClient" th:href="@{/addNewEmployee/}">
                     <i class="fas fa-plus"></i>
-                    Agregar Contrato</a>
+                    Agregar Empleado</a>
             </div>
         </div>
     </div>
@@ -20,17 +20,17 @@
         <div class="col-md-11">
             <div class="card">
                 <div class="card-header">
-                    <h4>Listado Contratos</h4>
+                    <h4>Listado Empleados</h4>
                 </div>
-                   <br>
-                <div th:if="${contracts != null and !contracts.isEmpty()}">
+                <br>
+                <div th:if="${employees != null and !employees.isEmpty()}">
                     <div class="search-box">
                         <div class="row">
                             <div class="col-md-3">
-                                <h5>&nbsp;Buscar Contrato</h5>
+                                <h5>&nbsp;Buscar Empleado</h5>
                             </div>
                             <div class="col-md-9">
-                                <input type="text" id="myInput"  class="form-control" placeholder="Ingrese palabra clave">
+                                <input type="text" id="myInput" onkeyup="myFunction()" class="form-control" placeholder="Ingrese palabra clave">
                                 <script>
                                     $(document).ready(function () {
                                         $("#myInput").on("keyup", function () {
@@ -44,27 +44,26 @@
                             </div>
                         </div>
                     </div>
-                        <br>
-                <table id="dtBasicExample" class="table table-striped">
+                    <br>
+                    <table id="dtBasicExample" class="table table-striped">
                         <thead class="thead-dark">
                         <tr>
-                            <th>Id</th>
-                            <th>Nombre</th>
-                            <th>Estado</th>
-                            <th>Cliente</th>
+                            <th>Identificación</th>
+                            <th>Nombres</th>
+                            <th>Apodo</th>
+                            <th>Teléfono</th>
                             <th>Enlace</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr test-id="rowtable" th:each="contract : ${contracts}">
-                            <td test-id="idContract" th:text="${contract.split(',')[0]}">Mostrar Id</td>
-                            <td th:text="${contract.split(',')[1]}">Mostrar Nombre</td>
-                            <td th:text="${contract.split(',')[2]}">Mostrar Estado</td>
-                            <td th:text="${contract.split(',')[3]}"></td>
+                        <tr th:each="employee : ${employees}">
+                            <td th:text="${employee.getIdEmployee()}"></td>
+                            <td th:text="${employee.getName() + ' ' + employee.getLastname()}"></td>
+                            <td th:text="${employee.getNickname()}"></td>
+                            <td th:text="${employee.getNumberPhone()}"></td>
                             <td>
-                                <a th:href="@{/abrirContrato/} + ${contract.split(',')[0]}" test-id="openContract" class="btn btn-outline-success">Abrir</a>
+                                <a th:href="@{/abrirEmpleado/} + ${employee.getIdEmployee()}" test-id="openEmployee" class="btn btn-outline-success">Abrir</a>
                             </td>
-                        </tr>
                         </tbody>
                     </table>
                 </div>

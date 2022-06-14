@@ -14,32 +14,34 @@ import org.springframework.transaction.annotation.Transactional;
 public class ClientImplService implements ServiceTemplate<Client>{
 
     @Autowired
-    ClientDao repository; 
+    private ClientDao repository;
 
     @Override
     @Transactional(readOnly = true)
-    public List<Client> listar() {
+    public List<Client> list() {
         return repository.findAll();
     }
 
     @Override
     @Transactional(readOnly = false)
-    public void guardar(Client data) {
+    public void save(Client data) {
         repository.save(data);
     }
 
     @Override
     @Transactional(readOnly = false)
-    public void eliminar(Client data) {
+    public void delete(Client data) {
         repository.delete(data);
     }
+
     @Transactional(readOnly = false)
     public void deleteforId(long id) {
         repository.deleteById(id);
     }
+
     @Override
     @Transactional(readOnly = true)
-    public Client encontrar(Long id) {
+    public Client findById(Long id) {
         return repository.findByIdClient(id);
     }
 

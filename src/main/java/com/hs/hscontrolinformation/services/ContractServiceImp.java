@@ -17,27 +17,27 @@ public class ContractServiceImp implements ServiceTemplate<Contract> {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Contract> listar() {
+    public List<Contract> list() {
         return (List<Contract>) contractDao.findAll();
     }
 
     @Override
-    public void guardar(Contract data) {
+    public void save(Contract data) {
         contractDao.save(data);
     }
 
     @Override
-    public void eliminar(Contract data) {
+    public void delete(Contract data) {
         contractDao.delete(data);
     }
 
     @Override
-    public Contract encontrar(Long id) {
+    public Contract findById(Long id) {
         return null;
     }
 
     @Transactional(readOnly = true)
-    public Contract encontrar(Contract contract) {
+    public Contract find(Contract contract) {
         return contractDao.findById(contract.getIdContract()).orElse(null);
     }
 

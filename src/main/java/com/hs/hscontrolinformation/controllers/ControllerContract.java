@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
 
 @org.springframework.stereotype.Controller
 @Slf4j
@@ -46,13 +47,16 @@ public class ControllerContract {
     }
 
     @GetMapping("/addContract/")
-    public String addNewContract(){
+    public String addNewContract(Model model){
+        LocalDate actual = LocalDate.now();
+        log.info("fecha " + actual.toString());
+        model.addAttribute("actual", actual);
         return "addContract";
     }
 
     @GetMapping("/findClient/")
     public String selectedClient(Model model, @RequestParam Long idClient, @ModelAttribute("client") Client client){
-        this.client = clientService.encontrar(idClient);
+        this.client = clientService.findById(idClient);
         model.addAttribute("client", this.client);
         return "findClient";
     }
@@ -62,16 +66,16 @@ public class ControllerContract {
         if (errors.hasErrors()){
             return "addContract";
         }
-        contractService.guardar(contract);
+        contractService.save(contract);
         contractService.updateContractToClientId(client.getIdClient(), contract.getIdContract());
         return "redirect:/Contracts";
     }
 
-    @GetMapping("/abrir/{idContract}")
+    @GetMapping("/abrirContrato/{idContract}")
     public String openContract(Contract contract, Model model){
-        contract = (Contract) contractService.encontrar(contract);
+        contract = (Contract) contractService.find(contract);
         Long idClient = Long.parseLong(contractService.findClientIdFromContract(contract.getIdContract()));
-        Client clientContract = clientService.encontrar(idClient);
+        Client clientContract = clientService.findById(idClient);
         model.addAttribute("contract", contract);
         model.addAttribute("client", clientContract);
         return "specificDataContract";
@@ -79,7 +83,10 @@ public class ControllerContract {
 
     @GetMapping("/editar/{idContract}")
     public String editContract(Contract contract, Model model){
-        contract = (Contract) contractService.encontrar(contract);
+        contract = (Contract) contractService.find(contract);
+        LocalDate actual = LocalDate.now();
+        log.info("fecha " + actual.toString());
+        model.addAttribute("actual", actual);
         model.addAttribute("contrato", contract);
         return "modifyContract";
     }
@@ -89,13 +96,13 @@ public class ControllerContract {
         if (errores.hasErrors()){
             return "modificar";
         }
-        contractService.guardar(contract);
+        contractService.save(contract);
         return "redirect:/Contracts";
     }
 
     @GetMapping("/eliminar")
     public String deleteContract(Contract contract){
-        contractService.eliminar(contract);
+        contractService.delete(contract);
         return "redirect:/Contracts";
     }
 }
