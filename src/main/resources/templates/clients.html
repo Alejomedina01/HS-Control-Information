@@ -8,7 +8,7 @@
     <div class="container">
         <div class="row">
             <div class="col">
-                <a class="btn btn-success" test-id="addClient" th:href="@{/addNewClient/}">
+                <a class="btn btn-success" test-id="addClients" th:href="@{/addNewClient/}">
                     <i class="fas fa-plus"></i>
                     Agregar Cliente</a>
             </div>
@@ -52,14 +52,18 @@
                             <th>Nombre</th>
                             <th>Email</th>
                             <th>No. Teléfono</th>
+                            <th>Enlace</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr th:each="client : ${clients}">
-                            <td th:text="${client.idClient}"></td>
-                            <td th:text="${client.clientName}"></td>
-                            <td th:text="${client.email}"></td>
-                            <td th:text="${client.numberPhone}"></td>
+                            <td th:text="${client.getIdClient()}"></td>
+                            <td th:text="${client.getClientName()}"></td>
+                            <td th:text="${client.getEmail()}"></td>
+                            <td th:text="${client.getNumberPhone()}"></td>
+                            <td>
+                                <a th:href="@{/abrirCliente/} + ${client.getIdClient()}" test-id="openClient" class="btn btn-outline-success">Abrir</a>
+                            </td>
                         </tbody>
                     </table>
                 </div>

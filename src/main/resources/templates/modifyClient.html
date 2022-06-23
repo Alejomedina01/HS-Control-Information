@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layout/template :: head"></head>
+<header th:replace="layout/template :: header"></header>
+<body>
+<section th:fragment="editarCliente">
+    <form th:action="@{/saveChangesClient}" method="POST" class="was-validated" th:object="${client}">
+        <div id="actions" class="py-4 mb-4 bg-light">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3">
+                        <a th:href="@{/abrirCliente/} + ${client.idClient}" class="btn btn-light btn-block">
+                            <i class="fas fa-arrow-left"></i>
+                        </a>
+                    </div>
+                    <div class="col-md-3">
+                        <button type="submit" test-id="saveChangesClient" class="btn btn-success btn-block">
+                            <i class="fas fa-check"></i> Guardar
+                        </button>
+                    </div>
+<!--                    <div class="col-md-3">-->
+<!--                        <a th:href="@{/deleteEmployee(idEmployee=${empleado.idEmployee})}"-->
+<!--                           class="btn btn-danger btn-block">-->
+<!--                            <i class="fas fa-trash"></i> Eliminar-->
+<!--                        </a>-->
+<!--                    </div>-->
+                </div>
+            </div>
+        </div>
+        <div id="details">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4>Editar Cliente</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="idClient" >Identificación</label>
+                                    <input type="number" min="1" max="999999999999" class="form-control" th:field="*{idClient}" name="idClient" required="true" readonly>
+                                </div>
+                                <div class="form-group">
+                                    <label for="clientName" >Nombre cliente</label>
+                                    <input type="text" class="form-control" th:field="*{clientName}" name="clientName" required="true">
+                                </div>
+                                <div class="form-group">
+                                    <label for="numberPhone">Numero de telefono</label>
+                                    <input type="number" min="1" max="3999999999" class="form-control" th:field="*{numberPhone}" name="numberPhone">
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Correo electronico</label>
+                                    <input type="email" class="form-control" th:field="*{email}" name="email" required="true">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</section>
+<footer th:replace="layout/template :: footer"></footer>
+</body>
+</html>
