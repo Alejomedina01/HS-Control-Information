@@ -9,6 +9,8 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 @Entity
@@ -73,4 +75,13 @@ public class Contract implements Serializable {
     @Column(name = "estado_contrato")
     private String contractState;
 
+/*    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "contract")
+    private List<EmployeeContract> employeeContracts;
+
+    public List<Employee> getEmployees(){
+        return getEmployeeContracts()
+                .stream()
+                .map(employeeContract -> employeeContract.getEmployee())
+                .collect(Collectors.toList());
+    }*/
 }

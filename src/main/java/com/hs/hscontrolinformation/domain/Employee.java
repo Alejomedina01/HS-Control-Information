@@ -2,11 +2,10 @@ package com.hs.hscontrolinformation.domain;
 
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Data
@@ -49,4 +48,14 @@ public class Employee {
 
     @Column(name = "arl")
     private String arl;
+
+    /*@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "employee")
+    private List<EmployeeContract> employeeContracts;
+
+    public List<Contract> getContracts(){
+        return getEmployeeContracts()
+                .stream()
+                .map(employeeContract -> employeeContract.getContract())
+                .collect(Collectors.toList());
+    }*/
 }

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/template :: head"></head>
+<header th:replace="layout/template :: header"></header>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-11">
+        <div class="form-group">
+        <h4>Identificación Contrato</h4>
+        <input type="number" min="1" max="999999999999" class="form-control" name="idContract" readonly th:value="${contract.idContract}">
+    </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-11">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Listado Empleados</h4>
+                </div>
+                <br>
+                <div th:if="${employees != null and !employees.isEmpty()}">
+                    <div class="search-box">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <h5>&nbsp;Buscar Empleado</h5>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="text" id="myInput" onkeyup="myFunction()" class="form-control" placeholder="Ingrese palabra clave">
+                                <script>
+                                    $(document).ready(function () {
+                                        $("#myInput").on("keyup", function () {
+                                            var value = $(this).val().toLowerCase();
+                                            $("#dtBasicExample tr").filter(function () {
+                                                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                                            });
+                                        });
+                                    });
+                                </script>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <table id="dtBasicExample" class="table table-striped">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th>Identificación</th>
+                            <th>Nombres</th>
+                            <th>Apodo</th>
+                            <th>Teléfono</th>
+                            <th>Enlace</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="employee : ${employees}">
+                            <td th:text="${employee.split(',')[0]}"></td>
+                            <td th:text="${employee.split(',')[1] + ' ' + employee.split(',')[2]}"></td>
+                            <td th:text="${employee.split(',')[3]}"></td>
+                            <td th:text="${employee.split(',')[4]}"></td>
+                            <td>
+                                <a th:href="@{/crearAsociacion/{idContract}/{idEmployee} (idContract=${contract.idContract}, idEmployee=${employee.split(',')[0]})}" test-id="asociateEmployee" class="btn btn-outline-primary btn-block"
+                                >Añadir</a>
+                            </td>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="text-center p-2" th:if="${employees == null or employees.isEmpty()}">
+                    <span>No quedan empleados por añadir</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="layout/template :: footer"></footer>
+</body>
+</html>
