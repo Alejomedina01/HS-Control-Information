@@ -78,6 +78,8 @@ public class ControllerContract {
         Client clientContract = clientService.findById(idClient);
         model.addAttribute("contract", contract);
         model.addAttribute("client", clientContract);
+
+       // log.info("empleados" + contract.getEmployees());
         return "specificDataContract";
     }
 
@@ -105,4 +107,6 @@ public class ControllerContract {
         contractService.delete(contract);
         return "redirect:/Contracts";
     }
+
+
 }

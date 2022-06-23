@@ -12,7 +12,17 @@
             <div th:if="${contract != null}">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Informacion del Contrato</h4>
+                        <div class="row">
+                            <div class="col-8">
+                                <h4>Informacion del Contrato</h4>
+                            </div>
+                            <div class="col-4">
+                                <a class="btn btn-warning d-flex justify-content-center" test-id="editContract" th:href="@{/editar/} + ${contract.getIdContract()}">
+                                    <i class="fas fa-pencil"></i>
+                                    &nbsp; Editar</a>
+                            </div>
+                        </div>
+
                     </div>
                     <table class="table table-striped">
                         <tr>
@@ -92,9 +102,9 @@
                         </div>
                     </div>
                 </div>
-                <a class="btn btn-warning d-flex justify-content-center" test-id="editContract" th:href="@{/editar/} + ${contract.getIdContract()}">
+                <a class="btn btn-outline-primary d-flex justify-content-center" test-id="EmployeeContract" th:href="@{/addEmployeeToContract/} + ${contract.getIdContract()}">
                     <i class="fas fa-pencil"></i>
-                    &nbsp; Editar</a>
+                    &nbsp; Agregar empleados</a>
             </div>
         </div>
 </div>
