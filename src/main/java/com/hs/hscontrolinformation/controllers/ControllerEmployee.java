@@ -55,8 +55,9 @@ public class ControllerEmployee {
     @GetMapping("/abrirEmpleado/{idEmployee}")
     public String openEmployee(Employee data, Model model){
         Employee employee = (Employee) employeeService.findById(data.getIdEmployee());
+        var contracts = employeeService.findBasicDataContract(data.getIdEmployee());
         model.addAttribute("employee", employee);
-
+        model.addAttribute("contracts", contracts);
         return "specificDataEmployee";
     }
 

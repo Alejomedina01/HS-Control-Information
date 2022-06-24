@@ -78,12 +78,8 @@ public class ControllerContract {
         Client clientContract = clientService.findById(idClient);
         model.addAttribute("contract", contract);
         model.addAttribute("client", clientContract);
-
-<<<<<<< HEAD
         // log.info("empleados" + contract.getEmployees());
-=======
        // log.info("empleados" + contract.getEmployees());
->>>>>>> 6a762a928d8b5c19c34edb416f6866d9a3c6e959
         return "specificDataContract";
     }
 
@@ -107,14 +103,9 @@ public class ControllerContract {
     }
 
     @GetMapping("/eliminar")
-    public String deleteContract(Contract contract){
+    public String deleteContract(Contract contract) {
         contractService.delete(contract);
         return "redirect:/Contracts";
     }
-<<<<<<< HEAD
 }
-=======
 
-
-}
->>>>>>> 6a762a928d8b5c19c34edb416f6866d9a3c6e959

@@ -54,4 +54,5 @@ public class ClientImplService implements ServiceTemplate<Client>{
     public List<String> findBasicDataContract(Long clientId){
         return repository.findContractsFromClient(clientId);
     }
+
 }

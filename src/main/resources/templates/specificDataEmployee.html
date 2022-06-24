@@ -66,10 +66,10 @@
                 </div>
             </div>
         </div>
-                <div class="col-md-auto">
+                <div class="col-md-7">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Contratos en los que ha trabajado</h4>
+                            <h4>Listado Contratos Trabajados</h4>
                         </div>
                         <div th:if="${contracts != null and !contracts.isEmpty()}">
                             <table id="dtBasicExample" class="table table-striped">
@@ -95,9 +95,6 @@
                                 </tbody>
                             </table>
                     </div>
-                        <div class="text-center p-2" th:if="${contracts == null or contracts.isEmpty()}">
-                            <span>No hay contratos</span>
-                        </div>
             </div>
         </div>
     </div>
