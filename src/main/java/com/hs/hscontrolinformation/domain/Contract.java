@@ -9,7 +9,6 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 @Data
 @Entity
@@ -78,5 +77,14 @@ public class Contract implements Serializable {
     @JoinColumn(name = "id_contrato")
     private List<Document> documentsList;
 
-    
+
+/*    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "contract")
+    private List<EmployeeContract> employeeContracts;
+
+    public List<Employee> getEmployees(){
+        return getEmployeeContracts()
+                .stream()
+                .map(employeeContract -> employeeContract.getEmployee())
+                .collect(Collectors.toList());
+    }*/
 }

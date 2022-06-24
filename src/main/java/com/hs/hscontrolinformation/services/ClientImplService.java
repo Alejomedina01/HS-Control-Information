@@ -42,12 +42,17 @@ public class ClientImplService implements ServiceTemplate<Client>{
     @Override
     @Transactional(readOnly = true)
     public Client findById(Long id) {
-        return repository.findByIdClient(id);
+        return repository.findById(id).orElse(null);
     }
 
     @Transactional(readOnly = true)
     public List<String> findBasicDataClient(){
         return repository.findBasicDataClient();
     }
-    
+
+    @Transactional(readOnly = true)
+    public List<String> findBasicDataContract(Long clientId){
+        return repository.findContractsFromClient(clientId);
+    }
+
 }

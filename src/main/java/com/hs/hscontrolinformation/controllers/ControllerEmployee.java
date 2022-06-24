@@ -2,6 +2,8 @@ package com.hs.hscontrolinformation.controllers;
 
 
 import com.hs.hscontrolinformation.domain.Employee;
+import com.hs.hscontrolinformation.domain.EmployeeContract;
+import com.hs.hscontrolinformation.services.EmployeeContractServiceImp;
 import com.hs.hscontrolinformation.services.EmployeeServiceImp;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +54,9 @@ public class ControllerEmployee {
     @GetMapping("/abrirEmpleado/{idEmployee}")
     public String openEmployee(Employee data, Model model){
         Employee employee = (Employee) employeeService.findById(data.getIdEmployee());
+        var contracts = employeeService.findBasicDataContract(data.getIdEmployee());
         model.addAttribute("employee", employee);
+        model.addAttribute("contracts", contracts);
         return "specificDataEmployee";
     }
 
@@ -70,4 +74,5 @@ public class ControllerEmployee {
         employeeService.save(employee);
         return "redirect:/Employees";
     }
+
 }

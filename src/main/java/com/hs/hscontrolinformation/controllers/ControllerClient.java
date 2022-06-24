@@ -1,5 +1,6 @@
 package com.hs.hscontrolinformation.controllers;
 
+import com.hs.hscontrolinformation.domain.Employee;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,7 +34,7 @@ public class ControllerClient {
     }
 
     @GetMapping("/addNewClient/")
-    public String findClienForContract(){
+    public String addClient(){
         return "addClients";
     }
 
@@ -50,5 +51,30 @@ public class ControllerClient {
     public String eliminar(Client data) {
         service.delete(data);
         return "index";
+    }
+
+    @GetMapping("/abrirCliente/{idClient}")
+    public String openClient(Client data, Model model){
+        Client client = (Client) service.findById(data.getIdClient());
+        var contracts = service.findBasicDataContract(data.getIdClient());
+        model.addAttribute("client", client);
+        model.addAttribute("contracts", contracts);
+        return "specificDataClient";
+    }
+
+    @GetMapping("/editarCliente/{idClient}")
+    public String editClient(Client data, Model model){
+        Client client = (Client) service.findById(data.getIdClient());
+        model.addAttribute("client", client);
+        return "modifyClient";
+    }
+
+    @PostMapping("/saveChangesClient")
+    public String saveChanges(@Valid Client client, Errors errores){
+        if (errores.hasErrors()){
+            return "modificar";
+        }
+        service.save(client);
+        return "redirect:/Clients";
     }
 }

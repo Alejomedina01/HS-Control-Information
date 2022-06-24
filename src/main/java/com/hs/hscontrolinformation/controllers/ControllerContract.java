@@ -2,7 +2,6 @@ package com.hs.hscontrolinformation.controllers;
 
 import com.hs.hscontrolinformation.domain.Client;
 import com.hs.hscontrolinformation.domain.Contract;
-import com.hs.hscontrolinformation.domain.Document;
 import com.hs.hscontrolinformation.services.ClientImplService;
 import com.hs.hscontrolinformation.services.ContractServiceImp;
 import com.hs.hscontrolinformation.services.DocumentServiceImp;
@@ -84,7 +83,7 @@ public class ControllerContract {
     }
 
     @GetMapping("/findClient/")
-    public String selectedClient(Model model, @RequestParam Long idClient, @ModelAttribute("client") Client client) {
+    public String selectedClient(Model model, @RequestParam Long idClient, @ModelAttribute("client") Client client){
         this.client = clientService.findById(idClient);
         model.addAttribute("client", this.client);
         return "findClient";
@@ -122,7 +121,6 @@ public class ControllerContract {
         model.addAttribute("documents",documentsContract);
         model.addAttribute("contract", contract);
         model.addAttribute("client", clientContract);
-        
         return "specificDataContract";
     }
 
@@ -148,6 +146,7 @@ public class ControllerContract {
         contractService.save(contract);
         return "redirect:/Contracts";
     }
+
     @GetMapping("/eliminar")
     public String deleteContract(Contract contract) {
         contractService.delete(contract);
