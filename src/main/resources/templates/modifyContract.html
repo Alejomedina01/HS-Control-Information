@@ -6,7 +6,7 @@
 <header th:replace="layout/template :: header"></header>
 <body>
 <section th:fragment="editarContrato">
-    <form th:action="@{/saveChangesContract}" method="POST" class="was-validated" th:object="${contrato}">
+    <form th:action="@{/saveChangesContract}" method="POST" class="was-validated" enctype="multipart/form-data"  th:object="${contrato}">
         <div id="actions" class="py-4 mb-4 bg-light">
             <div class="container">
                 <div class="row">

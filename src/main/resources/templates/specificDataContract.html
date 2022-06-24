@@ -5,14 +5,23 @@
 <head th:replace="layout/template :: head"></head>
 <header th:replace="layout/template :: header"></header>
 <body>
-
 <div class="container">
     <div class="row">
         <div class="col-lg-8">
             <div th:if="${contract != null}">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Informacion del Contrato</h4>
+                        <div class="row">
+                            <div class="col-8">
+                                <h4>Informacion del Contrato</h4>
+                            </div>
+                            <div class="col-4">
+                                <a class="btn btn-warning d-flex justify-content-center" test-id="editContract" th:href="@{/editar/} + ${contract.getIdContract()}">
+                                    <i class="fas fa-pencil"></i>
+                                    &nbsp; Editar</a>
+                            </div>
+                        </div>
+
                     </div>
                     <table class="table table-striped">
                         <tr>
@@ -67,36 +76,62 @@
                             <td><b>Nombre Cliente</b></td>
                             <td th:text="${client.getClientName()}"></td>
                         </tr>
+                        <tr>
+                            <td><b>Documentos Adjuntos :</b></td>
+                        </tr>
+                            <div th:if="${documents != null}">
+                                <tr th:each="document : ${documents}">
+                                    <td th:text="${document.getNameFile()}"></td>
+                                    <td><a th:href="@{/deleteFile(idDocument=${document.idDocument})}"> Borrar </a></td>
+                                    </td>
+                                </tr>
+                            </div>
                     </table>
                 </div>
             </div>
         </div>
 
-            <div class="col-md-auto">
-                <div class="card text-center bg-success text-white mb-1">
+        <div class="col-md-auto">
+            <div class="card text-center bg-success text-white mb-1">
+                <div class="card-body">
+                    <h5>Estado Contrato</h5>
+                    <h6 class="display-5">
+                        <i class="fas fa-file-archive"></i>
+                        [[${contract.getContractState()}]]
+                    </h6>
+                </div>
+            </div>
+            <div>
+                <div class="card text-center bg-danger text-white mb-3">
                     <div class="card-body">
-                        <h5>Estado Contrato</h5>
+                        <h5>Estado Retegarantia</h5>
                         <h6 class="display-5">
-                            <i class="fas fa-file-archive"></i>
-                            [[${contract.getContractState()}]]
+                            <i class="fas fa-lock"></i> [[${contract.getWarrantyState()}]]
                         </h6>
                     </div>
                 </div>
-                <div>
-                    <div class="card text-center bg-danger text-white mb-3">
-                        <div class="card-body">
-                            <h5>Estado Retegarantia</h5>
-                            <h6 class="display-5">
-                                <i class="fas fa-lock"></i> [[${contract.getWarrantyState()}]]
-                            </h6>
-                        </div>
-                    </div>
+            </div>
+            <div class="card">
+            <a class="btn btn-outline-primary d-flex justify-content-center" test-id="EmployeeContract" th:href="@{/addEmployeeToContract/} + ${contract.getIdContract()}">
+                <i class="fas fa-pencil"></i>
+                &nbsp; Agregar empleados</a>
+            </div>
+            <div class="card">
+            <form th:action="@{/addFileContract/} + ${contract.getIdContract()}" enctype="multipart/form-data" th:object="${document}" method="POST">
+                <label><b>ADJUNTAR ARCHIVO (PDF)</b></label>
+                <br>
+                <label>Nombre Documento</label>
+                <input type="text" class="form-control" name="nameFile" required="true">
+                <input type="file" class="form-control btn btn-primary" name="file" />
+
+                <div class="modal-footer">
+                    <button test-id="addFileContract" class="btn bg-success text-white" type="submit"
+                    >Agregar Archivo</button>
                 </div>
-                <a class="btn btn-warning d-flex justify-content-center" test-id="editContract" th:href="@{/editar/} + ${contract.getIdContract()}">
-                    <i class="fas fa-pencil"></i>
-                    &nbsp; Editar</a>
+            </form>
             </div>
         </div>
+    </div>
 </div>
 
 <footer th:replace="layout/template :: footer"></footer>

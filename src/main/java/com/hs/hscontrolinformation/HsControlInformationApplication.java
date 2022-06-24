@@ -8,4 +8,4 @@ public class HsControlInformationApplication {
     public static void main(String[] args) {
         SpringApplication.run(HsControlInformationApplication.class, args);
     }
-}
+}       

@@ -9,6 +9,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Entity
@@ -73,4 +74,9 @@ public class Contract implements Serializable {
     @Column(name = "estado_contrato")
     private String contractState;
 
+    @OneToMany
+    @JoinColumn(name = "id_contrato")
+    private List<Document> documentsList;
+
+    
 }
