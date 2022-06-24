@@ -25,7 +25,7 @@
 
                     </div>
                     <table class="table table-striped">
-                        <tr>
+                        <tr test-id="id-contract">
                             <td><b>Identificacion Contrato</b></td>
                             <td th:text="${contract.getIdContract()}"></td>
                         </tr>
@@ -123,7 +123,7 @@
                 <br>
                 <label>Nombre Documento</label>
                 <input type="text" class="form-control" name="nameFile" required="true">
-                <input type="file" class="form-control btn btn-primary" name="file" />
+                <input type="file" class="form-control btn btn-primary" required="true" name="file" />
 
                 <div class="modal-footer">
                     <button test-id="addFileContract" class="btn bg-success text-white" type="submit"

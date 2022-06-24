@@ -67,6 +67,7 @@ public class AwsServiceImpl implements AwsS3Service{
 
     @Override
     public void deleteFile(String KeyName) {
+        System.out.println("--------------------------Se borrara el archivo:"+KeyName);
         amazonS3.deleteObject(bucketName, KeyName);
     }
     

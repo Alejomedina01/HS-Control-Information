@@ -30,7 +30,7 @@
                                 <h5>&nbsp;Buscar Cliente</h5>
                             </div>
                             <div class="col-md-9">
-                                <input type="text" id="myInput" onkeyup="myFunction()" class="form-control" placeholder="Ingrese palabra clave">
+                                <input type="text" id="myInput" class="form-control" placeholder="Ingrese palabra clave">
                                 <script>
                                     $(document).ready(function () {
                                         $("#myInput").on("keyup", function () {
@@ -56,7 +56,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="client : ${clients}">
+                        <tr th:each="client : ${clients}" test-id="datasClient">
                             <td th:text="${client.getIdClient()}"></td>
                             <td th:text="${client.getClientName()}"></td>
                             <td th:text="${client.getEmail()}"></td>
@@ -64,6 +64,7 @@
                             <td>
                                 <a th:href="@{/abrirCliente/} + ${client.getIdClient()}" test-id="openClient" class="btn btn-outline-success">Abrir</a>
                             </td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>
