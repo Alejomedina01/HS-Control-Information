@@ -2,6 +2,7 @@ package com.hs.hscontrolinformation.controllers;
 
 import com.hs.hscontrolinformation.domain.Client;
 import com.hs.hscontrolinformation.domain.Contract;
+import com.hs.hscontrolinformation.domain.Document;
 import com.hs.hscontrolinformation.services.ClientImplService;
 import com.hs.hscontrolinformation.services.ContractServiceImp;
 import com.hs.hscontrolinformation.services.DocumentServiceImp;
