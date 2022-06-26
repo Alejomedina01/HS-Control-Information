@@ -13,7 +13,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,7 +21,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -80,11 +78,11 @@ public class ControllerContract {
         document.setFullName(fullName);
         documentService.saveDocument(document);
         documentService.updateDocumentToContractId(contract.getIdContract(), document.getIdDocument());
-        return "redirect:/abrirContrato/" + contract.getIdContract();
+        return "redirect:/abrirContrato/"+contract.getIdContract();
     }
 
     @GetMapping("/findClient/")
-    public String selectedClient(Model model, @RequestParam Long idClient, @ModelAttribute("client") Client client) {
+    public String selectedClient(Model model, @RequestParam Long idClient, @ModelAttribute("client") Client client){
         this.client = clientService.findById(idClient);
         model.addAttribute("client", this.client);
         return "findClient";
@@ -115,13 +113,15 @@ public class ControllerContract {
         contract = (Contract) contractService.find(contract);
         Long idClient = Long.parseLong(contractService.findClientIdFromContract(contract.getIdContract()));
         Client clientContract = clientService.findById(idClient);
-        List<Document> documentsContract = null;
-        if (documentService.getTotalCountDocuments() > 0) {
-            documentsContract = documentService.findAllDocumentsOneContract(contract.getIdContract());
+        List<Document> documentsContract=null;
+        if(documentService.getTotalCountDocuments()>0){
+            documentsContract=documentService.findAllDocumentsOneContract(contract.getIdContract());
         }
-        model.addAttribute("documents", documentsContract);
+        var employees = contractService.getEmployeesAsociated(contract.getIdContract());
+        model.addAttribute("documents",documentsContract);
         model.addAttribute("contract", contract);
         model.addAttribute("client", clientContract);
+        model.addAttribute("employees", employees);
         return "specificDataContract";
     }
 
@@ -150,24 +150,15 @@ public class ControllerContract {
 
     @GetMapping("/eliminar")
     public String deleteContract(Contract contract) {
-        List<Document> documentsContract = null;
-        if (documentService.getTotalCountDocuments() > 0) {
-            documentsContract = documentService.findAllDocumentsOneContract(contract.getIdContract());
-            for (int i = 0; i < documentsContract.size(); i++) {
-               serviceAws.deleteFile(documentsContract.get(i).getFullName());
-               documentService.delete(documentsContract.get(i));
-            }
-        }
         contractService.delete(contract);
         return "redirect:/Contracts";
     }
-
     @GetMapping("/deleteFile")
     public String deleteContract(Document document) {
-        long idContract = documentService.findIdContractForDocument(document.getIdDocument());
-        document = documentService.findById(document.getIdDocument());
+        long idContract=documentService.findIdContractForDocument(document.getIdDocument());
+        document=documentService.findById(document.getIdDocument());
         serviceAws.deleteFile(document.getFullName());
         documentService.delete(document);
-        return "redirect:/abrirContrato/" + idContract;
+        return "redirect:/abrirContrato/"+idContract;
     }
 }

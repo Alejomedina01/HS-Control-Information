@@ -19,5 +19,8 @@ public interface ContractDao extends JpaRepository<Contract, Long> {
     @Query(nativeQuery = true, value = "SELECT id_cliente FROM contrato WHERE id_contrato = ?1")
     String findClientIdFromContract(Long idContract);
 
+    @Query(value = "SELECT em.id_empleado, em.nombre_empleado, em.apellido_empleado, em.apodo_empleado, em.telefono FROM empleado em WHERE em.id_empleado IN (SELECT emp.id_empleado FROM empleado emp JOIN empleados_contratos ec ON emp.id_empleado = ec.id_empleado AND ec.id_contrato = ?1)", nativeQuery = true)
+    List<String> getEmployeesAsociated(Long idContract);
+
 
 }

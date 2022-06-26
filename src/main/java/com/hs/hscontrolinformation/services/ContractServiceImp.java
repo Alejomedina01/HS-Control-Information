@@ -55,4 +55,9 @@ public class ContractServiceImp implements ServiceTemplate<Contract> {
     public String findClientIdFromContract(Long idContract){
         return contractDao.findClientIdFromContract(idContract);
     }
+
+    @Transactional(readOnly = true)
+    public List<String> getEmployeesAsociated(Long idContract){
+        return contractDao.getEmployeesAsociated(idContract);
+    }
 }
