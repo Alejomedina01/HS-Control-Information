@@ -74,7 +74,7 @@ public class ControllerContract {
 
     @PostMapping("/addFileContract/{idContract}")
     public String addDocumentList(Contract contract, Model model, @Valid Document document,
-            @RequestParam MultipartFile file) {
+                                  @RequestParam MultipartFile file) {
         contract = (Contract) contractService.find(contract);
         String fullName = saveFileContract(contract, file, document.getNameFile());
         document.setFullName(fullName);
@@ -92,7 +92,7 @@ public class ControllerContract {
 
     @PostMapping("/saveContract")
     public String saveContract(@Valid Contract contract,
-            Errors errors) {
+                               Errors errors) {
         if (errors.hasErrors()) {
             return "addContract";
         }
