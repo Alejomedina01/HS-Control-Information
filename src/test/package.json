@@ -4,7 +4,7 @@
   "description": "testFunctional",
   "main": "index.js",
   "scripts": {
-    "test":"cypress run --browser firefox --spec 'cypress/integration/prueba.spec.js'",
+    "test": "cypress run --browser firefox --spec 'cypress/integration/prueba.spec.js'",
     "cypress:open": "cypress open"
   },
   "author": "yeison",

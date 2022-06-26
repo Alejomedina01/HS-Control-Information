@@ -4,7 +4,7 @@ describe('functional testing first sprint',function(){
         const IdClient="33333"
         cy.login({username:'jefaso',password:'12345'})
         cy.get('[test-id="clients"]').click()
-        cy.get('[test-id="addClient"]').click()
+        cy.get('[test-id="addClients"]').click()
         cy.get('input[name="idClient"]').type(IdClient)
         cy.get('input[name="clientName"]').type("UPTC")
         cy.get('input[name="numberPhone"]').type("74836267")
@@ -38,7 +38,7 @@ describe('functional testing first sprint',function(){
         get('td[test-id="idContract"]').
         should('contain','88888')
     })  
-    it.only('editar contrato',()=>{
+    it('editar contrato',()=>{
         cy.login({username:'jefaso',password:'12345'})
         cy.get('[test-id="contracts"]').click()
         cy.contains('88888').parent('tr').within(() => {
@@ -51,7 +51,7 @@ describe('functional testing first sprint',function(){
         cy.contains('88888').parent('tr').within(() => {
         cy.get('td').eq(4).contains('a', 'Abrir').click()
         })
-        cy.get('td[test-id="valuePending"]').should('contain','$1,000,000')    
+        cy.get('td[test-id="valuePending"]').should('contain','$1.000.000')
     })
     it('Consultar contrato',()=>{
         cy.login({username:'jefaso',password:'12345'})
@@ -61,4 +61,32 @@ describe('functional testing first sprint',function(){
             cy.get('td').eq(4).contains('a', 'Abrir').click()
             })
     })
+    it('Consultar clientes registrados', () => {
+        const IdClient="33333"
+        cy.login({username:'jefaso',password:'12345'})
+        cy.get('[test-id="clients"]').click()
+        cy.get('input[id="myInput"]').type('33333')
+        cy.get('[test-id="datasClient"]').should('contain','33333')
+    });
+    it.only('Consultar contrato mediante cliente', () => {
+        const IdClient="33333"
+        cy.login({username:'jefaso',password:'12345'})
+        cy.get('[test-id="clients"]').click()
+        cy.get('input[id="myInput"]').type('33333')
+        cy.get('[test-id="datasClient"]').should('contain','33333')
+        cy.contains('33333').parent('tr').within(() => {
+            cy.get('td').eq(4).contains('a', 'Abrir').click()
+        })
+        cy.contains('88888').parent('tr').within(() => {
+            cy.get('td').eq(3).contains('a', 'Abrir').click()
+        })
+        cy.get('[test-id="id-contract"]').should('contain','88888')
+    })
+    it('Consultar Empleado', () => {
+        const IdClient="33333"
+        cy.login({username:'jefaso',password:'12345'})
+        cy.get('[test-id="clients"]').click()
+        cy.get('input[id="myInput"]').type('33333')
+        cy.get('[test-id="datasClient"]').should('contain','33333')
+    });
 })
