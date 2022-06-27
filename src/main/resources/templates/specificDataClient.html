@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layout/template :: head"></head>
+<header th:replace="layout/template :: header"></header>
+<body>
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-auto">
+            <div th:if="${client != null}">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-8">
+                        <h4>Informacion del Cliente</h4>
+                            </div>
+                    <div class="col-4">
+                        <a class="btn btn-warning d-flex justify-content-center" test-id="editClient" th:href="@{/editarCliente/} + ${client.getIdClient()}">
+                            <!--                <a class="btn btn-warning d-flex justify-content-center">-->
+                            <i class="fas fa-pencil"></i>
+                            &nbsp; Editar</a>
+                    </div>
+                        </div>
+                    </div>
+                    <table class="table table-striped">
+                        <tr>
+                            <td><b>Id</b></td>
+                            <td th:text="${client.getIdClient()}"></td>
+                        </tr>
+                        <tr>
+                            <td><b>Nombre</b></td>
+                            <td th:text="${client.getClientName()}"></td>
+                        </tr>
+                        <tr>
+                            <td><b>Teléfono</b></td>
+                            <td th:text="${client.getNumberPhone()}"></td>
+                        </tr>
+                        <tr>
+                            <td><b>Email</b></td>
+                            <td th:text="${client.getEmail()}"></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+                <div class="col-md-7">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Listado Contratos Asociados</h4>
+                        </div>
+                        <br>
+                        <div th:if="${contracts != null and !contracts.isEmpty()}">
+                            <table id="dtBasicExample" class="table table-striped">
+                                <thead class="thead-dark">
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Nombre</th>
+                                    <th>Estado</th>
+                                    <th>Enlace</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr test-id="rowtable" th:each="contract : ${contracts}">
+                                    <td test-id="idContract" th:text="${contract.split(',')[0]}">Mostrar Id</td>
+                                    <td th:text="${contract.split(',')[1]}">Mostrar Nombre</td>
+                                    <td th:text="${contract.split(',')[2]}">Mostrar Estado</td>
+                                    <td>
+                                        <a th:href="@{/abrirContrato/} + ${contract.split(',')[0]}" test-id="openContract" class="btn btn-outline-success">Abrir</a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="text-center p-2" th:if="${contracts == null or contracts.isEmpty()}">
+                            <span>No hay contratos asociados</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<footer th:replace="layout/template :: footer"></footer>
+</body>
+</html>

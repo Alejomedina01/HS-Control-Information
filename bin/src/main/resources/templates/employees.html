@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/template :: head"></head>
+<header th:replace="layout/template :: header"></header>
+<body>
+<section th:fragment="buttons" class="py-4 mb-4 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <a class="btn btn-success" test-id="addClient" th:href="@{/addNewEmployee/}">
+                    <i class="fas fa-plus"></i>
+                    Agregar Empleado</a>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="container">
+    <div class="row">
+        <div class="col-md-11">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Listado Empleados</h4>
+                </div>
+                <br>
+                <div th:if="${employees != null and !employees.isEmpty()}">
+                    <div class="search-box">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <h5>&nbsp;Buscar Empleado</h5>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="text" id="myInput" onkeyup="myFunction()" class="form-control" placeholder="Ingrese palabra clave">
+                                <script>
+                                    $(document).ready(function () {
+                                        $("#myInput").on("keyup", function () {
+                                            var value = $(this).val().toLowerCase();
+                                            $("#dtBasicExample tr").filter(function () {
+                                                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                                            });
+                                        });
+                                    });
+                                </script>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <table id="dtBasicExample" class="table table-striped">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th>Identificación</th>
+                            <th>Nombres</th>
+                            <th>Apodo</th>
+                            <th>Teléfono</th>
+                            <th>Enlace</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="employee : ${employees}">
+                            <td th:text="${employee.getIdEmployee()}"></td>
+                            <td th:text="${employee.getName() + ' ' + employee.getLastname()}"></td>
+                            <td th:text="${employee.getNickname()}"></td>
+                            <td th:text="${employee.getNumberPhone()}"></td>
+                            <td>
+                                <a th:href="@{/abrirEmpleado/} + ${employee.getIdEmployee()}" test-id="openEmployee" class="btn btn-outline-success">Abrir</a>
+                            </td>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="layout/template :: footer"></footer>
+</body>
+</html>

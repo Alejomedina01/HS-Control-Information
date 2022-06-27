@@ -1,0 +1,15 @@
+{
+  "name": "test",
+  "version": "1.0.0",
+  "description": "testFunctional",
+  "main": "index.js",
+  "scripts": {
+    "test": "cypress run --browser firefox --spec 'cypress/integration/prueba.spec.js'",
+    "cypress:open": "cypress open"
+  },
+  "author": "yeison",
+  "license": "ISC",
+  "devDependencies": {
+    "cypress": "^9.7.0"
+  }
+}

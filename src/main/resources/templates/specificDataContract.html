@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layout/template :: head"></head>
+<header th:replace="layout/template :: header"></header>
+<body>
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-7">
+            <div th:if="${contract != null}">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-8">
+                                <h4>Informacion del Contrato</h4>
+                            </div>
+                            <div class="col-4">
+                                <a class="btn btn-warning d-flex justify-content-center" test-id="editContract" th:href="@{/editar/} + ${contract.getIdContract()}">
+                                    <i class="fas fa-pencil"></i>
+                                    &nbsp; Editar</a>
+                            </div>
+                        </div>
+
+                    </div>
+                    <table class="table table-striped">
+                        <tr>
+                            <td><b>Identificacion Contrato</b></td>
+                            <td th:text="${contract.getIdContract()}"></td>
+                        </tr>
+                        <tr>
+                            <td><b>Nombre del Proyecto</b></td>
+                            <td th:text="${contract.getProjectName()}"></td>
+                        </tr>
+                        <tr>
+                            <td><b>Ciudad</b></td>
+                            <td th:text="${contract.getCity()}"></td>
+                        </tr>
+                        <tr>
+                            <td><b>Fecha del Contrato</b></td>
+                            <td th:text="${contract.getContractDate()}"></td>
+                        </tr>
+                        <tr>
+                            <td><b>Valor Inicial</b></td>
+                            <td> [[${new java.text.DecimalFormat('$#,##0').format(contract.getInitialValue())}]]</td>
+                        </tr>
+                        <tr th:if="${contract.getAditionalValue() != null}">
+                            <td><b>Valor Adicional</b></td>
+                            <td test-id="valuePending">[[${new java.text.DecimalFormat('$#,##0').format(contract.getAditionalValue())}]]</td>
+                        </tr>
+                        <tr>
+                            <td><b>Acta Inicio</b></td>
+                            <td th:text="${contract.getInitialDateAct()}"></td>
+                        </tr>
+                        <tr th:if="${contract.getReceivalDateAct() != null}">
+                            <td><b>Acta Recibido</b></td>
+                            <td th:text="${contract.getReceivalDateAct()}"></td>
+                        </tr>
+                        <tr>
+                            <td><b>Valor Facturado</b></td>
+                            <td>[[${new java.text.DecimalFormat('$#,##0').format(contract.getInvoicedValue())}]]</td>
+                        </tr>
+                        <tr th:if="${contract.getPendingValue() != null}">
+                            <td><b>Valor Pendiente</b></td>
+                            <td>[[${new java.text.DecimalFormat('$#,##0').format(contract.getPendingValue())}]]</td>
+                        </tr>
+                        <tr>
+                            <td><b>Valor Retegarantía</b></td>
+                            <td>[[${new java.text.DecimalFormat('$#,##0').format(contract.getWarratyValue())}]]</td>
+                        </tr>
+                        <tr>
+                            <td><b>Identificacion Cliente</b></td>
+                            <td th:text="${client.getIdClient()}"></td>
+                        </tr>
+                        <tr>
+                            <td><b>Nombre Cliente</b></td>
+                            <td th:text="${client.getClientName()}"></td>
+                        </tr>
+                        <tr>
+                            <td><b>Documentos Adjuntos :</b></td>
+                        </tr>
+                        <div th:if="${documents != null}">
+                            <tr th:each="document : ${documents}">
+                                <td th:text="${document.getNameFile()}"></td>
+                                <td><a th:href="@{/deleteFile(idDocument=${document.idDocument})}"> Borrar </a></td>
+                                </td>
+                            </tr>
+                        </div>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-auto">
+            <div class="card text-center bg-success text-white mb-1">
+                <div class="card-body">
+                    <h5>Estado Contrato</h5>
+                    <h6 class="display-5">
+                        <i class="fas fa-file-archive"></i>
+                        [[${contract.getContractState()}]]
+                    </h6>
+                </div>
+            </div>
+            <div>
+                <div class="card text-center bg-danger text-white mb-3">
+                    <div class="card-body">
+                        <h5>Estado Retegarantia</h5>
+                        <h6 class="display-5">
+                            <i class="fas fa-lock"></i> [[${contract.getWarrantyState()}]]
+                        </h6>
+                    </div>
+                </div>
+            </div>
+            <a class="btn btn-outline-primary d-flex justify-content-center" test-id="EmployeeContract" th:href="@{/addEmployeeToContract/} + ${contract.getIdContract()}">
+                <i class="fas fa-pencil"></i>
+                &nbsp; Agregar empleados</a>
+
+            <br>
+            <div class="col-md-auto">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-auto">
+                                <h4>Adjuntar archivo (PDF)</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <form th:action="@{/addFileContract/} + ${contract.getIdContract()}" enctype="multipart/form-data" th:object="${document}" method="POST">
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label>Nombre Documento</label>
+                                <input type="text" class="form-control" name="nameFile" required="true"/>
+                            </div>
+                            <div class="form-group">
+                                <input type="file" class="form-control" name="file" required="true"/>
+                            </div>
+                            <div class="modal-footer">
+                                <button test-id="addFileContract" class="btn bg-success text-white" type="submit"
+                                >Agregar Archivo</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col-md-11">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Empleados Asociados</h4>
+                </div>
+                <br>
+                <div th:if="${employees != null and !employees.isEmpty()}">
+                    <div class="search-box">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <h5>&nbsp;Buscar Empleado</h5>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="text" id="myInput" onkeyup="myFunction()" class="form-control" placeholder="Ingrese palabra clave">
+                                <script>
+                                    $(document).ready(function () {
+                                        $("#myInput").on("keyup", function () {
+                                            var value = $(this).val().toLowerCase();
+                                            $("#dtBasicExample tr").filter(function () {
+                                                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                                            });
+                                        });
+                                    });
+                                </script>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <table id="dtBasicExample" class="table table-striped">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th>Identificación</th>
+                            <th>Nombres</th>
+                            <th>Apodo</th>
+                            <th>Teléfono</th>
+                            <th>Enlace</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="employee : ${employees}">
+                            <td th:text="${employee.split(',')[0]}"></td>
+                            <td th:text="${employee.split(',')[1] + ' ' + employee.split(',')[2]}"></td>
+                            <td th:text="${employee.split(',')[3]}"></td>
+                            <td th:text="${employee.split(',')[4]}"></td>
+                            <td>
+                                <a th:href="@{/abrirEmpleado/} + ${employee.split(',')[0]}" test-id="openEmployee" class="btn btn-outline-success">Abrir</a>
+                            </td>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="text-center p-2" th:if="${employees == null or employees.isEmpty()}">
+                    <span>No hay empleados asociados</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="layout/template :: footer"></footer>
+</body>
+</html>

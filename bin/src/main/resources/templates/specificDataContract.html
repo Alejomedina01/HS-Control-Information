@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layout/template :: head"></head>
+<header th:replace="layout/template :: header"></header>
+<body>
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8">
+            <div th:if="${contract != null}">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Informacion del Contrato</h4>
+                    </div>
+                    <table class="table table-striped">
+                        <tr>
+                            <td><b>Identificacion Contrato</b></td>
+                            <td th:text="${contract.getIdContract()}"></td>
+                        </tr>
+                        <tr>
+                            <td><b>Nombre del Proyecto</b></td>
+                            <td th:text="${contract.getProjectName()}"></td>
+                        </tr>
+                        <tr>
+                            <td><b>Ciudad</b></td>
+                            <td th:text="${contract.getCity()}"></td>
+                        </tr>
+                        <tr>
+                            <td><b>Fecha del Contrato</b></td>
+                            <td th:text="${contract.getContractDate()}"></td>
+                        </tr>
+                        <tr>
+                            <td><b>Valor Inicial</b></td>
+                            <td> [[${new java.text.DecimalFormat('$#,##0').format(contract.getInitialValue())}]]</td>
+                        </tr>
+                        <tr th:if="${contract.getAditionalValue() != null}">
+                            <td><b>Valor Adicional</b></td>
+                            <td test-id="valuePending">[[${new java.text.DecimalFormat('$#,##0').format(contract.getAditionalValue())}]]</td>
+                        </tr>
+                        <tr>
+                            <td><b>Acta Inicio</b></td>
+                            <td th:text="${contract.getInitialDateAct()}"></td>
+                        </tr>
+                        <tr th:if="${contract.getReceivalDateAct() != null}">
+                            <td><b>Acta Recibido</b></td>
+                            <td th:text="${contract.getReceivalDateAct()}"></td>
+                        </tr>
+                        <tr>
+                            <td><b>Valor Facturado</b></td>
+                            <td>[[${new java.text.DecimalFormat('$#,##0').format(contract.getInvoicedValue())}]]</td>
+                        </tr>
+                        <tr th:if="${contract.getPendingValue() != null}">
+                            <td><b>Valor Pendiente</b></td>
+                            <td>[[${new java.text.DecimalFormat('$#,##0').format(contract.getPendingValue())}]]</td>
+                        </tr>
+                        <tr>
+                            <td><b>Valor Retegarantía</b></td>
+                            <td>[[${new java.text.DecimalFormat('$#,##0').format(contract.getWarratyValue())}]]</td>
+                        </tr>
+                        <tr>
+                            <td><b>Identificacion Cliente</b></td>
+                            <td th:text="${client.getIdClient()}"></td>
+                        </tr>
+                        <tr>
+                            <td><b>Nombre Cliente</b></td>
+                            <td th:text="${client.getClientName()}"></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div th:if="${documents != null}">
+
+            </div>
+        </div>
+            <div class="col-md-auto">
+                <div class="card text-center bg-success text-white mb-1">
+                    <div class="card-body">
+                        <h5>Estado Contrato</h5>
+                        <h6 class="display-5">
+                            <i class="fas fa-file-archive"></i>
+                            [[${contract.getContractState()}]]
+                        </h6>
+                    </div>
+                </div>
+                <div>
+                    <div class="card text-center bg-danger text-white mb-3">
+                        <div class="card-body">
+                            <h5>Estado Retegarantia</h5>
+                            <h6 class="display-5">
+                                <i class="fas fa-lock"></i> [[${contract.getWarrantyState()}]]
+                            </h6>
+                        </div>
+                    </div>
+                </div>
+                <a class="btn btn-warning d-flex justify-content-center" test-id="editContract" th:href="@{/editar/} + ${contract.getIdContract()}">
+                    <i class="fas fa-pencil"></i>
+                    &nbsp; Editar</a>
+                    <form th:action="@{/addFileContract/} + ${contract.getIdContract()}" enctype="multipart/form-data" th:object="${document}" method="POST">
+                        <label for="nameFile">Adjuntar un documento digital (.pdf)</label>
+
+                        <input type="text" class="form-control" name="nameFile" required="true">
+                        <input type="file" class="form-control" name="file" />
+
+                        <div class="modal-footer">
+                            <button test-id="addFileContract" class="btn btn-primary" type="submit"
+                            >Agregar Archivo</button>
+                        </div>
+                    </form> 
+            </div>
+        </div>
+</div>
+
+<footer th:replace="layout/template :: footer"></footer>
+</body>
+</html>
