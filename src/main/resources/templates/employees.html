@@ -8,7 +8,7 @@
     <div class="container">
         <div class="row">
             <div class="col">
-                <a class="btn btn-success" test-id="addClient" th:href="@{/addNewEmployee/}">
+                <a class="btn btn-success" test-id="addEmployee" th:href="@{/addNewEmployee/}">
                     <i class="fas fa-plus"></i>
                     Agregar Empleado</a>
             </div>
@@ -30,7 +30,7 @@
                                 <h5>&nbsp;Buscar Empleado</h5>
                             </div>
                             <div class="col-md-9">
-                                <input type="text" id="myInput" onkeyup="myFunction()" class="form-control" placeholder="Ingrese palabra clave">
+                                <input type="text" id="myInput" class="form-control" placeholder="Ingrese palabra clave">
                                 <script>
                                     $(document).ready(function () {
                                         $("#myInput").on("keyup", function () {
@@ -56,7 +56,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="employee : ${employees}">
+                        <tr test-id="datasEmployee" th:each="employee : ${employees}">
                             <td th:text="${employee.getIdEmployee()}"></td>
                             <td th:text="${employee.getName() + ' ' + employee.getLastname()}"></td>
                             <td th:text="${employee.getNickname()}"></td>
