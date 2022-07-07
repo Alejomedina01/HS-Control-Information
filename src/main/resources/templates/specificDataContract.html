@@ -78,6 +78,9 @@
                             <td th:text="${client.getClientName()}"></td>
                         </tr>
                         <tr>
+                            <td><a th:href="@{/contractFiles/} + ${contract.getIdContract()}" class="btn bg-success text-white" >Visualizar Documentos</a></td>
+                        </tr>
+                        <tr>
                             <td><b>Documentos Adjuntos :</b></td>
                         </tr>
                         <div th:if="${documents != null}">
@@ -162,7 +165,7 @@
                                 <h5>&nbsp;Buscar Empleado</h5>
                             </div>
                             <div class="col-md-9">
-                                <input type="text" id="myInput" onkeyup="myFunction()" class="form-control" placeholder="Ingrese palabra clave">
+                                <input type="text" id="myInput" class="form-control" placeholder="Ingrese palabra clave">
                                 <script>
                                     $(document).ready(function () {
                                         $("#myInput").on("keyup", function () {

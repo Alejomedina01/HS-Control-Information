@@ -1,5 +1,6 @@
 package com.hs.hscontrolinformation.services;
 
+import com.hs.hscontrolinformation.domain.Document;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -8,6 +9,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.net.URL;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -64,10 +66,16 @@ public class AwsServiceImpl implements AwsS3Service{
         S3Object object=amazonS3.getObject(bucketName, keyName);
         return object.getObjectContent();
     }
-
+    @Override
+    public List<Document> getUrlsFiles(List<Document> documents){
+        for (int i = 0; i < documents.size(); i++) {
+            URL s3Url=amazonS3.getUrl(bucketName, documents.get(i).getFullName());
+            documents.get(i).setFullName(s3Url.toString());
+        }
+        return documents;
+    }
     @Override
     public void deleteFile(String KeyName) {
-        System.out.println("--------------------------Se borrara el archivo:"+KeyName);
         amazonS3.deleteObject(bucketName, KeyName);
     }
     

@@ -107,7 +107,18 @@ public class ControllerContract {
         }
         return null;
     }
-
+    @GetMapping("/contractFiles/{idContract}")
+    public String visualizeContractFiles(Contract contract, Model model){
+        contract = (Contract) contractService.find(contract);
+        List<Document> documentsContract=null;
+        if(documentService.getTotalCountDocuments()>0) {
+            documentsContract = documentService.findAllDocumentsOneContract(contract.getIdContract());
+            documentsContract = serviceAws.getUrlsFiles(documentsContract);
+        }
+        model.addAttribute("documents",documentsContract);
+        return "showContractFiles";
+    }
+    //@GetMapping("/getFile/{idDocument}")
     @GetMapping("/abrirContrato/{idContract}")
     public String openContract(Contract contract, Model model) {
         contract = (Contract) contractService.find(contract);

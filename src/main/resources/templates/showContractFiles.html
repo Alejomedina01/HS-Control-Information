@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layout/template :: head"></head>
+<header th:replace="layout/template :: header"></header>
+
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-auto">
+            <div th:if="${contract != null}">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-8">
+                                <h4>Documentos asociados al contrato</h4>
+                                <table class="table table-striped" th:if="${documents != null}">
+                                    <tr test-id="datas-fileContract" th:each="document : ${documents}">
+                                        <td > <b th:text="${document.getNameFile()}" ></b></td>
+                                        <td>
+                                            <button  class="fa-solid fa-eye" th:full-name="${document.getFullName()}" th:onclick="visualizeFile(this.getAttribute('full-name'))">
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <script type="text/javascript">
+                                    function visualizeFile(keyFile){
+                                        document.getElementById("datasFile").setAttribute("src",keyFile);
+                                    }
+                                </script>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <iframe id="datasFile"  name="viewerPdf" height="100%" width="100%"></iframe>
+        </div>
+    </div>
+</div>
+</body>
+</html>
