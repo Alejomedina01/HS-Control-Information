@@ -19,14 +19,19 @@
                                     <tr test-id="datas-fileContract" th:each="document : ${documents}">
                                         <td > <b th:text="${document.getNameFile()}" ></b></td>
                                         <td>
-                                            <button  class="fa-solid fa-eye" th:url-presigned="${document.getPresignedUrl()}" th:onclick="visualizeFile(this.getAttribute('url-presigned'))">
+                                            <button  class="fa-solid fa-eye" th:url-presigned="${document.getPresignedUrl()}"
+                                                     th:nameFile="${document.getNameFile()}" th:idFile="${document.getIdDocument()}"
+                                                     th:onclick="visualizeFile(this.getAttribute('url-presigned'),this.getAttribute('nameFile'),this.getAttribute('idFile'))">
                                             </button>
                                         </td>
                                     </tr>
                                 </table>
                                 <script type="text/javascript">
-                                    function visualizeFile(keyFile){
+                                    function visualizeFile(keyFile,nameDocument,idDocumen){
                                         document.getElementById("datasFile").setAttribute("src",keyFile);
+                                        document.getElementById("fieldNameFile").setAttribute("value",nameDocument);
+                                        console.log("id documento"+idDocumen)
+                                        document.getElementById("fielIdFile").setAttribute("value",idDocumen);
                                     }
                                 </script>
                             </div>
@@ -34,6 +39,30 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div>
+            <form th:action="@{/replaceFileDocument/} + ${contract.getIdContract()}" enctype="multipart/form-data" th:object="${document}" method="POST">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>id Documento</label>
+                        <input type="number" class="form-control" id="fielIdFile" test-id="idFileUpload" name="idDocument"   required="true" readonly/>
+                    </div>
+                    <div class="form-group">
+                        <label>Nombre Documento</label>
+                        <input type="text" class="form-control" id="fieldNameFile" test-id="nameFileUpload" name="nameFile" required="true" readonly/>
+                    </div>
+                    <div class="form-group">
+                        <input type="file" class="form-control"  test-id="fileStream" name="file" required="true">
+                    </div>
+                    <div class="modal-footer">
+                        <button test-id="addFileContract" class="btn bg-success text-white" type="submit"
+                        >Remplazar archivo</button>
+                    </div>
+                </div>
+            </form>
+            <script>
+
+            </script>
         </div>
         <div class="col-lg-6">
             <iframe id="datasFile"  name="viewerPdf" height="100%" width="100%"></iframe>

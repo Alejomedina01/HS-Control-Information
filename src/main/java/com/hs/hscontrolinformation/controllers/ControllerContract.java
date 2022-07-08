@@ -75,7 +75,7 @@ public class ControllerContract {
     public String addDocumentList(Contract contract, Model model, @Valid Document document,
                                   @RequestParam MultipartFile file) {
         contract = (Contract) contractService.find(contract);
-        String fullName = saveFileContract(contract, file, document.getNameFile());
+        String fullName = saveFileContract( file, document.getNameFile());
         document.setFullName(fullName);
         documentService.saveDocument(document);
         documentService.updateDocumentToContractId(contract.getIdContract(), document.getIdDocument());
@@ -100,13 +100,25 @@ public class ControllerContract {
         return "redirect:/Contracts";
     }
 
-    private String saveFileContract(Contract contract, MultipartFile contractFile, String nameFile) {
+    private String saveFileContract(MultipartFile contractFile, String nameFile) {
         if (!contractFile.isEmpty()) {
             String newFileName = System.currentTimeMillis() + nameFile + ".pdf";
             serviceAws.uploadFile(contractFile, newFileName);
             return newFileName;
         }
         return null;
+    }
+    @PostMapping("/replaceFileDocument/{idContract}")
+    public String replaceFileDocument(Contract contract, @Valid Document document,
+                                      @RequestParam MultipartFile file){
+        contract = (Contract) contractService.find(contract);
+        document=documentService.findById(document.getIdDocument());
+        serviceAws.deleteFile(document.getFullName());
+        String fullName = saveFileContract(file, document.getNameFile());
+        document.setFullName(fullName);
+        serviceAws.generatePresignedUrl(document);
+        documentService.saveDocument(document);
+        return "redirect:/contractFiles/"+contract.getIdContract();
     }
     @GetMapping("/contractFiles/{idContract}")
     public String visualizeContractFiles(Contract contract, Model model){
@@ -122,7 +134,7 @@ public class ControllerContract {
     public void checkPresignedUrls(List<Document> documentsContract){
         for (Document document:documentsContract) {
             if(document.getPresignedUrl()== null ||
-                    Long.parseLong(document.getExpirationDate())> (Instant.now().toEpochMilli())-(1000*60*60)){
+                    Long.parseLong(document.getExpirationDate())< (Instant.now().toEpochMilli())-(1000*60*60)){
                     serviceAws.generatePresignedUrl(document);
                     documentService.saveDocument(document);
             }
