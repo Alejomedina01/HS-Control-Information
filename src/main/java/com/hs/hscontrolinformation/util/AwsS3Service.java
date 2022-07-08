@@ -11,5 +11,6 @@ public interface AwsS3Service {
     List<String> getObjectsFroms3();
     InputStream downLoadFile(String keyName);
     void deleteFile(String KeyName);
-    List<Document> getUrlsFiles(List<Document> documents);
+    void generatePresignedUrl(Document document);
+
 }

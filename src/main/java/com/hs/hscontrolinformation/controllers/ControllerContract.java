@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -113,12 +114,20 @@ public class ControllerContract {
         List<Document> documentsContract=null;
         if(documentService.getTotalCountDocuments()>0) {
             documentsContract = documentService.findAllDocumentsOneContract(contract.getIdContract());
-            documentsContract = serviceAws.getUrlsFiles(documentsContract);
+            checkPresignedUrls(documentsContract);
         }
         model.addAttribute("documents",documentsContract);
         return "showContractFiles";
     }
-    //@GetMapping("/getFile/{idDocument}")
+    public void checkPresignedUrls(List<Document> documentsContract){
+        for (Document document:documentsContract) {
+            if(document.getPresignedUrl()== null ||
+                    Long.parseLong(document.getExpirationDate())> (Instant.now().toEpochMilli())-(1000*60*60)){
+                    serviceAws.generatePresignedUrl(document);
+                    documentService.saveDocument(document);
+            }
+        }
+    }
     @GetMapping("/abrirContrato/{idContract}")
     public String openContract(Contract contract, Model model) {
         contract = (Contract) contractService.find(contract);
@@ -140,7 +149,7 @@ public class ControllerContract {
     public String editContract(Contract contract, Model model) {
         contract = (Contract) contractService.find(contract);
         LocalDate actual = LocalDate.now();
-        log.info("fecha " + actual.toString());
+        log.info("edicion contrato id:"+ contract.getIdContract()+"  fecha modi:" + actual.toString());
         model.addAttribute("actual", actual);
         model.addAttribute("contrato", contract);
         return "modifyContract";

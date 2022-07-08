@@ -19,7 +19,7 @@
                                     <tr test-id="datas-fileContract" th:each="document : ${documents}">
                                         <td > <b th:text="${document.getNameFile()}" ></b></td>
                                         <td>
-                                            <button  class="fa-solid fa-eye" th:full-name="${document.getFullName()}" th:onclick="visualizeFile(this.getAttribute('full-name'))">
+                                            <button  class="fa-solid fa-eye" th:url-presigned="${document.getPresignedUrl()}" th:onclick="visualizeFile(this.getAttribute('url-presigned'))">
                                             </button>
                                         </td>
                                     </tr>
