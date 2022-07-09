@@ -15,6 +15,9 @@
                         <div class="row">
                             <div class="col-8">
                                 <h4>Documentos asociados al contrato</h4>
+                            </div>
+                        </div>
+                    </div>
                                 <table class="table table-striped" th:if="${documents != null}">
                                     <tr test-id="datas-fileContract" th:each="document : ${documents}">
                                         <td > <b th:text="${document.getNameFile()}" ></b></td>
@@ -32,13 +35,10 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
         <div class="col-lg-6">
             <iframe id="datasFile"  name="viewerPdf" height="100%" width="100%"></iframe>
         </div>
     </div>
-</div>
+    </div>
 </body>
 </html>
