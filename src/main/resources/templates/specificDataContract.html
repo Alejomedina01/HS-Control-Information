@@ -80,16 +80,6 @@
                         <tr>
                             <td><a th:href="@{/contractFiles/} + ${contract.getIdContract()}" class="btn bg-success text-white" >Visualizar Documentos</a></td>
                         </tr>
-                        <tr>
-                            <td><b>Documentos Adjuntos :</b></td>
-                        </tr>
-                        <div th:if="${documents != null}">
-                            <tr test-id="datas-fileContract" th:each="document : ${documents}">
-                                <td th:text="${document.getNameFile()}"></td>
-                                <td><a th:href="@{/deleteFile(idDocument=${document.idDocument})}"> Borrar </a></td>
-                                </td>
-                            </tr>
-                        </div>
                     </table>
                 </div>
             </div>
