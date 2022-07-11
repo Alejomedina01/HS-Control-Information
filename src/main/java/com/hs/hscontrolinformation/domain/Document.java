@@ -26,4 +26,10 @@ public class Document implements Serializable{
 
     @Column(name = "full_name")
     private String fullName;
+
+    @Column(name = "presigned_url",length = 600)
+    private String presignedUrl;
+
+    @Column(name = "expiration_date")
+    private String expirationDate;
 }

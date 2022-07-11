@@ -25,7 +25,7 @@
 
                     </div>
                     <table class="table table-striped">
-                        <tr>
+                        <tr test-id="id-contract">
                             <td><b>Identificacion Contrato</b></td>
                             <td th:text="${contract.getIdContract()}"></td>
                         </tr>
@@ -78,15 +78,8 @@
                             <td th:text="${client.getClientName()}"></td>
                         </tr>
                         <tr>
-                            <td><b>Documentos Adjuntos :</b></td>
+                            <td><a th:href="@{/contractFiles/} + ${contract.getIdContract()}" class="btn bg-success text-white" >Visualizar Documentos</a></td>
                         </tr>
-                        <div th:if="${documents != null}">
-                            <tr th:each="document : ${documents}">
-                                <td th:text="${document.getNameFile()}"></td>
-                                <td><a th:href="@{/deleteFile(idDocument=${document.idDocument})}"> Borrar </a></td>
-                                </td>
-                            </tr>
-                        </div>
                     </table>
                 </div>
             </div>
@@ -130,10 +123,10 @@
                         <div class="modal-body">
                             <div class="form-group">
                                 <label>Nombre Documento</label>
-                                <input type="text" class="form-control" name="nameFile" required="true"/>
+                                <input type="text" class="form-control" test-id="nameFileUpload" name="nameFile" required="true"/>
                             </div>
                             <div class="form-group">
-                                <input type="file" class="form-control" name="file" required="true"/>
+                                <input type="file" class="form-control" test-id="fileStream" name="file" required="true"/>
                             </div>
                             <div class="modal-footer">
                                 <button test-id="addFileContract" class="btn bg-success text-white" type="submit"
@@ -162,7 +155,7 @@
                                 <h5>&nbsp;Buscar Empleado</h5>
                             </div>
                             <div class="col-md-9">
-                                <input type="text" id="myInput" onkeyup="myFunction()" class="form-control" placeholder="Ingrese palabra clave">
+                                <input type="text" id="myInput" class="form-control" placeholder="Ingrese palabra clave">
                                 <script>
                                     $(document).ready(function () {
                                         $("#myInput").on("keyup", function () {
