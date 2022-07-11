@@ -52,7 +52,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="contractDate">Fecha contrato</label>
-                                    <input type="date" th:max="${actual}" th:field="*{contractDate}" class="form-control" name="contractDate" required="true">
+                                    <input type="date" id="contractDate" th:max="${actual}" th:field="*{contractDate}" class="form-control" name="contractDate" required="true">
                                 </div>
                                 <div class="form-group">
                                     <label for="initialValue">Valor inicial</label>
@@ -64,13 +64,13 @@
                                 </div>
                                 <div style="float: left; margin-right: 20px;" class="form-group">
                                     <label for="initialDateAct">Acta inicio</label>
-                                    <input th:max="${actual}" type="date" th:field="*{initialDateAct}" class="form-control" name="initialDateAct" required="true">
+                                    <input th:max="${actual}" id="initialDateAct" type="date" onclick="getLastDate('contractDate','initialDateAct')" th:field="*{initialDateAct}" class="form-control" name="initialDateAct" required="true">
                                 </div>
                                 <div style="float: left;" class="form-group">
                                     <label for="receivalDateAct">Acta recibido</label>
-                                    <input th:max="${actual}" type="date" th:field="*{receivalDateAct}" class="form-control" name="receivalDateAct">
+                                    <input th:max="${actual}" id="receivalDateAct" type="date" onclick="getLastDate('initialDateAct','receivalDateAct')" th:field="*{receivalDateAct}" class="form-control" name="receivalDateAct">
                                 </div>
-                                <br>git
+                                <br>
                                 <br>
                                 <br>
                                 <br>
@@ -112,5 +112,6 @@
     </form>
 </section>
 <footer th:replace="layout/template :: footer"></footer>
+<script th:replace="layout/template :: script"></script>
 </body>
 </html>

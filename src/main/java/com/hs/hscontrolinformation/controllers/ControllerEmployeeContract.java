@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.time.LocalDate;
+import java.util.Date;
 
 @org.springframework.stereotype.Controller
 @Slf4j
@@ -43,9 +45,12 @@ public class ControllerEmployeeContract {
     @GetMapping("/crearAsociacion/{idContract}/{idEmployee}")
     public String createAsociation(@PathVariable String idContract, @PathVariable String idEmployee, Model model){
         idContractActual = Long.valueOf(idContract);
-        idEmployeeActual = Long.valueOf(idEmployee);
+        Date contractDate = contractServiceImp.findById(idContractActual).getContractDate();
+        LocalDate actualDate = LocalDate.now();
         model.addAttribute("idContract", idContract);
         model.addAttribute("idEmployee", idEmployee);
+        model.addAttribute("actualDate", actualDate);
+        model.addAttribute("contractDate", contractDate);
         return "creatingEC";
     }
 

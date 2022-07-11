@@ -17,11 +17,7 @@
                         <div class="modal-body">
                             <div class="form-group">
                                 <label for="idContract" >Id contrato</label>
-<<<<<<< HEAD
                                 <input type="number" min="1" max="999999999999" class="form-control" name="idContract" required="true">
-=======
-                                <input type="number" class="form-control" name="idContract" required="true">
->>>>>>> 5df300500056870386d225ce743973faf79a7315
                             </div>
                             <div class="form-group">
                                 <label for="projectName" >Nombre proyecto</label>
@@ -33,7 +29,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="contractDate">Fecha contrato</label>
-                                <input type="date" class="form-control" th:max="${actual}" name="contractDate" required="true">
+                                <input type="date" id="contractDate" class="form-control" th:max="${actual}" name="contractDate" required="true">
                             </div>
                             <div class="form-group">
                                 <label for="initialValue">Valor inicial</label>
@@ -45,11 +41,11 @@
                             </div>
                             <div style="float: left; margin-right: 20px;" class="form-group">
                                 <label for="initialDateAct">Acta inicio</label>
-                                <input type="date" th:max="${actual}" class="form-control" name="initialDateAct" required="true">
+                                <input type="date" id="initialDateAct" th:max="${actual}" onclick="getLastDate('contractDate','initialDateAct')" class="form-control" name="initialDateAct" required="true">
                             </div>
                             <div style="float: left;" class="form-group">
                                 <label for="receivalDateAct">Acta recibido</label>
-                                <input type="date" th:max="${actual}" class="form-control" name="receivalDateAct">
+                                <input type="date" id="receivalDateAct" th:max="${actual}" onclick="getLastDate('initialDateAct','receivalDateAct')" class="form-control" name="receivalDateAct">
                             </div>
                             <br>
                             <br>
@@ -96,5 +92,6 @@
 </section>
 
 <footer th:replace="layout/template :: footer"></footer>
+<script th:replace="layout/template :: script"></script>
 </body>
 </html>
