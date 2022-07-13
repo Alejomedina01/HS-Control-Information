@@ -160,10 +160,15 @@ public class ControllerContract {
     @GetMapping("/editar/{idContract}")
     public String editContract(Contract contract, Model model) {
         contract = (Contract) contractService.find(contract);
+        boolean isAsociated = false;
+        if(documentService.getTotalCountDocuments()>0) {
+            isAsociated = (contractService.getEmployeesAsociated(contract.getIdContract()).size() > 0 || documentService.findAllDocumentsOneContract(contract.getIdContract()).size() > 0);
+        }
         LocalDate actual = LocalDate.now();
         log.info("edicion contrato id:"+ contract.getIdContract()+"  fecha modi:" + actual.toString());
         model.addAttribute("actual", actual);
         model.addAttribute("contrato", contract);
+        model.addAttribute("isAsociated", isAsociated);
         return "modifyContract";
     }
 

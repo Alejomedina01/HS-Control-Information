@@ -1,5 +1,6 @@
 package com.hs.hscontrolinformation.controllers;
 
+import com.hs.hscontrolinformation.domain.Contract;
 import com.hs.hscontrolinformation.domain.Employee;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,10 +48,10 @@ public class ControllerClient {
         return "redirect:/Clients";
     }
 
-    @DeleteMapping("/deleteClient")
-    public String eliminar(Client data) {
-        service.delete(data);
-        return "index";
+    @GetMapping("/deleteClient")
+    public String deleteClient(Client client) {
+        service.delete(client);
+        return "redirect:/Clients";
     }
 
     @GetMapping("/abrirCliente/{idClient}")
@@ -65,6 +66,8 @@ public class ControllerClient {
     @GetMapping("/editarCliente/{idClient}")
     public String editClient(Client data, Model model){
         Client client = (Client) service.findById(data.getIdClient());
+        boolean isAsociated = service.findBasicDataContract(data.getIdClient()).size() > 0;
+        model.addAttribute("isAsociated", isAsociated);
         model.addAttribute("client", client);
         return "modifyClient";
     }

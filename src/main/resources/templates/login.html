@@ -19,11 +19,11 @@
                         <form method="post" th:action="@{/login}">
                             <div class="form-group">
                                 <label for="username">Usuario:</label>
-                                <input type="text" class="form-control" name="username" id="username"/>
+                                <input type="text" class="form-control" name="username" id="username" required="true"/>
                             </div>
                             <div class="form-group">
                                 <label for="password">Contraseña:</label>
-                                <input type="password" class="form-control" name="password" id="password"/>
+                                <input type="password" class="form-control" name="password" id="password" required="true"/>
                             </div>
                             <input type="submit" test-id="Login" value="Iniciar Sesion" class="btn btn-success btn-block"/>
                         </form>

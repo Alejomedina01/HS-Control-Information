@@ -5,101 +5,100 @@
 <head th:replace="layout/template :: head"></head>
 <header th:replace="layout/template :: header"></header>
 <body>
-
-<div class="container d-flex ">
-    <div class="row">
-        <div class="col-lg-auto">
-            <div th:if="${employee != null}">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="row">
-                            <div class="col-8">
-                                <h4>Informacion del Empleado</h4>
-                            </div>
-                            <div class="col-4">
-                                <a class="btn btn-warning d-flex justify-content-center" test-id="editEmployee" th:href="@{/editarEmpleado/} + ${employee.getIdEmployee()}">
-                                    <!--                <a class="btn btn-warning d-flex justify-content-center">-->
-                                    <i class="fas fa-pencil"></i>
-                                    &nbsp; Editar</a>
+    <div class="container d-flex ">
+        <div class="row">
+            <div class="col-lg-auto">
+                <div th:if="${employee != null}">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-8">
+                                    <h4>Informacion del Empleado</h4>
+                                </div>
+                                <div class="col-4">
+                                    <a class="btn btn-warning d-flex justify-content-center" test-id="editEmployee" th:href="@{/editarEmpleado/} + ${employee.getIdEmployee()}">
+                                        <i class="fas fa-pencil"></i> &nbsp; Editar</a>
+                                </div>
                             </div>
                         </div>
+                        <table class="table table-striped">
+                            <tr test-id="idEmployee">
+                                <td><b>Identificacion</b></td>
+                                <td th:text="${employee.getIdEmployee()}"></td>
+                            </tr>
+                            <tr>
+                                <td><b>Nombre</b></td>
+                                <td th:text="${employee.getName()}"></td>
+                            </tr>
+                            <tr>
+                                <td><b>Apellido</b></td>
+                                <td th:text="${employee.getLastname()}"></td>
+                            </tr>
+                            <tr>
+                                <td><b>Apodo</b></td>
+                                <td th:text="${employee.getNickname()}"></td>
+                            </tr>
+                            <tr>
+                                <td><b>Dirrección de residencia</b></td>
+                                <td th:text="${employee.getAdress()}"></td>
+                            </tr>
+                            <tr>
+                                <td><b>Teléfono</b></td>
+                                <td th:text="${employee.getNumberPhone()}"></td>
+                            </tr>
+                            <tr>
+                                <td><b>EPS</b></td>
+                                <td th:text="${employee.getEps()}"></td>
+                            </tr>
+                            <tr>
+                                <td><b>AFP</b></td>
+                                <td th:text="${employee.getAfp()}"></td>
+                            </tr>
+                            <tr>
+                                <td><b>ARL</b></td>
+                                <td th:text="${employee.getArl()}"></td>
+                            </tr>
+                        </table>
                     </div>
-                    <table class="table table-striped">
-                        <tr test-id="idEmployee">
-                            <td><b>Identificacion</b></td>
-                            <td th:text="${employee.getIdEmployee()}"></td>
-                        </tr>
-                        <tr>
-                            <td><b>Nombre</b></td>
-                            <td th:text="${employee.getName()}"></td>
-                        </tr>
-                        <tr>
-                            <td><b>Apellido</b></td>
-                            <td th:text="${employee.getLastname()}"></td>
-                        </tr>
-                        <tr>
-                            <td><b>Apodo</b></td>
-                            <td th:text="${employee.getNickname()}"></td>
-                        </tr>
-                        <tr>
-                            <td><b>Dirrección de residencia</b></td>
-                            <td th:text="${employee.getAdress()}"></td>
-                        </tr>
-                        <tr>
-                            <td><b>Teléfono</b></td>
-                            <td th:text="${employee.getNumberPhone()}"></td>
-                        </tr>
-                        <tr>
-                            <td><b>EPS</b></td>
-                            <td th:text="${employee.getEps()}"></td>
-                        </tr>
-                        <tr>
-                            <td><b>AFP</b></td>
-                            <td th:text="${employee.getAfp()}"></td>
-                        </tr>
-                        <tr>
-                            <td><b>ARL</b></td>
-                            <td th:text="${employee.getArl()}"></td>
-                        </tr>
-
-                    </table>
                 </div>
             </div>
         </div>
-                <div class="col-md-7">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4>Listado Contratos Trabajados</h4>
-                        </div>
-                        <div th:if="${contracts != null and !contracts.isEmpty()}">
-                            <table id="dtBasicExample" class="table table-striped">
-                                <thead class="thead-dark">
-                                <tr>
-                                    <th>Id</th>
-                                    <th>Nombre</th>
-                                    <th>Estado</th>
-                                    <th>Cliente</th>
-                                    <th>Enlace</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr test-id="rowtable" th:each="contract : ${contracts}">
-                                    <td test-id="idContract" th:text="${contract.split(',')[0]}">Mostrar Id</td>
-                                    <td th:text="${contract.split(',')[1]}">Mostrar Nombre</td>
-                                    <td th:text="${contract.split(',')[2]}">Mostrar Estado</td>
-                                    <td th:text="${contract.split(',')[3]}"></td>
-                                    <td>
-                                        <a th:href="@{/abrirContrato/} + ${contract.split(',')[0]}" test-id="openContract" class="btn btn-outline-success">Abrir</a>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                    </div>
+        <div class="col-md-7">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Listado Contratos Trabajados</h4>
+                </div>
+                <div th:if="${contracts != null and !contracts.isEmpty()}">
+                    <table id="dtBasicExample" class="table table-striped">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th>Id</th>
+                            <th>Nombre</th>
+                            <th>Estado</th>
+                            <th>Cliente</th>
+                            <th>Enlace</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr test-id="rowtable" th:each="contract : ${contracts}">
+                            <td test-id="idContract" th:text="${contract.split(',')[0]}">Mostrar Id</td>
+                            <td th:text="${contract.split(',')[1]}">Mostrar Nombre</td>
+                            <td th:text="${contract.split(',')[2]}">Mostrar Estado</td>
+                            <td th:text="${contract.split(',')[3]}"></td>
+                            <td>
+                                <a th:href="@{/abrirContrato/} + ${contract.split(',')[0]}" test-id="openContract" class="btn btn-outline-success">Abrir</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div th:if="${contracts == null or contracts.isEmpty()}" class="text-center p-2">
+                    <span>El empleado no tiene contratos asociados</span>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<footer th:replace="layout/template :: footer"></footer>
+    <footer th:replace="layout/template :: footer"></footer>
 </body>
 </html>

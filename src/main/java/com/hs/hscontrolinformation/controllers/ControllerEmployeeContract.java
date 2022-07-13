@@ -45,6 +45,7 @@ public class ControllerEmployeeContract {
     @GetMapping("/crearAsociacion/{idContract}/{idEmployee}")
     public String createAsociation(@PathVariable String idContract, @PathVariable String idEmployee, Model model){
         idContractActual = Long.valueOf(idContract);
+        idEmployeeActual = Long.valueOf(idEmployee);
         Date contractDate = contractServiceImp.findById(idContractActual).getContractDate();
         LocalDate actualDate = LocalDate.now();
         model.addAttribute("idContract", idContract);
@@ -58,9 +59,9 @@ public class ControllerEmployeeContract {
     public String uploadAsociation(EmployeeContract employeeContract){
         employeeContract.setContract(contractServiceImp.findById(this.idContractActual));
         employeeContract.setEmployee(employeeService.findById(this.idEmployeeActual));
-        log.info("ce - " + employeeContract);
+        log.info("contrato cliente - " + this.idContractActual + " - " + this.idEmployeeActual);
         ecServiceImp.save(employeeContract);
-        return "redirect:/Contracts";
+        return "redirect:/abrirContrato/"+this.idContractActual;
     }
 
 

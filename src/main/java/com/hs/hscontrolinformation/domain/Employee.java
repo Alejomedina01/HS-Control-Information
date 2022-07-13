@@ -4,8 +4,6 @@ import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Entity
 @Data
@@ -33,29 +31,19 @@ public class Employee {
     @Column(name = "direccion_empleado")
     private String adress;
 
+    @NotEmpty
     @Column(name = "telefono")
-    private String numberPhone;
+    private Long numberPhone;
 
-//    @NotEmpty
-//    @Column(name = "lugar_trabajo")
-//    private String workPlace;
-
+    @NotEmpty
     @Column(name = "eps")
     private String eps;
 
+    @NotEmpty
     @Column(name = "afp")
     private String afp;
 
+    @NotEmpty
     @Column(name = "arl")
     private String arl;
-
-    /*@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "employee")
-    private List<EmployeeContract> employeeContracts;
-
-    public List<Contract> getContracts(){
-        return getEmployeeContracts()
-                .stream()
-                .map(employeeContract -> employeeContract.getContract())
-                .collect(Collectors.toList());
-    }*/
 }

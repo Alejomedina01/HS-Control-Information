@@ -28,7 +28,7 @@ public class Client implements Serializable {
     private String email;
 
     @Column(name = "numero_telefono_cliente")
-    private String numberPhone;
+    private Long numberPhone;
 
     @OneToMany
     @JoinColumn(name = "id_cliente")

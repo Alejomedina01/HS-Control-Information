@@ -30,12 +30,7 @@
                             <input type="date" id="fechaTerminacion" class="form-control" th:max="${actualDate}" onclick="getLastDate('fechaVinculacion','fechaTerminacion')" name="finalDate">
                         </div>
                         <div class="modal-footer">
-                            <dialog id="ms">
-                                <h2>El empleado fue asociado correctamente</h2>
-                                <button test-id="saveEmployeeContract" id="close" onclick="document.getElementById('ms').close()">Ok!</button>
-                            </dialog>
-                            <button class="btn btn-primary" onclick="document.getElementById('ms').showModal()" type="submit">Agregar</button>
-<!--                            <button test-id="saveEmployeeContract" class="btn btn-primary" onclick="document.show" type="submit">Agregar</button>-->
+                            <button test-id="saveEmployeeContract" class="btn btn-primary" type="submit">Agregar</button>
                         </div>
                     </div>
                 </form>

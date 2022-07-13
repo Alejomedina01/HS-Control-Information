@@ -63,6 +63,8 @@ public class ControllerEmployee {
     @GetMapping("/editarEmpleado/{idEmployee}")
     public String editEmployee(Employee data, Model model){
         Employee employee = (Employee) employeeService.find(data);
+        boolean isAsociated = employeeService.findBasicDataContract(data.getIdEmployee()).size() > 0;
+        model.addAttribute("isAsociated", isAsociated);
         model.addAttribute("empleado", employee);
         return "modifyEmployee";
     }
