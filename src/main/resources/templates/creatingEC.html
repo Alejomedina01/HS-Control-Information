@@ -11,7 +11,7 @@
                 <div class="card-header">
                     <h4 >Asociar empleado</h4>
                 </div>
-                <form th:action="@{/saveEmployeeContract}" th:object="${employeeContract}" method="POST" class="was-validated">
+                <form th:action="@{/saveEmployeeContract}" id="form-vin-employ" th:object="${employeeContract}" method="POST" class="was-validated">
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="idContract">Identificación Contrato</label>

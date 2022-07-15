@@ -78,7 +78,7 @@
                             <td th:text="${client.getClientName()}"></td>
                         </tr>
                         <tr>
-                            <td><a th:href="@{/contractFiles/} + ${contract.getIdContract()}" class="btn bg-success text-white" >Visualizar Documentos</a></td>
+                            <td><a th:href="@{/contractFiles/} + ${contract.getIdContract()}" test-id="visualizeDocuments" class="btn bg-success text-white" >Visualizar Documentos</a></td>
                         </tr>
                     </table>
                 </div>
@@ -108,7 +108,6 @@
             <a class="btn btn-outline-primary d-flex justify-content-center" test-id="EmployeeContract" th:href="@{/addEmployeeToContract/} + ${contract.getIdContract()}">
                 <i class="fas fa-pencil"></i>
                 &nbsp; Agregar empleados</a>
-
             <br>
             <div class="col-md-auto">
                 <div class="card">

@@ -14,47 +14,48 @@
                     <div class="card-header">
                         <h4>Documentos asociados al contrato</h4>
                     </div>
-                                <table class="table table-striped" th:if="${documents != null}">
-                                   <thead class="thead-dark">
-                                   <tr>
-                                       <th>Nombre</th>
-                                       <th>Enlace</th>
-                                       <th>Eliminar</th>
-                                   </tr>
-                                   </thead>
-                                    <tbody>
-                                    <tr test-id="datas-fileContract" th:each="document : ${documents}">
-                                        <td> <b th:text="${document.getNameFile()}" ></b></td>
-                                        <td>
-                                            <a class="btn btn-outline-success" th:url-presigned="${document.getPresignedUrl()}"
-                                               th:nameFile="${document.getNameFile()}" th:idFile="${document.getIdDocument()}"
-                                               th:onclick="visualizeFile(this.getAttribute('url-presigned'),this.getAttribute('nameFile'),this.getAttribute('idFile'))">Ver
-                                                <i class="fas fa-eye"></i></a>
-                                        </td>
-                                        <td>
-                                            <a th:href="@{/deleteFile(idDocument=${document.idDocument})}" class="btn btn-outline-danger">Borrar
-                                            <i class="fas fa-trash"></i></a>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                                <script type="text/javascript">
-                                    function visualizeFile(keyFile,nameDocument,idDocumen){
-                                        document.getElementById("datasFile").setAttribute("src",keyFile);
-                                        document.getElementById("fieldNameFile").setAttribute("value",nameDocument);
-                                        console.log("id documento"+idDocumen)
-                                        document.getElementById("fielIdFile").setAttribute("value",idDocumen);
-                                    }
-                                </script>
-                            </div>
-                        </div>
-        <div class="text-center p-2" th:if="${documents == null or documents.isEmpty()}">
-            <span>No hay documentos asociados</span>
-        </div>
+                    <table class="table table-striped" th:if="${documents != null}">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Enlace</th>
+                            <th>Eliminar</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr test-id="datas-fileContract" th:each="document : ${documents}">
+                            <td th:text="${document.getNameFile()}"></td>
+                            <td>
+                                <a class="btn btn-outline-success" th:url-presigned="${document.getPresignedUrl()}"
+                                   th:nameFile="${document.getNameFile()}" th:idFile="${document.getIdDocument()}"
+                                   th:onclick="visualizeFile(this.getAttribute('url-presigned'),this.getAttribute('nameFile'),this.getAttribute('idFile'))">Ver
+                                    <i class="fas fa-eye"></i></a>
+                            </td>
+                            <td>
+                                <a th:href="@{/deleteFile(idDocument=${document.idDocument})}"
+                                   class="btn btn-outline-danger">Borrar
+                                    <i class="fas fa-trash"></i></a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <script type="text/javascript">
+                        function visualizeFile(keyFile, nameDocument, idDocumen) {
+                            document.getElementById("datasFile").setAttribute("src", keyFile);
+                            document.getElementById("fieldNameFile").setAttribute("value", nameDocument);
+                            console.log("id documento" + idDocumen)
+                            document.getElementById("fielIdFile").setAttribute("value", idDocumen);
+                        }
+                    </script>
+                </div>
+            </div>
+            <div class="text-center p-2" th:if="${documents == null or documents.isEmpty()}">
+                <span>No hay documentos asociados</span>
+            </div>
             <br>
-    </div>
+        </div>
         <div class="col-lg-6">
-            <iframe id="datasFile"  name="viewerPdf" height="200%" width="130%"></iframe>
+            <iframe id="datasFile" test-id="containerPdf" name="viewerPdf" height="200%" width="130%"></iframe>
         </div>
         <div class="col-md-auto">
             <div class="card">
@@ -65,22 +66,26 @@
                         </div>
                     </div>
                 </div>
-                <form th:action="@{/replaceFileDocument/} + ${contract.getIdContract()}" enctype="multipart/form-data" th:object="${document}" method="POST">
+                <form th:action="@{/replaceFileDocument/} + ${contract.getIdContract()}" enctype="multipart/form-data"
+                      th:object="${document}" method="POST">
                     <div class="modal-body">
                         <div class="form-group">
                             <label>id Documento</label>
-                            <input type="number" class="form-control" id="fielIdFile" test-id="idFileUpload" name="idDocument"   required="true" readonly/>
+                            <input type="number" class="form-control" id="fielIdFile" test-id="idFileUpload"
+                                   name="idDocument" required="true" readonly/>
                         </div>
                         <div class="form-group">
                             <label>Nombre Documento</label>
-                            <input type="text" class="form-control" id="fieldNameFile" test-id="nameFileUpload" name="nameFile" required="true" readonly/>
+                            <input type="text" class="form-control" id="fieldNameFile" test-id="nameFileUpload"
+                                   name="nameFile" required="true" readonly/>
                         </div>
                         <div class="form-group">
-                            <input type="file" class="form-control"  test-id="fileStream" name="file" required="true"/>
+                            <input type="file" class="form-control" test-id="fileStream" name="file" required="true"/>
                         </div>
                         <div class="modal-footer">
                             <button test-id="addFileContract" class="btn bg-success text-white" type="submit"
-                            >Reemplazar Archivo</button>
+                            >Reemplazar Archivo
+                            </button>
                         </div>
                     </div>
                 </form>
@@ -88,6 +93,6 @@
             <br>
         </div>
     </div>
-    </div>
+</div>
 </body>
 </html>

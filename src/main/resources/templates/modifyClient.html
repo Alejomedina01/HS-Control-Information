@@ -22,7 +22,7 @@
                     </div>
                     <div th:if="${isAsociated == false}" class="col-md-3">
                         <a th:href="@{/deleteClient(idClient=${client.idClient})}"
-                           class="btn btn-danger btn-block">
+                           class="btn btn-danger btn-block" test-id="deleteClient">
                             <i class="fas fa-trash"></i> Eliminar
                         </a>
                     </div>

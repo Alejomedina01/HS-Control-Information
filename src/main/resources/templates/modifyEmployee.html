@@ -21,7 +21,7 @@
                         </button>
                     </div>
                     <div th:if="${isAsociated == false}" class="col-md-3">
-                        <a th:href="@{/deleteEmployee(idEmployee=${empleado.idEmployee})}"
+                        <a th:href="@{/deleteEmployee(idEmployee=${empleado.idEmployee})}" test-id="deleteEmployee"
                            class="btn btn-danger btn-block">
                             <i class="fas fa-trash"></i> Eliminar
                         </a>
