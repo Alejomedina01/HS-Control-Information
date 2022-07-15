@@ -26,6 +26,7 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @org.springframework.stereotype.Controller
 @Slf4j
@@ -44,6 +45,13 @@ public class ControllerContract {
     @Autowired
     private DocumentServiceImp documentService;
     private Client client;
+
+    @GetMapping("/login?error")
+    public String login(RedirectAttributes redirectAttrs) {
+        redirectAttrs.addFlashAttribute("mensaje", "Credenciales inválidas")
+                .addFlashAttribute("clase", "success");
+        return "login";
+    }
 
     @GetMapping("/")
     public String initial(Model model) {
