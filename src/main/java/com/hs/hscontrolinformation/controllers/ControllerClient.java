@@ -43,6 +43,14 @@ public class ControllerClient {
         if (errors.hasErrors()){
             return "addClients";
         }
+        if(service.findById(data.getIdClient()) == null){
+            service.save(data);
+            redirectAttrs.addFlashAttribute("mensaje", "✓ Cliente Agregado Correctamente")
+                    .addFlashAttribute("clase", "success");
+        }else{
+            redirectAttrs.addFlashAttribute("mensaje", "x Error al agregar cliente (id ya existe)")
+                    .addFlashAttribute("clase", "danger");
+        }
         service.save(data);
         redirectAttrs.addFlashAttribute("mensaje", "✓ Cliente Agregado Correctamente")
                 .addFlashAttribute("clase", "success");
@@ -50,8 +58,10 @@ public class ControllerClient {
     }
 
     @GetMapping("/deleteClient")
-    public String deleteClient(Client client) {
+    public String deleteClient(Client client, RedirectAttributes redirectAttrs) {
         service.delete(client);
+        redirectAttrs.addFlashAttribute("mensaje", "✓ Cliente Eliminado Correctamente")
+                .addFlashAttribute("clase", "success");
         return "redirect:/Clients";
     }
 
@@ -74,11 +84,13 @@ public class ControllerClient {
     }
 
     @PostMapping("/saveChangesClient")
-    public String saveChanges(@Valid Client client, Errors errores){
+    public String saveChanges(@Valid Client client, Errors errores, RedirectAttributes redirectAttrs){
         if (errores.hasErrors()){
             return "modificar";
         }
         service.save(client);
+        redirectAttrs.addFlashAttribute("mensaje", "✓ Cliente Editado Correctamente")
+                .addFlashAttribute("clase", "success");
         return "redirect:/Clients";
     }
 }

@@ -58,4 +58,9 @@ public class DocumentServiceImp implements ServiceTemplate<Document>{
     public Document findById(Long id) {
         return repository.getById(id);
     }
+
+    @Transactional(readOnly = true)
+    public Document findDocumentUniqName(Long idContract, String nameFile){
+        return repository.findDocumentUniqName(idContract, nameFile);
+    }
 }

@@ -62,7 +62,7 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-auto">
-                            <h4>Adjuntar archivo (PDF)</h4>
+                            <h4>Reemplazar archivo (PDF)</h4>
                         </div>
                     </div>
                 </div>
@@ -94,5 +94,11 @@
         </div>
     </div>
 </div>
+<div style="position: absolute;width: 370px;top: 150px;left: 70%;" th:classappend="'alert-' + (${clase != null} ? ${clase} : info)" th:if="${mensaje != null}"
+     th:text="${mensaje}"
+     class="alert">
+    <i class="fas fa-check-circle"></i>
+</div>
+<script th:replace="layout/template :: scriptAlerts"></script>
 </body>
 </html>

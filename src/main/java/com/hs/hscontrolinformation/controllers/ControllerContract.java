@@ -44,7 +44,15 @@ public class ControllerContract {
     private ClientImplService clientService;
     @Autowired
     private DocumentServiceImp documentService;
+
     private Client client;
+
+    @PostMapping("fail_login")
+    public String handleFailedLogin(RedirectAttributes redirectAttrs) {
+        redirectAttrs.addFlashAttribute("mensaje", "x Credenciales incorrectas")
+                .addFlashAttribute("clase", "danger");
+        return "redirect:/login?error";
+    }
 
     @GetMapping("/login?error")
     public String login(RedirectAttributes redirectAttrs) {
@@ -80,14 +88,24 @@ public class ControllerContract {
     }
 
     @PostMapping("/addFileContract/{idContract}")
-    public String addDocumentList(Contract contract, Model model, @Valid Document document,
-                                  @RequestParam MultipartFile file) {
+    public String addDocumentList(Contract contract, @Valid Document document, @RequestParam MultipartFile file, RedirectAttributes redirectAttrs) {
+        if (documentService.findDocumentUniqName(contract.getIdContract(), document.getNameFile()) == null){
+            saveDocumentStorage(contract, file, document);
+            redirectAttrs.addFlashAttribute("mensaje", "✓ Documento Agregado Correctamente")
+                    .addFlashAttribute("clase", "success");
+        }else{
+            redirectAttrs.addFlashAttribute("mensaje", "x Error al agregar documento (nombre ya existe)")
+                    .addFlashAttribute("clase", "danger");
+        }
+        return "redirect:/abrirContrato/"+contract.getIdContract();
+    }
+
+    private void saveDocumentStorage(Contract contract, MultipartFile file, Document document){
         contract = (Contract) contractService.find(contract);
         String fullName = saveFileContract( file, document.getNameFile());
         document.setFullName(fullName);
         documentService.saveDocument(document);
         documentService.updateDocumentToContractId(contract.getIdContract(), document.getIdDocument());
-        return "redirect:/abrirContrato/"+contract.getIdContract();
     }
 
     @GetMapping("/findClient/")
@@ -98,13 +116,19 @@ public class ControllerContract {
     }
 
     @PostMapping("/saveContract")
-    public String saveContract(@Valid Contract contract,
-                               Errors errors) {
+    public String saveContract(@Valid Contract contract, Errors errors, RedirectAttributes redirectAttrs) {
         if (errors.hasErrors()) {
             return "addContract";
         }
-        contractService.save(contract);
-        contractService.updateContractToClientId(client.getIdClient(), contract.getIdContract());
+        if (contractService.findById(contract.getIdContract()) == null){
+            contractService.save(contract);
+            contractService.updateContractToClientId(client.getIdClient(), contract.getIdContract());
+            redirectAttrs.addFlashAttribute("mensaje", "✓ Contrato Agregado Correctamente")
+                    .addFlashAttribute("clase", "success");
+        }else{
+            redirectAttrs.addFlashAttribute("mensaje", "x Error al agregar contrato (id ya existe)")
+                    .addFlashAttribute("clase", "danger");
+        }
         return "redirect:/Contracts";
     }
 
@@ -118,7 +142,7 @@ public class ControllerContract {
     }
     @PostMapping("/replaceFileDocument/{idContract}")
     public String replaceFileDocument(Contract contract, @Valid Document document,
-                                      @RequestParam MultipartFile file){
+                                      @RequestParam MultipartFile file, RedirectAttributes redirectAttrs){
         contract = (Contract) contractService.find(contract);
         document=documentService.findById(document.getIdDocument());
         serviceAws.deleteFile(document.getFullName());
@@ -126,6 +150,8 @@ public class ControllerContract {
         document.setFullName(fullName);
         serviceAws.generatePresignedUrl(document);
         documentService.saveDocument(document);
+        redirectAttrs.addFlashAttribute("mensaje", "✓ Documento Reemplazado Correctamente")
+                .addFlashAttribute("clase", "success");
         return "redirect:/contractFiles/"+contract.getIdContract();
     }
     @GetMapping("/contractFiles/{idContract}")
@@ -180,30 +206,32 @@ public class ControllerContract {
         return "modifyContract";
     }
 
-    public Contract findContractById(long idContract) {
-        return contractService.findById(idContract);
-    }
-
     @PostMapping("/saveChangesContract")
-    public String saveChanges(@Valid Contract contract, Errors errors) {
+    public String saveChanges(@Valid Contract contract, Errors errors, RedirectAttributes redirectAttrs) {
         if (errors.hasErrors()) {
             return "modificar";
         }
         contractService.save(contract);
+        redirectAttrs.addFlashAttribute("mensaje", "✓ Contrato Editado Correctamente")
+                .addFlashAttribute("clase", "success");
         return "redirect:/Contracts";
     }
 
     @GetMapping("/eliminar")
-    public String deleteContract(Contract contract) {
+    public String deleteContract(Contract contract, RedirectAttributes redirectAttrs) {
         contractService.delete(contract);
+        redirectAttrs.addFlashAttribute("mensaje", "✓ Contrato Eliminado Correctamente")
+                .addFlashAttribute("clase", "success");
         return "redirect:/Contracts";
     }
     @GetMapping("/deleteFile")
-    public String deleteContract(Document document) {
+    public String deleteFile(Document document, RedirectAttributes redirectAttrs) {
         long idContract=documentService.findIdContractForDocument(document.getIdDocument());
         document=documentService.findById(document.getIdDocument());
         serviceAws.deleteFile(document.getFullName());
         documentService.delete(document);
+        redirectAttrs.addFlashAttribute("mensaje", "✓ Documento Eliminado Correctamente")
+                .addFlashAttribute("clase", "success");
         return "redirect:/contractFiles/"+idContract;
     }
 }

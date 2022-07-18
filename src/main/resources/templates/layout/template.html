@@ -115,5 +115,12 @@
         document.getElementById(secondDate).min = document.getElementById(firstDate).value;
     }
 </script>
+<script th:fragment="scriptAlerts">
+    $(document).ready(function() {
+        setTimeout(function() {
+            $("div.alert").fadeOut(1500);
+        },3000);
+    })
+</script>
 </body>
 </html>
