@@ -27,7 +27,7 @@
     <div class="fixed-top">
         <nav class="navbar navbar-expand-sm navbar-dark bg-dark p-0">
             <div class="container">
-                <a th:href="@{/}" test-id="home" class="navbar-brand">HS CONTROL INFORMATION</a>
+                <a th:href="@{/}" test-id="home" class="navbar-brand"> <i class="fas fa-home"></i> HS CONTROL INFORMATION</a>
                 <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -111,9 +111,25 @@
     </div>
 </footer>
 <script th:fragment="script">
-    function getLastDate(firstDate, secondDate){
-        document.getElementById(secondDate).min = document.getElementById(firstDate).value;
+    function changeDate(firstDate, secondDate){
+        console.log(document.getElementById(secondDate).value)
+        if(document.getElementById(firstDate).value != ''){
+            document.getElementById(secondDate).min = document.getElementById(firstDate).value;
+            document.getElementById(secondDate).disabled = false;
+        }else{
+            document.getElementById(secondDate).value = '';
+            document.getElementById(secondDate).disabled = true;
+        }
     }
+    function enableInitialDateAct(){
+        changeDate('contractDate','initialDateAct')
+    }
+    function enableReceivalDateAct(){
+        changeDate('initialDateAct','receivalDateAct')
+    }
+    document.querySelector("#contractDate").addEventListener('change',enableInitialDateAct)
+    document.querySelector("#contractDate").addEventListener('change',enableReceivalDateAct)
+    document.querySelector("#initialDateAct").addEventListener('change',enableReceivalDateAct)
 </script>
 </body>
 </html>

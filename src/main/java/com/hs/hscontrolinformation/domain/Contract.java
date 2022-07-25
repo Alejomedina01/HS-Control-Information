@@ -46,7 +46,6 @@ public class Contract implements Serializable {
 
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    @NotNull
     @Column(name = "fecha_acta_inicio")
     private Date initialDateAct;
 

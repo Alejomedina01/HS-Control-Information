@@ -41,11 +41,11 @@
                             </div>
                             <div style="float: left; margin-right: 20px;" class="form-group">
                                 <label for="initialDateAct">Acta inicio</label>
-                                <input type="date" id="initialDateAct" th:max="${actual}"  title="Ingrese una fecha valida para el acta de inicio" onclick="getLastDate('contractDate','initialDateAct')" class="form-control" name="initialDateAct" required="true">
+                                <input type="date" id="initialDateAct" th:max="${actual}"  title="Ingrese una fecha valida para el acta de inicio" class="form-control" name="initialDateAct" disabled>
                             </div>
                             <div style="float: left;" class="form-group">
                                 <label for="receivalDateAct">Acta recibido</label>
-                                <input type="date" id="receivalDateAct" th:max="${actual}" title="Ingrese una fecha valida para el acta recibido" onclick="getLastDate('initialDateAct','receivalDateAct')" class="form-control" name="receivalDateAct">
+                                <input type="date" id="receivalDateAct" th:max="${actual}" title="Ingrese una fecha valida para el acta recibido" class="form-control" name="receivalDateAct" disabled>
                             </div>
                             <br>
                             <br>

@@ -64,11 +64,11 @@
                                 </div>
                                 <div style="float: left; margin-right: 20px;" class="form-group">
                                     <label for="initialDateAct">Acta inicio</label>
-                                    <input th:max="${actual}" id="initialDateAct" type="date" onclick="getLastDate('contractDate','initialDateAct')" th:field="*{initialDateAct}" class="form-control" name="initialDateAct" required="true">
+                                    <input th:max="${actual}" id="initialDateAct" type="date" onclick="getLastDateOfInitial('contractDate','initialDateAct')" th:field="*{initialDateAct}" class="form-control" name="initialDateAct" required="true">
                                 </div>
                                 <div style="float: left;" class="form-group">
                                     <label for="receivalDateAct">Acta recibido</label>
-                                    <input th:max="${actual}" id="receivalDateAct" type="date" onclick="getLastDate('initialDateAct','receivalDateAct')" th:field="*{receivalDateAct}" class="form-control" name="receivalDateAct">
+                                    <input th:max="${actual}" id="receivalDateAct" type="date" onclick="getLastDateOfReceival('initialDateAct','receivalDateAct','contractDate')" th:field="*{receivalDateAct}" class="form-control" name="receivalDateAct">
                                 </div>
                                 <br>
                                 <br>

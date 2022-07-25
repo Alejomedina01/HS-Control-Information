@@ -25,9 +25,13 @@
                             <label for="initialDate">Fecha de vinculación</label>
                             <input type="date" id="fechaVinculacion" th:min="${contractDate}" th:max="${actualDate}" class="form-control" name="initialDate" required="true">
                         </div>
-                        <div class="form-group">
+                        <div th:if="${finalContractDate != null}" class="form-group">
                             <label for="finalDate">Fecha de terminación</label>
-                            <input type="date" id="fechaTerminacion" class="form-control" th:max="${actualDate}" onclick="getLastDate('fechaVinculacion','fechaTerminacion')" name="finalDate">
+                            <input type="date" id="fechaTerminacion1" class="form-control" th:max="${finalContractDate}" onclick="changeDate('fechaVinculacion','fechaTerminacion1')" name="finalDate">
+                        </div>
+                        <div th:if="${finalContractDate == null}" class="form-group">
+                            <label for="finalDate">Fecha de terminación</label>
+                            <input type="date" id="fechaTerminacion2" class="form-control" th:max="${actualDate}" onclick="changeDate('fechaVinculacion','fechaTerminacion2')" name="finalDate">
                         </div>
                         <div class="modal-footer">
                             <button test-id="saveEmployeeContract" class="btn btn-primary" type="submit">Agregar</button>
