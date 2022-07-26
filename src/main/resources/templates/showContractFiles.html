@@ -45,6 +45,7 @@
                             document.getElementById("fieldNameFile").setAttribute("value", nameDocument);
                             console.log("id documento" + idDocumen)
                             document.getElementById("fielIdFile").setAttribute("value", idDocumen);
+                            enableForm();
                         }
                     </script>
                 </div>
@@ -100,5 +101,6 @@
     <i class="fas fa-check-circle"></i>
 </div>
 <script th:replace="layout/template :: scriptAlerts"></script>
+<script th:replace="layout/template :: scriptFiles"></script>
 </body>
 </html>

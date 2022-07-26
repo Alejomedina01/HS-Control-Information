@@ -78,6 +78,7 @@
                             <td th:text="${client.getClientName()}"></td>
                         </tr>
                         <tr>
+                            <td><b>Documentos</b></td>
                             <td><a th:href="@{/contractFiles/} + ${contract.getIdContract()}" test-id="visualizeDocuments" class="btn bg-success text-white" >Visualizar Documentos</a></td>
                         </tr>
                     </table>
@@ -177,6 +178,7 @@
                             <th>Apodo</th>
                             <th>Teléfono</th>
                             <th>Enlace</th>
+                            <th>Editar</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -185,8 +187,13 @@
                             <td th:text="${employee.split(',')[1] + ' ' + employee.split(',')[2]}"></td>
                             <td th:text="${employee.split(',')[3]}"></td>
                             <td th:text="${employee.split(',')[4]}"></td>
+                            <td th:if="${employee.split(',')[5] != 'null'}" th:text="${employee.split(',')[5]}"></td>
+                            <td th:if="${employee.split(',')[5] == 'null'}" th:text="${'No Concretada'}"></td>
                             <td>
                                 <a th:href="@{/abrirEmpleado/} + ${employee.split(',')[0]}" test-id="openEmployee" class="btn btn-outline-success">Abrir</a>
+                            </td>
+                            <td>
+                                <a class="btn btn-outline-warning">Editar</a>
                             </td>
                         </tbody>
                     </table>

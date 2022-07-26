@@ -36,6 +36,11 @@ public class EmployeeServiceImp implements ServiceTemplate<Employee> {
         return employeeDao.findById(id).orElse(null);
     }
 
+    @Override
+    public Employee findById(String id) {
+        return null;
+    }
+
     @Transactional(readOnly = true)
     public Employee find(Employee employee) {
         return employeeDao.findById(employee.getIdEmployee()).orElse(null);

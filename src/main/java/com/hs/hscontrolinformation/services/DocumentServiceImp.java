@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Slf4j
 public class DocumentServiceImp implements ServiceTemplate<Document>{
         @Autowired
     private DocumentDao repository;
@@ -57,6 +58,11 @@ public class DocumentServiceImp implements ServiceTemplate<Document>{
     @Transactional(readOnly = true)
     public Document findById(Long id) {
         return repository.getById(id);
+    }
+
+    @Override
+    public Document findById(String id) {
+        return null;
     }
 
     @Transactional(readOnly = true)

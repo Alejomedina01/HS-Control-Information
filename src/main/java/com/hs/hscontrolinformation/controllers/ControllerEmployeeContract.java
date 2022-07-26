@@ -48,11 +48,14 @@ public class ControllerEmployeeContract {
         idContractActual = Long.valueOf(idContract);
         idEmployeeActual = Long.valueOf(idEmployee);
         Date contractDate = contractServiceImp.findById(idContractActual).getContractDate();
+        Date finalContractDate = contractServiceImp.findById(idContractActual).getReceivalDateAct();
+        log.info(finalContractDate + "");
         LocalDate actualDate = LocalDate.now();
         model.addAttribute("idContract", idContract);
         model.addAttribute("idEmployee", idEmployee);
         model.addAttribute("actualDate", actualDate);
         model.addAttribute("contractDate", contractDate);
+        model.addAttribute("finalContractDate", finalContractDate);
         return "creatingEC";
     }
 

@@ -33,6 +33,11 @@ public class ContractServiceImp implements ServiceTemplate<Contract> {
 
     @Override
     public Contract findById(Long id) {
+        return null;
+    }
+
+    @Override
+    public Contract findById(String id) {
         return contractDao.findById(id).orElse(null);
     }
 

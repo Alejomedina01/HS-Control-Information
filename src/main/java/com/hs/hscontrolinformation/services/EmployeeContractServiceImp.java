@@ -36,6 +36,11 @@ public class EmployeeContractServiceImp implements ServiceTemplate<EmployeeContr
         return employeeContractDao.findById(id).orElse(null);
     }
 
+    @Override
+    public EmployeeContract findById(String id) {
+        return null;
+    }
+
     @Transactional(readOnly = true)
     public EmployeeContract find(EmployeeContract employeeContract) {
         return employeeContractDao.findById(employeeContract.getIdEmployeeContract()).orElse(null);
