@@ -34,5 +34,11 @@
     </div>
 </section>
 <footer th:replace="layout/template :: footer"></footer>
+<div style="position: absolute;width: 370px;top: 150px;left: 70%;" th:classappend="'alert-' + (${clase != null} ? ${clase} : info)" th:if="${mensaje != null}"
+     th:text="${mensaje}"
+     class="alert">
+    <i class="fas fa-check-circle"></i>
+</div>
+<script th:replace="layout/template :: scriptAlerts"></script>
 </body>
 </html>

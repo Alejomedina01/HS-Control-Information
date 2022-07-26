@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Data
@@ -31,7 +32,7 @@ public class Employee {
     @Column(name = "direccion_empleado")
     private String adress;
 
-    @NotEmpty
+    @NotNull
     @Column(name = "telefono")
     private Long numberPhone;
 

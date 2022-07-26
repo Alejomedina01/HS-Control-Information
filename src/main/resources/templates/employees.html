@@ -59,7 +59,8 @@
                         <tr test-id="datasEmployee" th:each="employee : ${employees}">
                             <td th:text="${employee.getIdEmployee()}"></td>
                             <td th:text="${employee.getName() + ' ' + employee.getLastname()}"></td>
-                            <td th:text="${employee.getNickname()}"></td>
+                            <td th:if="${employee.getNickname() != ''}" th:text="${employee.getNickname()}"></td>
+                            <td th:if="${employee.getNickname() == ''}" th:text="${'No Registra'}"></td>
                             <td th:text="${employee.getNumberPhone()}"></td>
                             <td>
                                 <a th:href="@{/abrirEmpleado/} + ${employee.getIdEmployee()}" test-id="openEmployee" class="btn btn-outline-success">Abrir</a>
@@ -71,7 +72,12 @@
         </div>
     </div>
 </div>
-
+<div style="position: absolute;width: 370px;top: 150px;left: 70%;" th:classappend="'alert-' + (${clase != null} ? ${clase} : info)" th:if="${mensaje != null}"
+     th:text="${mensaje}"
+     class="alert">
+    <i class="fas fa-check-circle"></i>
+</div>
 <footer th:replace="layout/template :: footer"></footer>
+<script th:replace="layout/template :: scriptAlerts"></script>
 </body>
 </html>

@@ -6,12 +6,12 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface ClientDao extends JpaRepository<Client, Long> {
+public interface ClientDao extends JpaRepository<Client, String> {
 
     @Query(value = "SELECT * FROM cliente ", nativeQuery = true)
     List<String> findBasicDataClient();
-    Client findByIdClient(Long idClient);
+    Client findByIdClient(String idClient);
 
     @Query(value = "SELECT cn.id_contrato, cn.nombre_proyecto, cn.estado_contrato, cl.nombre_cliente FROM contrato AS cn JOIN cliente AS cl ON cn.id_cliente = cl.id_cliente AND cn.id_cliente = ?1", nativeQuery = true)
-    List<String> findContractsFromClient(Long idClient);
+    List<String> findContractsFromClient(String idClient);
 }

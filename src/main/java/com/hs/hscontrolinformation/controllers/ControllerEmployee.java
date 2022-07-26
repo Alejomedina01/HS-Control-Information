@@ -13,6 +13,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
@@ -37,17 +38,26 @@ public class ControllerEmployee {
     }
 
     @PostMapping("/saveEmployee")
-    public String saveClient(@Valid Employee data, Errors errors) {
+    public String saveClient(@Valid Employee data, Errors errors, RedirectAttributes redirectAttrs) {
         if (errors.hasErrors()){
             return "addEmployee";
         }
-        employeeService.save(data);
+        if(employeeService.findById(data.getIdEmployee()) == null){
+            employeeService.save(data);
+            redirectAttrs.addFlashAttribute("mensaje", "✓ Empleado Agregado Correctamente")
+                    .addFlashAttribute("clase", "success");
+        }else {
+            redirectAttrs.addFlashAttribute("mensaje", "x Error al agregar empleado (id ya existe)")
+                    .addFlashAttribute("clase", "danger");
+        }
         return "redirect:/Employees";
     }
 
     @GetMapping("/deleteEmployee")
-    public String deleteEmp(Employee data) {
+    public String deleteEmp(Employee data, RedirectAttributes redirectAttrs) {
         employeeService.delete(data);
+        redirectAttrs.addFlashAttribute("mensaje", "✓ Empleado Eliminado Correctamente")
+                .addFlashAttribute("clase", "success");
         return "redirect:/Employees";
     }
 
@@ -69,11 +79,13 @@ public class ControllerEmployee {
         return "modifyEmployee";
     }
     @PostMapping("/saveChangesEmployee")
-    public String saveChanges(@Valid Employee employee, Errors errores){
+    public String saveChanges(@Valid Employee employee, Errors errores, RedirectAttributes redirectAttrs){
         if (errores.hasErrors()){
             return "modificar";
         }
         employeeService.save(employee);
+        redirectAttrs.addFlashAttribute("mensaje", "✓ Empleado Editado Correctamente")
+                .addFlashAttribute("clase", "success");
         return "redirect:/Employees";
     }
 

@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
 import java.util.Date;
@@ -28,7 +29,7 @@ public class ControllerEmployeeContract {
     @Autowired
     private ContractServiceImp contractServiceImp;
 
-    private Long idContractActual;
+    private String idContractActual;
 
     private Long idEmployeeActual;
 
@@ -44,7 +45,7 @@ public class ControllerEmployeeContract {
 
     @GetMapping("/crearAsociacion/{idContract}/{idEmployee}")
     public String createAsociation(@PathVariable String idContract, @PathVariable String idEmployee, Model model){
-        idContractActual = Long.valueOf(idContract);
+        idContractActual = idContract;
         idEmployeeActual = Long.valueOf(idEmployee);
         Date contractDate = contractServiceImp.findById(idContractActual).getContractDate();
         Date finalContractDate = contractServiceImp.findById(idContractActual).getReceivalDateAct();
@@ -59,11 +60,13 @@ public class ControllerEmployeeContract {
     }
 
     @PostMapping("/saveEmployeeContract")
-    public String uploadAsociation(EmployeeContract employeeContract){
+    public String uploadAsociation(EmployeeContract employeeContract, RedirectAttributes redirectAttrs){
         employeeContract.setContract(contractServiceImp.findById(this.idContractActual));
         employeeContract.setEmployee(employeeService.findById(this.idEmployeeActual));
         log.info("contrato cliente - " + this.idContractActual + " - " + this.idEmployeeActual);
         ecServiceImp.save(employeeContract);
+        redirectAttrs.addFlashAttribute("mensaje", "✓ Empleado Asociado al Contrato")
+                .addFlashAttribute("clase", "success");
         return "redirect:/abrirContrato/"+this.idContractActual;
     }
 

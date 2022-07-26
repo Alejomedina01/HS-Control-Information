@@ -22,7 +22,7 @@
                 <div class="card-header">
                     <h4>Listado Clientes</h4>
                 </div>
-                   <br>
+                <br>
                 <div th:if="${clients != null and !clients.isEmpty()}">
                     <div class="search-box">
                         <div class="row">
@@ -44,8 +44,8 @@
                             </div>
                         </div>
                     </div>
-                        <br>
-                <table id="dtBasicExample" class="table table-striped">
+                    <br>
+                    <table id="dtBasicExample" class="table table-striped">
                         <thead class="thead-dark">
                         <tr>
                             <th>Id</th>
@@ -59,8 +59,10 @@
                         <tr th:each="client : ${clients}" test-id="datasClient">
                             <td th:text="${client.getIdClient()}"></td>
                             <td th:text="${client.getClientName()}"></td>
-                            <td th:text="${client.getEmail()}"></td>
-                            <td th:text="${client.getNumberPhone()}"></td>
+                            <td th:if="${client.getEmail() != ''}" th:text="${client.getEmail()}"></td>
+                            <td th:if="${client.getEmail() == ''}" th:text="${'No Registra'}"></td>
+                            <td th:if="${client.getNumberPhone() != null}" th:text="${client.getNumberPhone()}"></td>
+                            <td th:if="${client.getNumberPhone() == null}" th:text="${'No Registra'}"></td>
                             <td>
                                 <a th:href="@{/abrirCliente/} + ${client.getIdClient()}" test-id="openClient" class="btn btn-outline-success">Abrir</a>
                             </td>
@@ -72,9 +74,12 @@
         </div>
     </div>
 </div>
-<div hidden style="position: absolute;width: 370px;top: 200px;left: 70%;" class="alert alert-success" role="alert">
-    El cliente ha sido registrado con éxito
+<div style="position: absolute;width: 370px;top: 150px;left: 70%;" th:classappend="'alert-' + (${clase != null} ? ${clase} : info)" th:if="${mensaje != null}"
+     th:text="${mensaje}"
+     class="alert">
+    <i class="fas fa-check-circle"></i>
 </div>
 <footer th:replace="layout/template :: footer"></footer>
+<script th:replace="layout/template :: scriptAlerts"></script>
 </body>
 </html>

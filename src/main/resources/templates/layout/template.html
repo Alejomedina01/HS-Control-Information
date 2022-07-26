@@ -110,9 +110,8 @@
         </div>
     </div>
 </footer>
-<script th:fragment="script">
+<script th:fragment="scriptDates">
     function changeDate(firstDate, secondDate){
-        console.log(document.getElementById(secondDate).value)
         if(document.getElementById(firstDate).value != ''){
             document.getElementById(secondDate).min = document.getElementById(firstDate).value;
             document.getElementById(secondDate).disabled = false;
@@ -130,6 +129,56 @@
     document.querySelector("#contractDate").addEventListener('change',enableInitialDateAct)
     document.querySelector("#contractDate").addEventListener('change',enableReceivalDateAct)
     document.querySelector("#initialDateAct").addEventListener('change',enableReceivalDateAct)
+</script>
+<script th:fragment="scriptAlerts">
+    $(document).ready(function() {
+        setTimeout(function() {
+            $("div.alert").fadeOut(1500);
+        },3000);
+    })
+</script>
+<script th:fragment="scriptValues">
+
+    const formatterPeso = new Intl.NumberFormat('es-CO', {
+        style: 'currency',
+        currency: 'COP',
+        minimumFractionDigits: 0
+    })
+
+    function calculateTotal(){
+        var initialValue = (document.getElementById('initialValue').value != '')? parseFloat(document.getElementById('initialValue').value) : 0;
+        var aditionalValue = (document.getElementById('aditionalValue').value != '')? parseFloat(document.getElementById('aditionalValue').value) : 0;
+        return initialValue + aditionalValue;
+    }
+
+    function setTotal(){
+        document.getElementById('totalValue').value = formatterPeso.format(calculateTotal());
+    }
+
+    function calculatePendingValue(){
+        var total = calculateTotal();
+        var invoiceValue = (document.getElementById('invoicedValue').value != '')? parseFloat(document.getElementById('invoicedValue').value) : 0;
+        var pendingValue = total - invoiceValue
+        console.log(total +" - "+ invoiceValue)
+        console.log(total - invoiceValue)
+        document.getElementById('pendingValue').value = formatterPeso.format(pendingValue);
+    }
+    document.querySelector("#initialValue").addEventListener('change',setTotal)
+    document.querySelector("#aditionalValue").addEventListener('change',setTotal)
+    document.querySelector("#initialValue").addEventListener('change',calculatePendingValue)
+    document.querySelector("#aditionalValue").addEventListener('change',calculatePendingValue)
+    document.querySelector("#invoicedValue").addEventListener('change',calculatePendingValue)
+</script>
+<script th:fragment="scriptFiles">
+    function enableForm(){
+        if(document.getElementById('fielIdFile').value != '' && document.getElementById('fieldNameFile').value != ''){
+            document.getElementById('inputFile').disabled = false;
+            document.getElementById('buttonFile').disabled = false;
+        }else{
+            document.getElementById('inputFile').disabled = true;
+            document.getElementById('buttonFile').disabled = true;
+        }
+    }
 </script>
 </body>
 </html>
