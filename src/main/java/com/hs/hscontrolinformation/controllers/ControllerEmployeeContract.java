@@ -29,7 +29,7 @@ public class ControllerEmployeeContract {
     @Autowired
     private ContractServiceImp contractServiceImp;
 
-    private Long idContractActual;
+    private String idContractActual;
 
     private Long idEmployeeActual;
 
@@ -45,7 +45,7 @@ public class ControllerEmployeeContract {
 
     @GetMapping("/crearAsociacion/{idContract}/{idEmployee}")
     public String createAsociation(@PathVariable String idContract, @PathVariable String idEmployee, Model model){
-        idContractActual = Long.valueOf(idContract);
+        idContractActual = idContract;
         idEmployeeActual = Long.valueOf(idEmployee);
         Date contractDate = contractServiceImp.findById(idContractActual).getContractDate();
         Date finalContractDate = contractServiceImp.findById(idContractActual).getReceivalDateAct();

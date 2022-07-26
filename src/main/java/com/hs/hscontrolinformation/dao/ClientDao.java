@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface ClientDao extends JpaRepository<Client, Long> {
+public interface ClientDao extends JpaRepository<Client, String> {
 
     @Query(value = "SELECT * FROM cliente ", nativeQuery = true)
     List<String> findBasicDataClient();

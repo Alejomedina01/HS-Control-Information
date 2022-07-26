@@ -45,25 +45,32 @@
                             <td><b>Valor Inicial</b></td>
                             <td> [[${new java.text.DecimalFormat('$#,##0').format(contract.getInitialValue())}]]</td>
                         </tr>
-                        <tr th:if="${contract.getAditionalValue() != null}">
+                        <tr>
                             <td><b>Valor Adicional</b></td>
-                            <td test-id="valuePending">[[${new java.text.DecimalFormat('$#,##0').format(contract.getAditionalValue())}]]</td>
+                            <td th:if="${contract.getAditionalValue() != null}" test-id="valuePending">[[${new java.text.DecimalFormat('$#,##0').format(contract.getAditionalValue())}]]</td>
+                            <td th:if="${contract.getAditionalValue() == null}" test-id="valuePending">$0</td>
+                        </tr>
+                        <tr>
+                            <td><b>Valor Total</b></td>
+                            <td>[[${new java.text.DecimalFormat('$#,##0').format(totalValue)}]]</td>
                         </tr>
                         <tr>
                             <td><b>Acta Inicio</b></td>
-                            <td th:text="${contract.getInitialDateAct()}"></td>
+                            <td th:if="${contract.getInitialDateAct() != null}" th:text="${contract.getInitialDateAct()}"></td>
+                            <td th:if="${contract.getInitialDateAct() == null}" th:text="${'Sin Definir'}"></td>
                         </tr>
-                        <tr th:if="${contract.getReceivalDateAct() != null}">
+                        <tr>
                             <td><b>Acta Recibido</b></td>
-                            <td th:text="${contract.getReceivalDateAct()}"></td>
+                            <td th:if="${contract.getReceivalDateAct() != null}" th:text="${contract.getReceivalDateAct()}"></td>
+                            <td th:if="${contract.getReceivalDateAct() == null}" th:text="${'Sin Definir'}"></td>
                         </tr>
                         <tr>
                             <td><b>Valor Facturado</b></td>
                             <td>[[${new java.text.DecimalFormat('$#,##0').format(contract.getInvoicedValue())}]]</td>
                         </tr>
-                        <tr th:if="${contract.getPendingValue() != null}">
+                        <tr>
                             <td><b>Valor Pendiente</b></td>
-                            <td>[[${new java.text.DecimalFormat('$#,##0').format(contract.getPendingValue())}]]</td>
+                            <td>[[${new java.text.DecimalFormat('$#,##0').format(pendingValue)}]]</td>
                         </tr>
                         <tr>
                             <td><b>Valor Retegarantía</b></td>
@@ -176,7 +183,8 @@
                             <th>Identificación</th>
                             <th>Nombres</th>
                             <th>Apodo</th>
-                            <th>Teléfono</th>
+                            <th>Fecha Inicio</th>
+                            <th>Fecha Fin</th>
                             <th>Enlace</th>
                             <th>Editar</th>
                         </tr>

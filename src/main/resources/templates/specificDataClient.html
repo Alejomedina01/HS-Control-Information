@@ -35,11 +35,13 @@
                         </tr>
                         <tr>
                             <td><b>Teléfono</b></td>
-                            <td th:text="${client.getNumberPhone()}"></td>
+                            <td th:if="${client.getNumberPhone() != null}" th:text="${client.getNumberPhone()}"></td>
+                            <td th:if="${client.getNumberPhone() == null}" th:text="${'No Registra'}"></td>
                         </tr>
                         <tr>
                             <td><b>Email</b></td>
-                            <td th:text="${client.getEmail()}"></td>
+                            <td th:if="${client.getEmail() != ''}" th:text="${client.getEmail()}"></td>
+                            <td th:if="${client.getEmail() == ''}" th:text="${'No Registra'}"></td>
                         </tr>
                     </table>
                 </div>

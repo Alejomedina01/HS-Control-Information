@@ -48,10 +48,10 @@
                             enableForm();
                         }
                     </script>
+                    <div class="text-center p-2" th:if="${documents == null or documents.isEmpty()}">
+                        <span>No hay documentos asociados</span>
+                    </div>
                 </div>
-            </div>
-            <div class="text-center p-2" th:if="${documents == null or documents.isEmpty()}">
-                <span>No hay documentos asociados</span>
             </div>
             <br>
         </div>
@@ -81,11 +81,11 @@
                                    name="nameFile" required="true" readonly/>
                         </div>
                         <div class="form-group">
-                            <input type="file" class="form-control" test-id="fileStream" name="file" required="true"/>
+                            <input type="file" class="form-control" test-id="fileStream" id="inputFile" name="file" required="true" disabled="true"/>
                         </div>
                         <div class="modal-footer">
-                            <button test-id="addFileContract" class="btn bg-success text-white" type="submit"
-                            >Reemplazar Archivo
+                            <button test-id="addFileContract" class="btn bg-success text-white" id="buttonFile" type="submit" disabled="true">
+                                Reemplazar Archivo
                             </button>
                         </div>
                     </div>

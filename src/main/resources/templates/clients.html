@@ -68,8 +68,10 @@
                         <tr th:each="client : ${clients}" test-id="datasClient">
                             <td th:text="${client.getIdClient()}"></td>
                             <td th:text="${client.getClientName()}"></td>
-                            <td th:text="${client.getEmail()}"></td>
-                            <td th:text="${client.getNumberPhone()}"></td>
+                            <td th:if="${client.getEmail() != ''}" th:text="${client.getEmail()}"></td>
+                            <td th:if="${client.getEmail() == ''}" th:text="${'No Registra'}"></td>
+                            <td th:if="${client.getNumberPhone() != null}" th:text="${client.getNumberPhone()}"></td>
+                            <td th:if="${client.getNumberPhone() == null}" th:text="${'No Registra'}"></td>
                             <td>
                                 <a th:href="@{/abrirCliente/} + ${client.getIdClient()}" test-id="openClient"
                                    class="btn btn-outline-success">Abrir</a>

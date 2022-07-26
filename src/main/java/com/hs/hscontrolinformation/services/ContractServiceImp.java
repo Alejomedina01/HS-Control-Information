@@ -52,17 +52,17 @@ public class ContractServiceImp implements ServiceTemplate<Contract> {
     }
 
     @Transactional
-    public void updateContractToClientId(Long idClient, Long idContract){
+    public void updateContractToClientId(String idClient, String idContract){
         contractDao.updateContractToClientId(idClient, idContract);
     }
 
     @Transactional(readOnly = true)
-    public String findClientIdFromContract(Long idContract){
+    public String findClientIdFromContract(String idContract){
         return contractDao.findClientIdFromContract(idContract);
     }
 
     @Transactional(readOnly = true)
-    public List<String> getEmployeesAsociated(Long idContract){
+    public List<String> getEmployeesAsociated(String idContract){
         return contractDao.getEmployeesAsociated(idContract);
     }
 }

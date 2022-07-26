@@ -45,14 +45,14 @@ public class ClientImplService implements ServiceTemplate<Client>{
         repository.delete(data);
     }
 
-    @Transactional(readOnly = false)
-    public void deleteforId(long id) {
-        repository.deleteById(id);
+    @Override
+    public Client findById(Long id) {
+        return null;
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Client findById(Long id) {
+    public Client findById(String id) {
         return repository.findById(id).orElse(null);
     }
 
@@ -62,7 +62,7 @@ public class ClientImplService implements ServiceTemplate<Client>{
     }
 
     @Transactional(readOnly = true)
-    public List<String> findBasicDataContract(Long clientId){
+    public List<String> findBasicDataContract(String clientId){
         return repository.findContractsFromClient(clientId);
     }
 

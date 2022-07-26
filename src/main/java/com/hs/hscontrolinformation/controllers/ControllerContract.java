@@ -76,7 +76,9 @@ public class ControllerContract {
     }
 
     @GetMapping("/addNewContract/")
-    public String findClienForContract() {
+    public String findClienForContract(Model model) {
+        var clients = clientService.list();
+        model.addAttribute("clients", clients);
         return "findClient";
     }
 
@@ -98,7 +100,7 @@ public class ControllerContract {
             redirectAttrs.addFlashAttribute("mensaje", "x Error al agregar documento (nombre ya existe)")
                     .addFlashAttribute("clase", "danger");
         }
-        return "redirect:/abrirContrato/"+contract.getIdContract();
+        return "redirect:/abrirContrato/"+ contract.getIdContract();
     }
 
     private void saveDocumentStorage(Contract contract, MultipartFile file, Document document){
@@ -110,9 +112,10 @@ public class ControllerContract {
         documentService.updateDocumentToContractId(contract.getIdContract(), document.getIdDocument());
     }
 
-    @GetMapping("/findClient/")
-    public String selectedClient(Model model, @RequestParam Long idClient, @ModelAttribute("client") Client client){
-        this.client = clientService.findById(idClient);
+    @GetMapping("/findClient/{idClient}")
+    public String selectedClient(Model model, Client client){
+        this.client = clientService.findById(client.getIdClient());
+        log.info(client.getIdClient());
         model.addAttribute("client", this.client);
         return "findClient";
     }
@@ -124,9 +127,9 @@ public class ControllerContract {
             log.info(contract.getContractDate()+"");
             return "addContract";
         }
-        if (contractService.findById(contract.getIdContract()) == null){
+        if (contractService.findById(contract.getIdContract()) == null && this.client != null){
             contractService.save(contract);
-            contractService.updateContractToClientId(client.getIdClient(), contract.getIdContract());
+            contractService.updateContractToClientId(this.client.getIdClient(), contract.getIdContract());
             redirectAttrs.addFlashAttribute("mensaje", "✓ Contrato Agregado Correctamente")
                     .addFlashAttribute("clase", "success");
         }else{
@@ -184,7 +187,7 @@ public class ControllerContract {
     @GetMapping("/abrirContrato/{idContract}")
     public String openContract(Contract contract, Model model) {
         contract = (Contract) contractService.find(contract);
-        Long idClient = Long.parseLong(contractService.findClientIdFromContract(contract.getIdContract()));
+        String idClient = contractService.findClientIdFromContract(contract.getIdContract());
         Client clientContract = clientService.findById(idClient);
         List<Document> documentsContract=null;
         if(documentService.getTotalCountDocuments()>0){

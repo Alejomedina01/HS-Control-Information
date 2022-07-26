@@ -9,19 +9,20 @@ import com.hs.hscontrolinformation.domain.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
+import lombok.extern.slf4j.Slf4j;
 @Service
 @Slf4j
 public class DocumentServiceImp implements ServiceTemplate<Document>{
-        @Autowired
+    @Autowired
     private DocumentDao repository;
 
     @Transactional
-    public void updateDocumentToContractId(Long idContract,Long idDocument){
+    public void updateDocumentToContractId(String idContract,Long idDocument){
+        log.info(idContract + " aqui es el metodo de la implementacion");
         repository.updateDocumentToContractId(idContract,idDocument);
     }
     @Transactional
-    public List<Document> findAllDocumentsOneContract(Long idContract){
+    public List<Document> findAllDocumentsOneContract(String idContract){
         return repository.findAllDocumentsOneContract(idContract);
     }
     @Transactional
@@ -66,7 +67,7 @@ public class DocumentServiceImp implements ServiceTemplate<Document>{
     }
 
     @Transactional(readOnly = true)
-    public Document findDocumentUniqName(Long idContract, String nameFile){
+    public Document findDocumentUniqName(String idContract, String nameFile){
         return repository.findDocumentUniqName(idContract, nameFile);
     }
 }

@@ -47,7 +47,7 @@ public class EmployeeContractServiceImp implements ServiceTemplate<EmployeeContr
     }
 
     @Transactional(readOnly = true)
-    public List<String> getEmployeesNotAsociated(Long idContract){
+    public List<String> getEmployeesNotAsociated(String idContract){
         return this.employeeContractDao.getEmployeesNotAsociated(idContract);
     }
 
