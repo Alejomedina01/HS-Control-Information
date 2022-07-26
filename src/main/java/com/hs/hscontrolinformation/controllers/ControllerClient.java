@@ -14,7 +14,6 @@ import com.hs.hscontrolinformation.services.ClientImplService;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
@@ -32,6 +31,7 @@ public class ControllerClient {
             return getOnePage(model, 1);
         }
         clients = service.findByKeyword(myInput);
+        log.info("tamaño de busquedad:"+clients.size());
         model.addAttribute("currentPage", 1);
         model.addAttribute("totalPages", 1);
         model.addAttribute("totalItems", clients.size());

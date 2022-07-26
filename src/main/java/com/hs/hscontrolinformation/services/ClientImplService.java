@@ -26,7 +26,7 @@ public class ClientImplService implements ServiceTemplate<Client>{
     }
     @Transactional(readOnly = true)
     public List<Client> findByKeyword(String keyword){
-        return repository.findAllByKeyWord("%"+keyword+"%");
+        return repository.findAllByKeyWord("%"+keyword.toLowerCase()+"%");
     }
     @Override
     @Transactional(readOnly = false)
