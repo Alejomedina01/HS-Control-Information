@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
+import org.springframework.data.domain.Page;
 
 
 import com.hs.hscontrolinformation.domain.Client;
@@ -13,6 +14,8 @@ import com.hs.hscontrolinformation.services.ClientImplService;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Controller
 @Slf4j
@@ -21,18 +24,32 @@ public class ControllerClient {
     @Autowired
     ClientImplService service ;
 
-    @GetMapping("/allClients")
-    public String listar() {
-        service.list();
-        return "index";
-    }
     @GetMapping("/Clients")
-    public String showClients(Model model){
+    public String showClients(Model model,String myInput){
         var clients = service.list();
+        log.info("ingreso busqueda: "+myInput);
+        if (myInput == null || myInput.isEmpty()){
+            return getOnePage(model, 1);
+        }
+        clients = service.findByKeyword(myInput);
+        model.addAttribute("currentPage", 1);
+        model.addAttribute("totalPages", 1);
+        model.addAttribute("totalItems", clients.size());
         model.addAttribute("clients", clients);
         return "clients";
     }
-
+    @GetMapping("/Clients/page/{pageNumber}")
+    public String getOnePage(Model model, @PathVariable("pageNumber") int currentPage) {
+        Page<Client> page = service.findPage(currentPage);
+        int totalPages = page.getTotalPages();
+        long totalItems = page.getTotalElements();
+        List<Client> clients = page.getContent();
+        model.addAttribute("currentPage", currentPage);
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("totalItems", totalItems);
+        model.addAttribute("clients", clients);
+        return "clients";
+    }
     @GetMapping("/addNewClient/")
     public String addClient(){
         return "addClients";
