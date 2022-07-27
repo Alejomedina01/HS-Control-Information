@@ -51,4 +51,9 @@ public class EmployeeContractServiceImp implements ServiceTemplate<EmployeeContr
         return this.employeeContractDao.getEmployeesNotAsociated(idContract);
     }
 
+    @Transactional(readOnly = false)
+    public void deleteAsociation(String idEmployee, String idContract){
+        this.employeeContractDao.deleteAsociation(Long.parseLong(idEmployee), idContract);
+    }
+
 }

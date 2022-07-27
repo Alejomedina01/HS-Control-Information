@@ -187,6 +187,7 @@
                             <th>Fecha Fin</th>
                             <th>Enlace</th>
                             <th>Editar</th>
+                            <th>Eliminar</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -202,6 +203,9 @@
                             </td>
                             <td>
                                 <a class="btn btn-outline-warning">Editar</a>
+                            </td>
+                            <td>
+                                <a th:href="@{/deleteEmployee/{idEmployee}/{idContract} (idEmployee=${employee.split(',')[0]}, idContract=${contract.idContract})}" class="btn btn-outline-danger">Desasociar</a>
                             </td>
                         </tbody>
                     </table>

@@ -29,19 +29,27 @@
                             <div class="col-md-3">
                                 <h5>&nbsp;Buscar Cliente</h5>
                             </div>
-                            <div class="col-md-9">
-                                <input type="text" id="myInput" class="form-control" placeholder="Ingrese palabra clave">
-                                <script>
-                                    $(document).ready(function () {
-                                        $("#myInput").on("keyup", function () {
-                                            var value = $(this).val().toLowerCase();
-                                            $("#dtBasicExample tr").filter(function () {
-                                                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                            <form th:action="@{/Clients}"
+                                  method="GET" class="was-validated">
+                                <div class="input-group mb-3 col-md-auto">
+                                    <input type="text" id="myInput" name="myInput" class="form-control"
+                                           placeholder="Ingrese palabra clave">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-success" test-id="searchClient"
+                                                type="submit">Buscar</button>
+                                    </div>
+                                    <script>
+                                        $(document).ready(function () {
+                                            $("#myInput").on("keyup", function () {
+                                                var value = $(this).val().toLowerCase();
+                                                $("#dtBasicExample tr").filter(function () {
+                                                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                                                });
                                             });
                                         });
-                                    });
-                                </script>
-                            </div>
+                                    </script>
+                                </div>
+                            </form>
                         </div>
                     </div>
                     <br>
@@ -56,6 +64,7 @@
                         </tr>
                         </thead>
                         <tbody>
+
                         <tr th:each="client : ${clients}" test-id="datasClient">
                             <td th:text="${client.getIdClient()}"></td>
                             <td th:text="${client.getClientName()}"></td>
@@ -64,17 +73,59 @@
                             <td th:if="${client.getNumberPhone() != null}" th:text="${client.getNumberPhone()}"></td>
                             <td th:if="${client.getNumberPhone() == null}" th:text="${'No Registra'}"></td>
                             <td>
-                                <a th:href="@{/abrirCliente/} + ${client.getIdClient()}" test-id="openClient" class="btn btn-outline-success">Abrir</a>
+                                <a th:href="@{/abrirCliente/} + ${client.getIdClient()}" test-id="openClient"
+                                   class="btn btn-outline-success">Abrir</a>
                             </td>
                         </tr>
                         </tbody>
                     </table>
+                    <nav class="form-inline">
+                        <ul class="pagination">
+                            <li class="page-item p-2">N° Total Items: [[${totalItems}]] Pagina [[${currentPage}]] de
+                                [[${totalPages}]]
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link btn btn-light" th:if="${currentPage > 1}"
+                                   th:href="@{'/Clients/page/1'}">Primera</a>
+                                <span class="page-link btn btn-light" th:unless="${currentPage > 1}">Primera</span>
+                            </li>
+
+                            <li class="page-item">
+                                <a class="page-link btn btn-light" th:if="${currentPage > 1}"
+                                   th:href="@{'/Clients/page/' + ${currentPage - 1}}">Anterior</a>
+                                <span class="page-link btn btn-light" th:unless="${currentPage > 1}">Anterior</span>
+                            </li>
+
+                            <li class="page-item pagination">
+                                <span th:each="i: ${#numbers.sequence(1, totalPages)}">
+                                    <a class=" page-item page-link btn btn-light page-item" th:if="${i != currentPage}"
+                                       th:href="@{'/Clients/page/' + ${i}}">[[${i}]]</a>
+                                    <span class="page-item page-link btn btn-light page-item"
+                                          th:unless="${i != currentPage}">[[${i}]]</span>
+                                </span>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link btn btn-light" th:if="${currentPage < totalPages}"
+                                   th:href="@{'/Clients/page/' + ${currentPage + 1}}">Siguiente</a>
+                                <span class="page-link btn btn-light"
+                                      th:unless="${currentPage < totalPages}">Siguiente</span>
+                            </li>
+
+                            <li class="page-item">
+                                <a class="page-link btn btn-light" th:if="${currentPage < totalPages}"
+                                   th:href="@{'/Clients/page/' + ${totalPages}}">Ultima</a>
+                                <span class="page-link btn btn-light"
+                                      th:unless="${currentPage < totalPages}">Ultima</span>
+                            </li>
+                        </ul>
+                    </nav>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<div style="position: absolute;width: 370px;top: 150px;left: 70%;" th:classappend="'alert-' + (${clase != null} ? ${clase} : info)" th:if="${mensaje != null}"
+<div style="position: absolute;width: 370px;top: 150px;left: 70%;"
+     th:classappend="'alert-' + (${clase != null} ? ${clase} : info)" th:if="${mensaje != null}"
      th:text="${mensaje}"
      class="alert">
     <i class="fas fa-check-circle"></i>

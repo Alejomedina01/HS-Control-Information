@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.Valid;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -173,6 +174,9 @@ public class ControllerContract {
     }
     public void checkPresignedUrls(List<Document> documentsContract){
         for (Document document:documentsContract) {
+            Calendar cal=Calendar.getInstance();
+
+            log.info("fecha vencimiento"+document.getExpirationDate()+"  fecha actual:"+(Instant.now().toEpochMilli()-(1000*60*60))+" hora calenadario: "+cal.getTimeInMillis());
             if(document.getPresignedUrl()== null ||
                     Long.parseLong(document.getExpirationDate())< (Instant.now().toEpochMilli())-(1000*60*60)){
                     serviceAws.generatePresignedUrl(document);
