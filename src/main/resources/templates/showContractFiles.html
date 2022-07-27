@@ -9,12 +9,12 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-auto">
-            <div th:if="${documents != null or !documents.isEmpty()}">
+            <div>
                 <div class="card">
                     <div class="card-header">
                         <h4>Documentos asociados al contrato</h4>
                     </div>
-                    <table class="table table-striped" th:if="${documents != null}">
+                    <table class="table table-striped">
                         <thead class="thead-dark">
                         <tr>
                             <th>Nombre</th>
@@ -22,7 +22,7 @@
                             <th>Eliminar</th>
                         </tr>
                         </thead>
-                        <tbody>
+                        <tbody th:if="${documents != null and !documents.isEmpty()}">
                         <tr test-id="datas-fileContract" th:each="document : ${documents}">
                             <td th:text="${document.getNameFile()}"></td>
                             <td>
