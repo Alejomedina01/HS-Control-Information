@@ -199,12 +199,12 @@ public class ControllerContract {
         return "specificDataContract";
     }
 
-    private Long calculateTotalValue(Double contractValue, Double aditionalValue){
-        return (long) (contractValue + ((aditionalValue != null)? aditionalValue : 0));
+    private Double calculateTotalValue(Double contractValue, Double aditionalValue){
+        return (contractValue + ((aditionalValue != null)? aditionalValue : 0));
     }
 
-    private Long calculatePendingValue(Double contractValue, Double aditionalValue, Double invoicedValue){
-        return (long) (calculateTotalValue(contractValue,aditionalValue) - ((invoicedValue != null)? invoicedValue : 0));
+    private Double calculatePendingValue(Double contractValue, Double aditionalValue, Double invoicedValue){
+        return (calculateTotalValue(contractValue,aditionalValue) - ((invoicedValue != null)? invoicedValue : 0));
     }
 
     @GetMapping("/editar/{idContract}")
