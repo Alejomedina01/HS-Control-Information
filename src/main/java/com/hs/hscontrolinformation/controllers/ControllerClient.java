@@ -51,9 +51,6 @@ public class ControllerClient {
             redirectAttrs.addFlashAttribute("mensaje", "x Error al agregar cliente (id ya existe)")
                     .addFlashAttribute("clase", "danger");
         }
-        service.save(data);
-        redirectAttrs.addFlashAttribute("mensaje", "✓ Cliente Agregado Correctamente")
-                .addFlashAttribute("clase", "success");
         return "redirect:/Clients";
     }
 
