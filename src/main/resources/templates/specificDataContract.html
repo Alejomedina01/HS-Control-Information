@@ -43,16 +43,16 @@
                         </tr>
                         <tr>
                             <td><b>Valor Inicial</b></td>
-                            <td> [[${new java.text.DecimalFormat('$#,##0').format(contract.getInitialValue())}]]</td>
+                            <td class="formato">[[${contract.getInitialValue()}]]</td>
                         </tr>
                         <tr>
                             <td><b>Valor Adicional</b></td>
-                            <td th:if="${contract.getAditionalValue() != null}" test-id="valuePending">[[${new java.text.DecimalFormat('$#,##0').format(contract.getAditionalValue())}]]</td>
-                            <td th:if="${contract.getAditionalValue() == null}" test-id="valuePending">$0</td>
+                            <td class="formato" th:if="${contract.getAditionalValue() != null}" test-id="valuePending">[[${contract.getAditionalValue()}]]</td>
+                            <td th:if="${contract.getAditionalValue() == null}" test-id="valuePending">0</td>
                         </tr>
                         <tr>
                             <td><b>Valor Total</b></td>
-                            <td>[[${new java.text.DecimalFormat('$#,##0').format(totalValue)}]]</td>
+                            <td class="formato">[[${totalValue}]]</td>
                         </tr>
                         <tr>
                             <td><b>Acta Inicio</b></td>
@@ -66,15 +66,15 @@
                         </tr>
                         <tr>
                             <td><b>Valor Facturado</b></td>
-                            <td>[[${new java.text.DecimalFormat('$#,##0').format(contract.getInvoicedValue())}]]</td>
+                            <td class="formato">[[${contract.getInvoicedValue()}]]</td>
                         </tr>
                         <tr>
                             <td><b>Valor Pendiente</b></td>
-                            <td>[[${new java.text.DecimalFormat('$#,##0').format(pendingValue)}]]</td>
+                            <td class="formato">[[${pendingValue}]]</td>
                         </tr>
                         <tr>
                             <td><b>Valor Retegarantía</b></td>
-                            <td>[[${new java.text.DecimalFormat('$#,##0').format(contract.getWarratyValue())}]]</td>
+                            <td class="formato">[[${contract.getWarratyValue()}]]</td>
                         </tr>
                         <tr>
                             <td><b>Identificacion Cliente</b></td>
@@ -187,6 +187,7 @@
                             <th>Fecha Fin</th>
                             <th>Enlace</th>
                             <th>Editar</th>
+                            <th>Eliminar</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -202,6 +203,9 @@
                             </td>
                             <td>
                                 <a class="btn btn-outline-warning">Editar</a>
+                            </td>
+                            <td>
+                                <a th:href="@{/deleteEmployee/{idEmployee}/{idContract} (idEmployee=${employee.split(',')[0]}, idContract=${contract.idContract})}" class="btn btn-outline-danger">Desasociar</a>
                             </td>
                         </tbody>
                     </table>
@@ -220,5 +224,6 @@
 </div>
 <footer th:replace="layout/template :: footer"></footer>
 <script th:replace="layout/template :: scriptAlerts"></script>
+<script th:replace="layout/template :: scriptFormat"></script>
 </body>
 </html>

@@ -70,5 +70,9 @@ public class ControllerEmployeeContract {
         return "redirect:/abrirContrato/"+this.idContractActual;
     }
 
-
+    @GetMapping("/deleteEmployee/{idEmployee}/{idContract}")
+    public String deleteAsociation(@PathVariable String idEmployee, @PathVariable String idContract){
+        ecServiceImp.deleteAsociation(idEmployee, idContract);
+        return "redirect:/abrirContrato/"+idContract;
+    }
 }

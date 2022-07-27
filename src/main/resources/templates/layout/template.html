@@ -126,9 +126,29 @@
     function enableReceivalDateAct(){
         changeDate('initialDateAct','receivalDateAct')
     }
-    document.querySelector("#contractDate").addEventListener('change',enableInitialDateAct)
-    document.querySelector("#contractDate").addEventListener('change',enableReceivalDateAct)
-    document.querySelector("#initialDateAct").addEventListener('change',enableReceivalDateAct)
+    function enableFinalDateLinkOne(){
+        if(document.getElementById('fechaTerminacion1') != null) {
+            changeDate('fechaVinculacion1', 'fechaTerminacion1')
+        }else{
+            changeDate('fechaVinculacion1', 'fechaTerminacion2')
+        }
+    }
+    function enableFinalDateLinkTwo(){
+        if(document.getElementById('fechaTerminacion1') != null) {
+            changeDate('fechaVinculacion2', 'fechaTerminacion1')
+        }else{
+            changeDate('fechaVinculacion2', 'fechaTerminacion2')
+        }
+    }
+    if(document.getElementById('contractDate') != null){
+        document.querySelector("#contractDate").addEventListener('change',enableReceivalDateAct)
+        document.querySelector("#contractDate").addEventListener('change',enableInitialDateAct)
+        document.querySelector("#initialDateAct").addEventListener('change',enableReceivalDateAct)
+    }else if(document.getElementById('fechaVinculacion1') != null){
+        document.querySelector("#fechaVinculacion1").addEventListener('change',enableFinalDateLinkOne)
+    }else if(document.getElementById('fechaVinculacion2') != null){
+        document.querySelector("#fechaVinculacion2").addEventListener('change',enableFinalDateLinkTwo)
+    }
 </script>
 <script th:fragment="scriptAlerts">
     $(document).ready(function() {
@@ -158,10 +178,13 @@
     function calculatePendingValue(){
         var total = calculateTotal();
         var invoiceValue = (document.getElementById('invoicedValue').value != '')? parseFloat(document.getElementById('invoicedValue').value) : 0;
-        var pendingValue = total - invoiceValue
-        console.log(total +" - "+ invoiceValue)
-        console.log(total - invoiceValue)
-        document.getElementById('pendingValue').value = formatterPeso.format(pendingValue);
+        if(invoiceValue > total){
+            document.getElementById('invoicedValue').setCustomValidity('El valor no puede ser mayor a ' + formatterPeso.format(total));
+        }else{
+            document.getElementById('invoicedValue').setCustomValidity('');
+            document.getElementById('invoicedValue').required = false;
+        }
+        document.getElementById('pendingValue').value = formatterPeso.format((total - invoiceValue));
     }
     document.querySelector("#initialValue").addEventListener('change',setTotal)
     document.querySelector("#aditionalValue").addEventListener('change',setTotal)
@@ -177,6 +200,22 @@
         }else{
             document.getElementById('inputFile').disabled = true;
             document.getElementById('buttonFile').disabled = true;
+        }
+    }
+</script>
+<script th:fragment="scriptFormat">
+    const formatterPesoCol = new Intl.NumberFormat('es-CO', {
+        style: 'currency',
+        currency: 'COP',
+        minimumFractionDigits: 0
+    })
+    var formatElements = document.getElementsByClassName('formato');
+    for (let i = 0; i < formatElements.length; i++) {
+        var tag = formatElements[i];
+        if(tag.textContent != ''){
+            tag.textContent = formatterPesoCol.format(tag.textContent);
+        }else if(tag.value != ''){
+            tag.value = formatterPesoCol.format(tag.value);
         }
     }
 </script>
