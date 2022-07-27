@@ -11,12 +11,10 @@ import com.hs.hscontrolinformation.util.AwsS3Service;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
@@ -69,19 +67,56 @@ public class ControllerContract {
     }
 
     @GetMapping("/Contracts")
-    public String showContracts(Model model) {
-        var contracts = contractService.findBasicDataContract();
-        model.addAttribute("contracts", contracts);
+    public String showContracts(Model model,String myInput) {
+        log.info("ingreso busqueda: "+myInput);
+        if (myInput == null || myInput.isEmpty()){
+            return getOnePageContracts(model, 1);
+        }
+        var contractsSearch = contractService.findByKeyword(myInput);
+        log.info("tamaño de busquedad:"+contractsSearch.size());
+        model.addAttribute("currentPage", 1);
+        model.addAttribute("totalPages", 1);
+        model.addAttribute("totalItems", contractsSearch.size());
+        model.addAttribute("contracts", contractsSearch);
         return "contracts";
     }
-
+    @GetMapping("/Contracts/page/{pageNumber}")
+    public String getOnePageContracts(Model model, @PathVariable("pageNumber") int currentPage) {
+        MyPage<String> page = contractService.findPage(currentPage);
+        int totalPages = page.getNumberPages();
+        long totalItems = page.getTotalItems();
+        model.addAttribute("currentPage", currentPage);
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("totalItems", totalItems);
+        model.addAttribute("contracts", page.getContent());
+        return "contracts";
+    }
     @GetMapping("/addNewContract/")
-    public String findClienForContract(Model model) {
-        var clients = clientService.list();
+    public String findClienForContract(Model model,String myInput) {
+        log.info("ingreso busqueda: "+myInput);
+        if (myInput == null || myInput.isEmpty()){
+            return getOnePageClients(model, 1);
+        }
+        var clients = clientService.findByKeyword(myInput);
+        log.info("tamaño de busquedad:"+clients.size());
+        model.addAttribute("currentPage", 1);
+        model.addAttribute("totalPages", 1);
+        model.addAttribute("totalItems", clients.size());
         model.addAttribute("clients", clients);
         return "findClient";
     }
-
+    @GetMapping("/addNewContract/page/{pageNumber}")
+    public String getOnePageClients(Model model, @PathVariable("pageNumber") int currentPage) {
+        Page<Client> page = clientService.findPage(currentPage);
+        int totalPages = page.getTotalPages();
+        long totalItems = page.getTotalElements();
+        List<Client> clients = page.getContent();
+        model.addAttribute("currentPage", currentPage);
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("totalItems", totalItems);
+        model.addAttribute("clients", clients);
+        return "findClient";
+    }
     @GetMapping("/addContract/")
     public String addNewContract(Model model) {
         LocalDate actual = LocalDate.now();

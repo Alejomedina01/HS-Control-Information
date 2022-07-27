@@ -1,5 +1,6 @@
 package com.hs.hscontrolinformation.services;
 
+import com.hs.hscontrolinformation.controllers.MyPage;
 import com.hs.hscontrolinformation.dao.ContractDao;
 import com.hs.hscontrolinformation.domain.Contract;
 import com.hs.hscontrolinformation.util.ServiceTemplate;
@@ -26,11 +27,25 @@ public class ContractServiceImp implements ServiceTemplate<Contract> {
         contractDao.save(data);
     }
 
+    @Transactional(readOnly = true)
+    public MyPage<String> findPage(int pageNumber){
+        double maxItems=4;
+        MyPage<String> myPage=new MyPage<>();
+        long total= contractDao.count();
+        List<String> contracts=contractDao.findBasicDataContract((long)((pageNumber-1)*maxItems) , (int) maxItems);
+        myPage.setTotalItems(total);
+        myPage.setNumberPages((int) Math.ceil(total/maxItems));
+        myPage.setContent(contracts);
+        return myPage;
+    }
     @Override
     public void delete(Contract data) {
         contractDao.delete(data);
     }
-
+    @Transactional(readOnly = true)
+    public List<String> findByKeyword(String keyword){
+        return contractDao.findAllByKeyWord("%"+keyword.toLowerCase()+"%");
+    }
     @Override
     public Contract findById(Long id) {
         return null;
@@ -44,11 +59,6 @@ public class ContractServiceImp implements ServiceTemplate<Contract> {
     @Transactional(readOnly = true)
     public Contract find(Contract contract) {
         return contractDao.findById(contract.getIdContract()).orElse(null);
-    }
-
-    @Transactional(readOnly = true)
-    public List<String> findBasicDataContract(){
-        return contractDao.findBasicDataContract();
     }
 
     @Transactional
