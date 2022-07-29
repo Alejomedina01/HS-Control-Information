@@ -202,7 +202,7 @@
                                 <a th:href="@{/abrirEmpleado/} + ${employee.split(',')[0]}" test-id="openEmployee" class="btn btn-outline-success">Abrir</a>
                             </td>
                             <td>
-                                <a class="btn btn-outline-warning">Editar</a>
+                                <a th:href="@{/modifyAsociation/{idContract}/{idEmployee} (idEmployee=${employee.split(',')[0]}, idContract=${contract.idContract})}" class="btn btn-outline-warning">Editar</a>
                             </td>
                             <td>
                                 <a th:href="@{/deleteEmployee/{idEmployee}/{idContract} (idEmployee=${employee.split(',')[0]}, idContract=${contract.idContract})}" class="btn btn-outline-danger">Desasociar</a>

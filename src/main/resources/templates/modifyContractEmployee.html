@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/template :: head"></head>
+<header th:replace="layout/template :: header"></header>
+<body>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 >Editar Asociación del empleado</h4>
+                </div>
+                <form th:action="@{/saveChangesEmpCont}" id="form-vin-employ" th:object="${employeeContract}" method="POST" class="was-validated">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="idContract">Identificación Contrato</label>
+                            <input type="text" class="form-control" name="idContract" readonly th:value="${idContract}">
+                        </div>
+                        <div class="form-group">
+                            <label for="idEmployee">Identificación Empleado</label>
+                            <input type="number" min="1" max="999999999999" class="form-control" name="idEmployee" readonly th:value="${idEmployee}">
+                        </div>
+                        <div th:if="${finalContractDate != null}" class="form-group">
+                            <label for="initialDate">Fecha de vinculación</label>
+                            <input type="date" id="fechaVinculacion1" th:value="${employeeContract.initialDate}" th:min="${contractDate}" th:max="${finalContractDate}" class="form-control" name="initialDate" required="true">
+                        </div>
+                        <div th:if="${finalContractDate == null}" class="form-group">
+                            <label for="initialDate">Fecha de vinculación</label>
+                            <input type="date" id="fechaVinculacion2" th:value="${employeeContract.initialDate}"  th:min="${contractDate}" th:max="${actualDate}" class="form-control" name="initialDate" required="true">
+                        </div>
+                        <div th:if="${finalContractDate != null}" class="form-group">
+                            <label for="finalDate">Fecha de terminación</label>
+                            <input type="date" id="fechaTerminacion1" th:value="${employeeContract.finalDate}" class="form-control" th:max="${finalContractDate}"  name="finalDate">
+                        </div>
+                        <div th:if="${finalContractDate == null}" class="form-group">
+                            <label for="finalDate">Fecha de terminación</label>
+                            <input type="date" id="fechaTerminacion2" th:value="${employeeContract.finalDate}" class="form-control" th:max="${actualDate}" name="finalDate">
+                        </div>
+                        <div class="modal-footer">
+                            <button test-id="saveChangesEmpCont" class="btn btn-primary" type="submit">Agregar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="layout/template :: footer"></footer>
+<script th:replace="layout/template :: scriptDates"></script>
+</body>
+</html>

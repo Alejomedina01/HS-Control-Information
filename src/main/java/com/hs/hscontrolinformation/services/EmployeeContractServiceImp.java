@@ -1,7 +1,6 @@
 package com.hs.hscontrolinformation.services;
 
 import com.hs.hscontrolinformation.dao.EmployeeContractDao;
-import com.hs.hscontrolinformation.domain.Employee;
 import com.hs.hscontrolinformation.domain.EmployeeContract;
 import com.hs.hscontrolinformation.util.ServiceTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +53,11 @@ public class EmployeeContractServiceImp implements ServiceTemplate<EmployeeContr
     @Transactional(readOnly = false)
     public void deleteAsociation(String idEmployee, String idContract){
         this.employeeContractDao.deleteAsociation(Long.parseLong(idEmployee), idContract);
+    }
+
+    @Transactional(readOnly = true)
+    public EmployeeContract findByEmpCont(String idEmployee, String idContract){
+        return this.employeeContractDao.findByEmpCont(Long.parseLong(idEmployee), idContract);
     }
 
 }
