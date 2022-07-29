@@ -40,7 +40,7 @@
                             <div class="card-body">
                                 <div class="form-group">
                                     <label for="idContract" >Id contrato</label>
-                                    <input type="number" min="1" max="999999999999" th:field="*{idContract}" class="form-control" name="idContract" required="true" readonly>
+                                    <input type="text" th:field="*{idContract}" class="form-control" name="idContract" required="true" readonly>
                                 </div>
                                 <div class="form-group">
                                     <label for="projectName" >Nombre proyecto</label>
@@ -56,19 +56,23 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="initialValue">Valor inicial</label>
-                                    <input type="number" min="1" max="999999999999" th:onkeypress="return event.charCode >= 48 && event.charCode <= 57" th:field="*{initialValue}" class="form-control" name="initialValue" required="true">
+                                    <input type="number" step="any" min="0" max="999999999999" th:field="*{initialValue}" class="form-control" name="initialValue" id="initialValue" required="true">
                                 </div>
                                 <div class="form-group">
                                     <label for="aditionalValue">Valor adicional</label>
-                                    <input type="number" min="1" max="999999999999" th:onkeypress="return event.charCode >= 48 && event.charCode <= 57" th:field="*{aditionalValue}" class="form-control" name="aditionalValue">
+                                    <input type="number" step="any" min="0" max="999999999999" th:field="*{aditionalValue}" class="form-control" name="aditionalValue" id="aditionalValue">
+                                </div>
+                                <div class="form-group">
+                                    <label for="totalValue">Valor total</label>
+                                    <input type="text" th:value="${totalValue}" class="formato form-control" id="totalValue" disabled>
                                 </div>
                                 <div style="float: left; margin-right: 20px;" class="form-group">
                                     <label for="initialDateAct">Acta inicio</label>
-                                    <input th:max="${actual}" id="initialDateAct" type="date" onclick="getLastDate('contractDate','initialDateAct')" th:field="*{initialDateAct}" class="form-control" name="initialDateAct" required="true">
+                                    <input th:max="${actual}" id="initialDateAct" type="date" th:field="*{initialDateAct}" class="form-control" name="initialDateAct">
                                 </div>
                                 <div style="float: left;" class="form-group">
                                     <label for="receivalDateAct">Acta recibido</label>
-                                    <input th:max="${actual}" id="receivalDateAct" type="date" onclick="getLastDate('initialDateAct','receivalDateAct')" th:field="*{receivalDateAct}" class="form-control" name="receivalDateAct">
+                                    <input th:max="${actual}" id="receivalDateAct" type="date" th:field="*{receivalDateAct}" class="form-control" name="receivalDateAct">
                                 </div>
                                 <br>
                                 <br>
@@ -76,15 +80,15 @@
                                 <br>
                                 <div class="form-group">
                                     <label for="invoicedValue">Valor facturado</label>
-                                    <input type="number" min="1" max="999999999999" th:onkeypress="return event.charCode >= 48 && event.charCode <= 57" th:field="*{invoicedValue}" class="form-control" name="invoicedValue" required="true">
+                                    <input type="number" step="any" min="0" max="999999999999" th:field="*{invoicedValue}" class="form-control" name="invoicedValue" id="invoicedValue" required="true">
                                 </div>
                                 <div class="form-group">
                                     <label for="pendingValue">Valor pendiente</label>
-                                    <input type="number" min="1" max="999999999999" th:onkeypress="return event.charCode >= 48 && event.charCode <= 57" th:field="*{pendingValue}" class="form-control" name="pendingValue">
+                                    <input type="text" th:value="${pendingValue}" class="formato form-control" name="pendingValue" id="pendingValue" readonly>
                                 </div>
                                 <div class="form-group">
                                     <label for="warratyValue">Valor garantía (Retegarantía)</label>
-                                    <input type="number" min="1" max="999999999999" th:onkeypress="return event.charCode >= 48 && event.charCode <= 57" th:field="*{warratyValue}" class="form-control" name="warratyValue" required="true">
+                                    <input type="number" step="any" min="0" max="999999999999" th:onkeypress="return event.charCode >= 48 && event.charCode <= 57" th:field="*{warratyValue}" class="form-control" name="warratyValue" required="true">
                                 </div>
                                 <div class="form-group">
                                     <label for="warrantyState">Estado garantía (Retegarantía)</label>
@@ -112,6 +116,8 @@
     </form>
 </section>
 <footer th:replace="layout/template :: footer"></footer>
-<script th:replace="layout/template :: script"></script>
+<script th:replace="layout/template :: scriptDates"></script>
+<script th:replace="layout/template :: scriptValues"></script>
+<script th:replace="layout/template :: scriptFormat"></script>
 </body>
 </html>

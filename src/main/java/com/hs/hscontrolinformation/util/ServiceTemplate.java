@@ -8,6 +8,7 @@ public interface ServiceTemplate<T> {
     public void save(T data);
     public void delete(T data);
     public T findById(Long id);
+    public T findById(String id);
 
 
 }

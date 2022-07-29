@@ -43,31 +43,38 @@
                         </tr>
                         <tr>
                             <td><b>Valor Inicial</b></td>
-                            <td> [[${new java.text.DecimalFormat('$#,##0').format(contract.getInitialValue())}]]</td>
+                            <td class="formato">[[${contract.getInitialValue()}]]</td>
                         </tr>
-                        <tr th:if="${contract.getAditionalValue() != null}">
+                        <tr>
                             <td><b>Valor Adicional</b></td>
-                            <td test-id="valuePending">[[${new java.text.DecimalFormat('$#,##0').format(contract.getAditionalValue())}]]</td>
+                            <td class="formato" th:if="${contract.getAditionalValue() != null}" test-id="valuePending">[[${contract.getAditionalValue()}]]</td>
+                            <td th:if="${contract.getAditionalValue() == null}" test-id="valuePending">0</td>
+                        </tr>
+                        <tr>
+                            <td><b>Valor Total</b></td>
+                            <td class="formato">[[${totalValue}]]</td>
                         </tr>
                         <tr>
                             <td><b>Acta Inicio</b></td>
-                            <td th:text="${contract.getInitialDateAct()}"></td>
+                            <td th:if="${contract.getInitialDateAct() != null}" th:text="${contract.getInitialDateAct()}"></td>
+                            <td th:if="${contract.getInitialDateAct() == null}" th:text="${'Sin Definir'}"></td>
                         </tr>
-                        <tr th:if="${contract.getReceivalDateAct() != null}">
+                        <tr>
                             <td><b>Acta Recibido</b></td>
-                            <td th:text="${contract.getReceivalDateAct()}"></td>
+                            <td th:if="${contract.getReceivalDateAct() != null}" th:text="${contract.getReceivalDateAct()}"></td>
+                            <td th:if="${contract.getReceivalDateAct() == null}" th:text="${'Sin Definir'}"></td>
                         </tr>
                         <tr>
                             <td><b>Valor Facturado</b></td>
-                            <td>[[${new java.text.DecimalFormat('$#,##0').format(contract.getInvoicedValue())}]]</td>
+                            <td class="formato">[[${contract.getInvoicedValue()}]]</td>
                         </tr>
-                        <tr th:if="${contract.getPendingValue() != null}">
+                        <tr>
                             <td><b>Valor Pendiente</b></td>
-                            <td>[[${new java.text.DecimalFormat('$#,##0').format(contract.getPendingValue())}]]</td>
+                            <td class="formato">[[${pendingValue}]]</td>
                         </tr>
                         <tr>
                             <td><b>Valor Retegarantía</b></td>
-                            <td>[[${new java.text.DecimalFormat('$#,##0').format(contract.getWarratyValue())}]]</td>
+                            <td class="formato">[[${contract.getWarratyValue()}]]</td>
                         </tr>
                         <tr>
                             <td><b>Identificacion Cliente</b></td>
@@ -78,6 +85,7 @@
                             <td th:text="${client.getClientName()}"></td>
                         </tr>
                         <tr>
+                            <td><b>Documentos</b></td>
                             <td><a th:href="@{/contractFiles/} + ${contract.getIdContract()}" test-id="visualizeDocuments" class="btn bg-success text-white" >Visualizar Documentos</a></td>
                         </tr>
                     </table>
@@ -175,8 +183,11 @@
                             <th>Identificación</th>
                             <th>Nombres</th>
                             <th>Apodo</th>
-                            <th>Teléfono</th>
+                            <th>Fecha Inicio</th>
+                            <th>Fecha Fin</th>
                             <th>Enlace</th>
+                            <th>Editar</th>
+                            <th>Eliminar</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -185,8 +196,16 @@
                             <td th:text="${employee.split(',')[1] + ' ' + employee.split(',')[2]}"></td>
                             <td th:text="${employee.split(',')[3]}"></td>
                             <td th:text="${employee.split(',')[4]}"></td>
+                            <td th:if="${employee.split(',')[5] != 'null'}" th:text="${employee.split(',')[5]}"></td>
+                            <td th:if="${employee.split(',')[5] == 'null'}" th:text="${'No Concretada'}"></td>
                             <td>
                                 <a th:href="@{/abrirEmpleado/} + ${employee.split(',')[0]}" test-id="openEmployee" class="btn btn-outline-success">Abrir</a>
+                            </td>
+                            <td>
+                                <a class="btn btn-outline-warning">Editar</a>
+                            </td>
+                            <td>
+                                <a th:href="@{/deleteEmployee/{idEmployee}/{idContract} (idEmployee=${employee.split(',')[0]}, idContract=${contract.idContract})}" class="btn btn-outline-danger">Desasociar</a>
                             </td>
                         </tbody>
                     </table>
@@ -205,5 +224,6 @@
 </div>
 <footer th:replace="layout/template :: footer"></footer>
 <script th:replace="layout/template :: scriptAlerts"></script>
+<script th:replace="layout/template :: scriptFormat"></script>
 </body>
 </html>

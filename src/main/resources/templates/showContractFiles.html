@@ -9,12 +9,12 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-auto">
-            <div th:if="${documents != null or !documents.isEmpty()}">
+            <div>
                 <div class="card">
                     <div class="card-header">
                         <h4>Documentos asociados al contrato</h4>
                     </div>
-                    <table class="table table-striped" th:if="${documents != null}">
+                    <table class="table table-striped">
                         <thead class="thead-dark">
                         <tr>
                             <th>Nombre</th>
@@ -22,7 +22,7 @@
                             <th>Eliminar</th>
                         </tr>
                         </thead>
-                        <tbody>
+                        <tbody th:if="${documents != null and !documents.isEmpty()}">
                         <tr test-id="datas-fileContract" th:each="document : ${documents}">
                             <td th:text="${document.getNameFile()}"></td>
                             <td>
@@ -45,12 +45,13 @@
                             document.getElementById("fieldNameFile").setAttribute("value", nameDocument);
                             console.log("id documento" + idDocumen)
                             document.getElementById("fielIdFile").setAttribute("value", idDocumen);
+                            enableForm();
                         }
                     </script>
+                    <div class="text-center p-2" th:if="${documents == null or documents.isEmpty()}">
+                        <span>No hay documentos asociados</span>
+                    </div>
                 </div>
-            </div>
-            <div class="text-center p-2" th:if="${documents == null or documents.isEmpty()}">
-                <span>No hay documentos asociados</span>
             </div>
             <br>
         </div>
@@ -80,11 +81,11 @@
                                    name="nameFile" required="true" readonly/>
                         </div>
                         <div class="form-group">
-                            <input type="file" class="form-control" test-id="fileStream" name="file" required="true"/>
+                            <input type="file" class="form-control" test-id="fileStream" id="inputFile" name="file" required="true" disabled="true"/>
                         </div>
                         <div class="modal-footer">
-                            <button test-id="addFileContract" class="btn bg-success text-white" type="submit"
-                            >Reemplazar Archivo
+                            <button test-id="addFileContract" class="btn bg-success text-white" id="buttonFile" type="submit" disabled="true">
+                                Reemplazar Archivo
                             </button>
                         </div>
                     </div>
@@ -100,5 +101,6 @@
     <i class="fas fa-check-circle"></i>
 </div>
 <script th:replace="layout/template :: scriptAlerts"></script>
+<script th:replace="layout/template :: scriptFiles"></script>
 </body>
 </html>

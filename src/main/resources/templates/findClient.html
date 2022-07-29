@@ -5,25 +5,114 @@
 <head th:replace="layout/template :: head"></head>
 <header th:replace="layout/template :: header"></header>
 <body>
-<div class="container text-center col-4">
-    <div class="card">
-        <div class="card-header">
-            <h4>Buscar Cliente </h4>
-        </div>
-        <br>
-        <form class="form-inline" th:action="@{/findClient/}" th:object="${client}" method="get">
-            <div class="form-group mx-sm-3 mb-2">
-                <label>Identificación</label>
-                &nbsp;
-                <input type="number" min="0" th:onkeypress="return event.charCode >= 48 && event.charCode <= 57" name="idClient" class="form-control"
-                       id="idClient" th:value="${idClient}" required>
-                &nbsp;
-                <input style="margin-top: 7px;" type="submit" test-id="btnsearch" class="btn btn-primary mb-2" value="Buscar">
+<div th:if="${clients != null and !clients.isEmpty()}" class="container align-center">
+    <div class="row">
+        <div class="col-md-11">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Seleccionar Cliente del Contrato</h4>
+                </div>
+                <br>
+                <div th:if="${clients != null and !clients.isEmpty()}">
+                    <div class="search-box">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <h5>&nbsp;Buscar Cliente</h5>
+                            </div>
+                            <form th:action="@{/addNewContract/}" method="GET" class="was-validated">
+                                <div class="input-group mb-3 col-md-auto">
+                                    <input type="text" id="myInput" name="myInput" class="form-control"
+                                           placeholder="Ingrese palabra clave">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-success" test-id="searchClient"
+                                                type="submit">Buscar
+                                        </button>
+                                    </div>
+                                        <script>
+                                            $(document).ready(function () {
+                                                $("#myInput").on("keyup", function () {
+                                                    var value = $(this).val().toLowerCase();
+                                                    $("#dtBasicExample tr").filter(function () {
+                                                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                                                    });
+                                                });
+                                            });
+                                        </script>
+                                    </div>
+                            </form>
+                        </div>
+                    </div>
+                    <br>
+                    <table id="dtBasicExample" class="table table-striped">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th>Id</th>
+                            <th>Nombre</th>
+                            <th>Email</th>
+                            <th>No. Teléfono</th>
+                            <th>Seleccionar</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="client : ${clients}" test-id="datasClient">
+                            <td th:text="${client.getIdClient()}"></td>
+                            <td th:text="${client.getClientName()}"></td>
+                            <td th:if="${client.getEmail() != ''}" th:text="${client.getEmail()}"></td>
+                            <td th:if="${client.getEmail() == ''}" th:text="${'No Registra'}"></td>
+                            <td th:if="${client.getNumberPhone() != null}" th:text="${client.getNumberPhone()}"></td>
+                            <td th:if="${client.getNumberPhone() == null}" th:text="${'No Registra'}"></td>
+                            <td>
+                                <a th:href="@{/findClient/} + ${client.getIdClient()}" test-id="selectedClient"
+                                   class="btn btn-outline-success">Seleccionar</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <nav class="form-inline">
+                        <ul class="pagination">
+                            <li class="page-item p-2">N° Total Items: [[${totalItems}]] Pagina [[${currentPage}]] de
+                                [[${totalPages}]]
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link btn btn-light" th:if="${currentPage > 1}"
+                                   th:href="@{'/addNewContract/page/1'}">Primera</a>
+                                <span class="page-link btn btn-light" th:unless="${currentPage > 1}">Primera</span>
+                            </li>
+
+                            <li class="page-item">
+                                <a class="page-link btn btn-light" th:if="${currentPage > 1}"
+                                   th:href="@{'/addNewContract/page/'+ ${currentPage - 1}}">Anterior</a>
+                                <span class="page-link btn btn-light" th:unless="${currentPage > 1}">Anterior</span>
+                            </li>
+
+                            <li class="page-item pagination">
+                                <span th:each="i: ${#numbers.sequence(1, totalPages)}">
+                                    <a class=" page-item page-link btn btn-light page-item" th:if="${i != currentPage}"
+                                       th:href="@{'/addNewContract/page/' + ${i}}">[[${i}]]</a>
+                                    <span class="page-item page-link btn btn-light page-item"
+                                          th:unless="${i != currentPage}">[[${i}]]</span>
+                                </span>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link btn btn-light" th:if="${currentPage < totalPages}"
+                                   th:href="@{'/addNewContract/page/' + ${currentPage + 1}}">Siguiente</a>
+                                <span class="page-link btn btn-light"
+                                      th:unless="${currentPage < totalPages}">Siguiente</span>
+                            </li>
+
+                            <li class="page-item">
+                                <a class="page-link btn btn-light" th:if="${currentPage < totalPages}"
+                                   th:href="@{'/addNewContract/page/' + ${totalPages}}">Ultima</a>
+                                <span class="page-link btn btn-light"
+                                      th:unless="${currentPage < totalPages}">Ultima</span>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
             </div>
-        </form>
+        </div>
     </div>
 </div>
-
 <br>
 <div class="container d-flex justify-content-center">
     <div class="row">
@@ -43,21 +132,22 @@
                             <td th:text="${client.clientName}"></td>
                         </tr>
                         <tr>
-                            <td><b>Telefono</b></td>
-                            <td th:text="${client.numberPhone}"></td>
+                            <td><b>Email</b></td>
+                            <td th:if="${client.getEmail() != ''}" th:text="${client.getEmail()}"></td>
+                            <td th:if="${client.getEmail() == ''}" th:text="${'No Registra'}"></td>
                         </tr>
                         <tr>
-                            <td><b>Email</b></td>
-                            <td th:text="${client.email}"></td>
+                            <td><b>Telefono</b></td>
+                            <td th:if="${client.getNumberPhone() != null}" th:text="${client.getNumberPhone()}"></td>
+                            <td th:if="${client.getNumberPhone() == null}" th:text="${'No Registra'}"></td>
                         </tr>
                     </table>
                 </div>
                 <br>
                 <a class="btn btn-success d-flex justify-content-center" th:href="@{/addContract/}">
-                    <i style="margin-top: 4px;" class="fas fa-arrow-alt-circle-right" test-id="confirmClient" ></i>
+                    <i style="margin-top: 4px;" class="fas fa-arrow-alt-circle-right" test-id="confirmClient"></i>
                     &nbsp; Siguiente</a>
             </div>
-            <h2 th:if="${client == null}">No hay coincidencias</h2>
         </div>
     </div>
 </div>

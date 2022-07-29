@@ -29,7 +29,7 @@ public class ControllerEmployeeContract {
     @Autowired
     private ContractServiceImp contractServiceImp;
 
-    private Long idContractActual;
+    private String idContractActual;
 
     private Long idEmployeeActual;
 
@@ -45,14 +45,17 @@ public class ControllerEmployeeContract {
 
     @GetMapping("/crearAsociacion/{idContract}/{idEmployee}")
     public String createAsociation(@PathVariable String idContract, @PathVariable String idEmployee, Model model){
-        idContractActual = Long.valueOf(idContract);
+        idContractActual = idContract;
         idEmployeeActual = Long.valueOf(idEmployee);
         Date contractDate = contractServiceImp.findById(idContractActual).getContractDate();
+        Date finalContractDate = contractServiceImp.findById(idContractActual).getReceivalDateAct();
+        log.info(finalContractDate + "");
         LocalDate actualDate = LocalDate.now();
         model.addAttribute("idContract", idContract);
         model.addAttribute("idEmployee", idEmployee);
         model.addAttribute("actualDate", actualDate);
         model.addAttribute("contractDate", contractDate);
+        model.addAttribute("finalContractDate", finalContractDate);
         return "creatingEC";
     }
 
@@ -67,5 +70,9 @@ public class ControllerEmployeeContract {
         return "redirect:/abrirContrato/"+this.idContractActual;
     }
 
-
+    @GetMapping("/deleteEmployee/{idEmployee}/{idContract}")
+    public String deleteAsociation(@PathVariable String idEmployee, @PathVariable String idContract){
+        ecServiceImp.deleteAsociation(idEmployee, idContract);
+        return "redirect:/abrirContrato/"+idContract;
+    }
 }

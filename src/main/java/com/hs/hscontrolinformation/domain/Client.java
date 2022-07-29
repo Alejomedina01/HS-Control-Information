@@ -17,7 +17,7 @@ public class Client implements Serializable {
 
     @Id
     @Column(name = "id_cliente")
-    private Long idClient;
+    private String idClient;
 
     @NotEmpty
     @Column(name = "nombre_cliente")

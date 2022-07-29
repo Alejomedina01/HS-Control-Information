@@ -27,7 +27,7 @@
     <div class="fixed-top">
         <nav class="navbar navbar-expand-sm navbar-dark bg-dark p-0">
             <div class="container">
-                <a th:href="@{/}" test-id="home" class="navbar-brand">HS CONTROL INFORMATION</a>
+                <a th:href="@{/}" test-id="home" class="navbar-brand"> <i class="fas fa-home"></i> HS CONTROL INFORMATION</a>
                 <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -110,9 +110,44 @@
         </div>
     </div>
 </footer>
-<script th:fragment="script">
-    function getLastDate(firstDate, secondDate){
-        document.getElementById(secondDate).min = document.getElementById(firstDate).value;
+<script th:fragment="scriptDates">
+    function changeDate(firstDate, secondDate){
+        if(document.getElementById(firstDate).value != ''){
+            document.getElementById(secondDate).min = document.getElementById(firstDate).value;
+            document.getElementById(secondDate).disabled = false;
+        }else{
+            document.getElementById(secondDate).value = '';
+            document.getElementById(secondDate).disabled = true;
+        }
+    }
+    function enableInitialDateAct(){
+        changeDate('contractDate','initialDateAct')
+    }
+    function enableReceivalDateAct(){
+        changeDate('initialDateAct','receivalDateAct')
+    }
+    function enableFinalDateLinkOne(){
+        if(document.getElementById('fechaTerminacion1') != null) {
+            changeDate('fechaVinculacion1', 'fechaTerminacion1')
+        }else{
+            changeDate('fechaVinculacion1', 'fechaTerminacion2')
+        }
+    }
+    function enableFinalDateLinkTwo(){
+        if(document.getElementById('fechaTerminacion1') != null) {
+            changeDate('fechaVinculacion2', 'fechaTerminacion1')
+        }else{
+            changeDate('fechaVinculacion2', 'fechaTerminacion2')
+        }
+    }
+    if(document.getElementById('contractDate') != null){
+        document.querySelector("#contractDate").addEventListener('change',enableReceivalDateAct)
+        document.querySelector("#contractDate").addEventListener('change',enableInitialDateAct)
+        document.querySelector("#initialDateAct").addEventListener('change',enableReceivalDateAct)
+    }else if(document.getElementById('fechaVinculacion1') != null){
+        document.querySelector("#fechaVinculacion1").addEventListener('change',enableFinalDateLinkOne)
+    }else if(document.getElementById('fechaVinculacion2') != null){
+        document.querySelector("#fechaVinculacion2").addEventListener('change',enableFinalDateLinkTwo)
     }
 </script>
 <script th:fragment="scriptAlerts">
@@ -121,6 +156,68 @@
             $("div.alert").fadeOut(1500);
         },3000);
     })
+</script>
+<script th:fragment="scriptValues">
+
+    const formatterPeso = new Intl.NumberFormat('es-CO', {
+        style: 'currency',
+        currency: 'COP',
+        minimumFractionDigits: 0
+    })
+
+    function calculateTotal(){
+        var initialValue = (document.getElementById('initialValue').value != '')? parseFloat(document.getElementById('initialValue').value) : 0;
+        var aditionalValue = (document.getElementById('aditionalValue').value != '')? parseFloat(document.getElementById('aditionalValue').value) : 0;
+        return initialValue + aditionalValue;
+    }
+
+    function setTotal(){
+        document.getElementById('totalValue').value = formatterPeso.format(calculateTotal());
+    }
+
+    function calculatePendingValue(){
+        var total = calculateTotal();
+        var invoiceValue = (document.getElementById('invoicedValue').value != '')? parseFloat(document.getElementById('invoicedValue').value) : 0;
+        if(invoiceValue > total){
+            document.getElementById('invoicedValue').setCustomValidity('El valor no puede ser mayor a ' + formatterPeso.format(total));
+        }else{
+            document.getElementById('invoicedValue').setCustomValidity('');
+            document.getElementById('invoicedValue').required = false;
+        }
+        document.getElementById('pendingValue').value = formatterPeso.format((total - invoiceValue));
+    }
+    document.querySelector("#initialValue").addEventListener('change',setTotal)
+    document.querySelector("#aditionalValue").addEventListener('change',setTotal)
+    document.querySelector("#initialValue").addEventListener('change',calculatePendingValue)
+    document.querySelector("#aditionalValue").addEventListener('change',calculatePendingValue)
+    document.querySelector("#invoicedValue").addEventListener('change',calculatePendingValue)
+</script>
+<script th:fragment="scriptFiles">
+    function enableForm(){
+        if(document.getElementById('fielIdFile').value != '' && document.getElementById('fieldNameFile').value != ''){
+            document.getElementById('inputFile').disabled = false;
+            document.getElementById('buttonFile').disabled = false;
+        }else{
+            document.getElementById('inputFile').disabled = true;
+            document.getElementById('buttonFile').disabled = true;
+        }
+    }
+</script>
+<script th:fragment="scriptFormat">
+    const formatterPesoCol = new Intl.NumberFormat('es-CO', {
+        style: 'currency',
+        currency: 'COP',
+        minimumFractionDigits: 0
+    })
+    var formatElements = document.getElementsByClassName('formato');
+    for (let i = 0; i < formatElements.length; i++) {
+        var tag = formatElements[i];
+        if(tag.textContent != ''){
+            tag.textContent = formatterPesoCol.format(tag.textContent);
+        }else if(tag.value != ''){
+            tag.value = formatterPesoCol.format(tag.value);
+        }
+    }
 </script>
 </body>
 </html>

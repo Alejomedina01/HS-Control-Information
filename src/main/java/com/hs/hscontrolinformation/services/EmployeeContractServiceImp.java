@@ -36,14 +36,24 @@ public class EmployeeContractServiceImp implements ServiceTemplate<EmployeeContr
         return employeeContractDao.findById(id).orElse(null);
     }
 
+    @Override
+    public EmployeeContract findById(String id) {
+        return null;
+    }
+
     @Transactional(readOnly = true)
     public EmployeeContract find(EmployeeContract employeeContract) {
         return employeeContractDao.findById(employeeContract.getIdEmployeeContract()).orElse(null);
     }
 
     @Transactional(readOnly = true)
-    public List<String> getEmployeesNotAsociated(Long idContract){
+    public List<String> getEmployeesNotAsociated(String idContract){
         return this.employeeContractDao.getEmployeesNotAsociated(idContract);
+    }
+
+    @Transactional(readOnly = false)
+    public void deleteAsociation(String idEmployee, String idContract){
+        this.employeeContractDao.deleteAsociation(Long.parseLong(idEmployee), idContract);
     }
 
 }

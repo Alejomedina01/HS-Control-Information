@@ -20,7 +20,7 @@ public class Contract implements Serializable {
 
     @Id
     @Column(name = "id_contrato")
-    private Long idContract;
+    private String idContract;
 
     @NotEmpty
     @Column(name = "nombre_proyecto")
@@ -39,14 +39,13 @@ public class Contract implements Serializable {
 
     @NotNull
     @Column(name = "valor_inicial")
-    private Long initialValue;
+    private Double initialValue;
 
     @Column(name = "valor_adicional")
-    private Long aditionalValue;
+    private Double aditionalValue;
 
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    @NotNull
     @Column(name = "fecha_acta_inicio")
     private Date initialDateAct;
 
@@ -55,16 +54,13 @@ public class Contract implements Serializable {
     @Column(name = "fecha_acta_recibo")
     private Date receivalDateAct;
 
-    @NotNull
-    @Column(name = "valor_facturado")
-    private Long invoicedValue;
 
-    @Column(name = "valor_pendiente")
-    private Long pendingValue;
+    @Column(name = "valor_facturado")
+    private Double invoicedValue;
 
     @NotNull
     @Column(name = "valor_retegarantia")
-    private Long warratyValue;
+    private Double warratyValue;
 
     @NotEmpty
     @Column(name = "estado_garantia")

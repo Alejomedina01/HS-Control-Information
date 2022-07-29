@@ -73,18 +73,21 @@
                         <thead class="thead-dark">
                         <tr>
                             <th>Id</th>
-                            <th>Nombre</th>
-                            <th>Estado</th>
+                            <th>Nombre Proyecto</th>
                             <th>Cliente</th>
+                            <th>Fecha Inicio</th>
+                            <th>Fecha Fin</th>
                             <th>Enlace</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr test-id="rowtable" th:each="contract : ${contracts}">
                             <td test-id="idContract" th:text="${contract.split(',')[0]}">Mostrar Id</td>
-                            <td th:text="${contract.split(',')[1]}">Mostrar Nombre</td>
-                            <td th:text="${contract.split(',')[2]}">Mostrar Estado</td>
+                            <td th:text="${contract.split(',')[1]}"></td>
+                            <td th:text="${contract.split(',')[2]}"></td>
                             <td th:text="${contract.split(',')[3]}"></td>
+                            <td th:if="${contract.split(',')[4] != 'null'}" th:text="${contract.split(',')[4]}"></td>
+                            <td th:if="${contract.split(',')[4] == 'null'}" th:text="${'No Concretada'}"></td>
                             <td>
                                 <a th:href="@{/abrirContrato/} + ${contract.split(',')[0]}" test-id="openContract" class="btn btn-outline-success">Abrir</a>
                             </td>
