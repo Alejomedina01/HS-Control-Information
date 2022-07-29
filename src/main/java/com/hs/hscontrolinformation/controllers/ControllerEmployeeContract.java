@@ -72,6 +72,7 @@ public class ControllerEmployeeContract {
         model.addAttribute("employees", page.getContent());
         return "asociateEC";
     }
+
     @GetMapping("/crearAsociacion/{idContract}/{idEmployee}")
     public String createAsociation(@PathVariable String idContract, @PathVariable String idEmployee, Model model){
         idContractActual = idContract;

@@ -27,7 +27,6 @@ public class ControllerClient {
 
     @Autowired
     ClientImplService service ;
-//    Logger log = LoggerFactory.getLogger(ControllerContract.class);
 
     @GetMapping("/Clients")
     public String showClients(Model model,String myInput){
