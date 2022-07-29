@@ -1,5 +1,7 @@
 package com.hs.hscontrolinformation.controllers;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.hs.hscontrolinformation.domain.Client;
 import com.hs.hscontrolinformation.domain.Employee;
@@ -32,16 +34,17 @@ public class ControllerEmployee {
     @GetMapping("/Employees")
     public String showEmployees(Model model,String myInput){
         var employees = employeeService.list();
-        log.info("ingreso busqueda: "+myInput);
+        log.info("ingreso busqueda empleado: "+myInput  + " --Fecha: "  + LocalDate.now().toString());
         if (myInput == null || myInput.isEmpty()){
             return getOnePage(model, 1);
         }
         employees = employeeService.findByKeyword(myInput);
-        log.info("tamaño de busquedad:"+employees.size());
+        log.info("tamaño de busquedad de empleados: "+employees.size()+ " --Fecha: "  + LocalDate.now().toString());
         model.addAttribute("currentPage", 1);
         model.addAttribute("totalPages", 1);
         model.addAttribute("totalItems", employees.size());
         model.addAttribute("employees", employees);
+        log.info("Se muestran correctamente los empleado: " + " --Fecha: "  + LocalDate.now().toString());
         return "employees";
     }
     @GetMapping("/Employees/page/{pageNumber}")
@@ -59,6 +62,7 @@ public class ControllerEmployee {
 
     @GetMapping("/addNewEmployee/")
     public String addNewEmployee(){
+        log.info("Nuevo empleado: " + " --Fecha: "  + LocalDate.now().toString());
         return "addEmployee";
     }
 
@@ -71,9 +75,12 @@ public class ControllerEmployee {
             employeeService.save(data);
             redirectAttrs.addFlashAttribute("mensaje", "✓ Empleado Agregado Correctamente")
                     .addFlashAttribute("clase", "success");
+            log.info("Empleado agregado correctamente: " + " --Fecha: "  + LocalDate.now().toString());
+
         }else {
             redirectAttrs.addFlashAttribute("mensaje", "x Error al agregar empleado (id ya existe)")
                     .addFlashAttribute("clase", "danger");
+            log.info("Error al agregar un empleado ya existe el id: " + data.getIdEmployee() + " --Fecha: "  + LocalDate.now().toString());
         }
         return "redirect:/Employees";
     }
@@ -83,6 +90,7 @@ public class ControllerEmployee {
         employeeService.delete(data);
         redirectAttrs.addFlashAttribute("mensaje", "✓ Empleado Eliminado Correctamente")
                 .addFlashAttribute("clase", "success");
+        log.info("Se elimina correctamente al empleado: " +data.getIdEmployee() + " --Fecha: "  + LocalDate.now().toString());
         return "redirect:/Employees";
     }
 
@@ -111,7 +119,7 @@ public class ControllerEmployee {
         employeeService.save(employee);
         redirectAttrs.addFlashAttribute("mensaje", "✓ Empleado Editado Correctamente")
                 .addFlashAttribute("clase", "success");
+        log.info("Se edita correctamente al empleado: "+employee.getIdEmployee() + " --Fecha: "  + LocalDate.now().toString());
         return "redirect:/Employees";
     }
-
 }

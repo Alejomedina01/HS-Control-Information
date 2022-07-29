@@ -33,7 +33,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Slf4j
 public class ControllerContract {
 
-    private static final Logger logger = LoggerFactory.getLogger(ControllerContract.class);
+    Logger log = LoggerFactory.getLogger(ControllerContract.class);
 
     @Autowired
     private ContractServiceImp contractService;
@@ -52,6 +52,7 @@ public class ControllerContract {
     public String handleFailedLogin(RedirectAttributes redirectAttrs) {
         redirectAttrs.addFlashAttribute("mensaje", "x Credenciales incorrectas")
                 .addFlashAttribute("clase", "danger");
+        log.info("Fallo por credenciales incorrectas" + " --Fecha: "  + LocalDate.now().toString());
         return "redirect:/login?error";
     }
 
@@ -59,6 +60,8 @@ public class ControllerContract {
     public String login(RedirectAttributes redirectAttrs) {
         redirectAttrs.addFlashAttribute("mensaje", "Credenciales inválidas")
                 .addFlashAttribute("clase", "success");
+        log.info("Fallo por credenciales invalidas" + " --Fecha: "  + LocalDate.now().toString());
+
         return "login";
     }
 
@@ -68,11 +71,12 @@ public class ControllerContract {
         log.info("Usuario loggeado: " + user);
         return "index";
     }
-
+    
     @GetMapping("/Contracts")
     public String showContracts(Model model,String myInput) {
         log.info("ingreso busqueda: "+myInput);
         if (myInput == null || myInput.isEmpty()){
+        	 log.info("No hay contrato que coincida con el ingresado" + " --Fecha: "  + LocalDate.now().toString());
             return getOnePageContracts(model, 1);
         }
         var contractsSearch = contractService.findByKeyword(myInput);
@@ -81,6 +85,7 @@ public class ControllerContract {
         model.addAttribute("totalPages", 1);
         model.addAttribute("totalItems", contractsSearch.size());
         model.addAttribute("contracts", contractsSearch);
+        log.info("Se Mostro listado de contratos opcion contratos" + " --Fecha: "  + LocalDate.now().toString());
         return "contracts";
     }
     @GetMapping("/Contracts/page/{pageNumber}")
@@ -92,6 +97,7 @@ public class ControllerContract {
         model.addAttribute("totalPages", totalPages);
         model.addAttribute("totalItems", totalItems);
         model.addAttribute("contracts", page.getContent());
+        log.info("Se Mostro listado de contratos por pagina:  "+ page + " --Fecha: "  + LocalDate.now().toString());
         return "contracts";
     }
     @GetMapping("/addNewContract/")
@@ -101,11 +107,12 @@ public class ControllerContract {
             return getOnePageClients(model, 1);
         }
         var clients = clientService.findByKeyword(myInput);
-        log.info("tamaño de busquedad:"+clients.size());
+        log.info("tamaño de busquedad: "+clients.size());
         model.addAttribute("currentPage", 1);
         model.addAttribute("totalPages", 1);
         model.addAttribute("totalItems", clients.size());
         model.addAttribute("clients", clients);
+        log.info("Se encontro al cliente por " +myInput + " --Fecha: "  + LocalDate.now().toString());
         return "findClient";
     }
     @GetMapping("/addNewContract/page/{pageNumber}")
@@ -118,13 +125,14 @@ public class ControllerContract {
         model.addAttribute("totalPages", totalPages);
         model.addAttribute("totalItems", totalItems);
         model.addAttribute("clients", clients);
+        log.info("Se obtuvo la pagina "+ page.getNumber() + "para agregar contrato --Fecha: "  + LocalDate.now().toString());
         return "findClient";
     }
     @GetMapping("/addContract/")
     public String addNewContract(Model model) {
         LocalDate actual = LocalDate.now();
         log.info("fecha " + actual.toString());
-        model.addAttribute("actual", actual);
+        model.addAttribute("nevo contrato actual", actual);
         return "addContract";
     }
 
@@ -134,20 +142,24 @@ public class ControllerContract {
             saveDocumentStorage(contract, file, document);
             redirectAttrs.addFlashAttribute("mensaje", "✓ Documento Agregado Correctamente")
                     .addFlashAttribute("clase", "success");
+            log.info("Documento" + document.getNameFile() +  " agregado Correctamente al contrato  "+ contract.getIdContract() + "para agregar contrato --Fecha: "  + LocalDate.now().toString());
+
         }else{
             redirectAttrs.addFlashAttribute("mensaje", "x Error al agregar documento (nombre ya existe)")
                     .addFlashAttribute("clase", "danger");
+            log.info("Error al agregar un documento con el nombre" +document.getNameFile() + " --Fecha: "  + LocalDate.now().toString());
         }
         return "redirect:/abrirContrato/"+ contract.getIdContract();
     }
 
     private void saveDocumentStorage(Contract contract, MultipartFile file, Document document){
         contract = (Contract) contractService.find(contract);
-        log.info(contract.getIdContract() + "aqui es locos 2.0");
         String fullName = saveFileContract( file, document.getNameFile());
         document.setFullName(fullName);
         documentService.saveDocument(document);
         documentService.updateDocumentToContractId(contract.getIdContract(), document.getIdDocument());
+        log.info("Se agrego un documento con el nombre " +document.getNameFile()+ " Al contrato: "+ contract.getIdContract() + " --Fecha: "  + LocalDate.now().toString());
+
     }
 
     @GetMapping("/findClient/{idClient}")
@@ -155,14 +167,14 @@ public class ControllerContract {
         this.client = clientService.findById(client.getIdClient());
         log.info(client.getIdClient());
         model.addAttribute("client", this.client);
+        log.info("Se selecciono al cliente: " +client.getIdClient() + " --Fecha: "  + LocalDate.now().toString());
         return "findClient";
     }
 
     @PostMapping("/saveContract")
     public String saveContract(@Valid Contract contract, Errors errors, RedirectAttributes redirectAttrs) {
         if (errors.hasErrors()) {
-            log.info(contract.getIdContract()+"");
-            log.info(contract.getContractDate()+"");
+            log.info("Error en guardar el contrato " + contract.getIdContract()+ " Fecha de contrato"+ contract.getContractDate() + " --Fecha: "  +  LocalDate.now().toString());
             return "addContract";
         }
         if (contractService.findById(contract.getIdContract()) == null && this.client != null){
@@ -170,9 +182,12 @@ public class ControllerContract {
             contractService.updateContractToClientId(this.client.getIdClient(), contract.getIdContract());
             redirectAttrs.addFlashAttribute("mensaje", "✓ Contrato Agregado Correctamente")
                     .addFlashAttribute("clase", "success");
+            log.info("Contrato agregado correctamente " + " --Fecha: "  +  LocalDate.now().toString());
+
         }else{
             redirectAttrs.addFlashAttribute("mensaje", "x Error al agregar contrato (id ya existe)")
                     .addFlashAttribute("clase", "danger");
+            log.info("Error en guardar el contrato " + contract.getIdContract()+ " El id ya existe"+ " --Fecha: "  +  LocalDate.now().toString());
         }
         return "redirect:/Contracts";
     }
@@ -181,6 +196,7 @@ public class ControllerContract {
         if (!contractFile.isEmpty()) {
             String newFileName = System.currentTimeMillis() + nameFile + ".pdf";
             serviceAws.uploadFile(contractFile, newFileName);
+            log.info("Se guuardoo el contrato: " + nameFile);
             return newFileName;
         }
         return null;
@@ -197,6 +213,7 @@ public class ControllerContract {
         documentService.saveDocument(document);
         redirectAttrs.addFlashAttribute("mensaje", "✓ Documento Reemplazado Correctamente")
                 .addFlashAttribute("clase", "success");
+        log.info("Documento remplazado correctamente: " + document.getNameFile()+ " En el contrato: " + contract.getIdContract()+ " --Fecha: "  +  LocalDate.now().toString());
         return "redirect:/contractFiles/"+contract.getIdContract();
     }
     @GetMapping("/contractFiles/{idContract}")
@@ -208,6 +225,8 @@ public class ControllerContract {
             checkPresignedUrls(documentsContract);
         }
         model.addAttribute("documents",documentsContract);
+        log.info("Documento del contrato : " + contract.getIdContract() + " visualizado satisfactoriamente En el contrato: " + contract.getIdContract()+ " --Fecha: "  +  LocalDate.now().toString());
+
         return "showContractFiles";
     }
     public void checkPresignedUrls(List<Document> documentsContract){
@@ -238,6 +257,8 @@ public class ControllerContract {
         model.addAttribute("pendingValue", calculatePendingValue(contract.getInitialValue(),contract.getAditionalValue(),contract.getInvoicedValue()));
         model.addAttribute("client", clientContract);
         model.addAttribute("employees", employees);
+        log.info("Se abrio el contrato : " + contract.getIdContract() + " --Fecha: "  +  LocalDate.now().toString());
+
         return "specificDataContract";
     }
 
@@ -256,9 +277,8 @@ public class ControllerContract {
         if(documentService.getTotalCountDocuments()>0) {
             isAsociated = (contractService.getEmployeesAsociated(contract.getIdContract()).size() > 0 || documentService.findAllDocumentsOneContract(contract.getIdContract()).size() > 0);
         }
-        LocalDate actual = LocalDate.now();
-        log.info("edicion contrato id:"+ contract.getIdContract()+"  fecha modi:" + actual.toString());
-        model.addAttribute("actual", actual);
+        log.info("edicion contrato id: "+ contract.getIdContract()+"  fecha modi:" + LocalDate.now().toString());
+        model.addAttribute("actual", LocalDate.now().toString());
         model.addAttribute("contrato", contract);
         model.addAttribute("totalValue", calculateTotalValue(contract.getInitialValue(),contract.getAditionalValue()));
         model.addAttribute("pendingValue", calculatePendingValue(contract.getInitialValue(),contract.getAditionalValue(),contract.getInvoicedValue()));
@@ -274,6 +294,8 @@ public class ControllerContract {
         contractService.save(contract);
         redirectAttrs.addFlashAttribute("mensaje", "✓ Contrato Editado Correctamente")
                 .addFlashAttribute("clase", "success");
+        log.info("Contrato editadado correctamente: " + contract.getIdContract()+ " --Fecha: "  +  LocalDate.now().toString());
+
         return "redirect:/Contracts";
     }
 
@@ -282,6 +304,7 @@ public class ControllerContract {
         contractService.delete(contract);
         redirectAttrs.addFlashAttribute("mensaje", "✓ Contrato Eliminado Correctamente")
                 .addFlashAttribute("clase", "success");
+        log.info("Contrato eliminado correctamente: " + contract.getIdContract()+ " --Fecha: "  +  LocalDate.now().toString());
         return "redirect:/Contracts";
     }
     @GetMapping("/deleteFile")
@@ -292,6 +315,7 @@ public class ControllerContract {
         documentService.delete(document);
         redirectAttrs.addFlashAttribute("mensaje", "✓ Documento Eliminado Correctamente")
                 .addFlashAttribute("clase", "success");
+        log.info("Documento eliminado correctamente: " + document.getNameFile()+ " --Fecha: "  +  LocalDate.now().toString());
         return "redirect:/contractFiles/"+idContract;
     }
 }

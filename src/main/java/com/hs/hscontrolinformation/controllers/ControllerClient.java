@@ -1,6 +1,9 @@
 package com.hs.hscontrolinformation.controllers;
 
 import lombok.extern.slf4j.Slf4j;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
@@ -14,6 +17,8 @@ import com.hs.hscontrolinformation.services.ClientImplService;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+
+import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -22,11 +27,12 @@ public class ControllerClient {
 
     @Autowired
     ClientImplService service ;
+//    Logger log = LoggerFactory.getLogger(ControllerContract.class);
 
     @GetMapping("/Clients")
     public String showClients(Model model,String myInput){
         var clients = service.list();
-        log.info("ingreso busqueda: "+myInput);
+        log.info("ingreso busqueda cliente: "+myInput  + " --Fecha: "  + LocalDate.now().toString()) ;
         if (myInput == null || myInput.isEmpty()){
             return getOnePage(model, 1);
         }
@@ -36,6 +42,7 @@ public class ControllerClient {
         model.addAttribute("totalPages", 1);
         model.addAttribute("totalItems", clients.size());
         model.addAttribute("clients", clients);
+        log.info("Clientes mostrados satisfactoriamente " + " --Fecha: "  + LocalDate.now().toString());
         return "clients";
     }
     @GetMapping("/Clients/page/{pageNumber}")
@@ -52,6 +59,7 @@ public class ControllerClient {
     }
     @GetMapping("/addNewClient/")
     public String addClient(){
+        log.info("Se va a crear un nuevo cliente" + " --Fecha: "  + LocalDate.now().toString());
         return "addClients";
     }
 
@@ -64,10 +72,18 @@ public class ControllerClient {
             service.save(data);
             redirectAttrs.addFlashAttribute("mensaje", "✓ Cliente Agregado Correctamente")
                     .addFlashAttribute("clase", "success");
+            log.info("Se agrego correctamente el cliente: "+ data.getIdClient() + " --Fecha: "  + LocalDate.now().toString());
+
         }else{
             redirectAttrs.addFlashAttribute("mensaje", "x Error al agregar cliente (id ya existe)")
                     .addFlashAttribute("clase", "danger");
+            log.info("El cliente ya existe con el id "+ data.getIdClient() + " --Fecha: "  + LocalDate.now().toString());
+
         }
+        service.save(data);
+        redirectAttrs.addFlashAttribute("mensaje", "✓ Cliente Agregado Correctamente")
+                .addFlashAttribute("clase", "success");
+        log.info("Se guardo correctamente el cliente: "+ data.getIdClient() + " --Fecha: "  + LocalDate.now().toString());
         return "redirect:/Clients";
     }
 
@@ -76,6 +92,8 @@ public class ControllerClient {
         service.delete(client);
         redirectAttrs.addFlashAttribute("mensaje", "✓ Cliente Eliminado Correctamente")
                 .addFlashAttribute("clase", "success");
+        log.info("Se elimino correctamente el cliente: "+ client.getIdClient() + " --Fecha: "  + LocalDate.now().toString());
+
         return "redirect:/Clients";
     }
 
@@ -85,6 +103,7 @@ public class ControllerClient {
         var contracts = service.findBasicDataContract(data.getIdClient());
         model.addAttribute("client", client);
         model.addAttribute("contracts", contracts);
+        log.info("Se abrio correctamente el cliente: "+ data.getIdClient() + " --Fecha: "  + LocalDate.now().toString());
         return "specificDataClient";
     }
 
@@ -94,6 +113,7 @@ public class ControllerClient {
         boolean isAsociated = service.findBasicDataContract(data.getIdClient()).size() > 0;
         model.addAttribute("isAsociated", isAsociated);
         model.addAttribute("client", client);
+        log.info("Se edito correctamente el cliente: "+ data.getIdClient() + " --Fecha: "  + LocalDate.now().toString());
         return "modifyClient";
     }
 
@@ -105,6 +125,8 @@ public class ControllerClient {
         service.save(client);
         redirectAttrs.addFlashAttribute("mensaje", "✓ Cliente Editado Correctamente")
                 .addFlashAttribute("clase", "success");
+        log.info("Se edito correctamente el cliente: "+ client.getIdClient() + " --Fecha: "  + LocalDate.now().toString());
+
         return "redirect:/Clients";
     }
 }
