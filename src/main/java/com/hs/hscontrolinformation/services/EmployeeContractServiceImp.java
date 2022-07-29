@@ -50,6 +50,7 @@ public class EmployeeContractServiceImp implements ServiceTemplate<EmployeeContr
     public EmployeeContract find(EmployeeContract employeeContract) {
         return employeeContractDao.findById(employeeContract.getIdEmployeeContract()).orElse(null);
     }
+
     @Transactional(readOnly = true)
     public MyPage<String> findPage(String idContract,int pageNumber){
         MyPage<String> myPage=new MyPage<>();
@@ -72,6 +73,11 @@ public class EmployeeContractServiceImp implements ServiceTemplate<EmployeeContr
     @Transactional(readOnly = false)
     public void deleteAsociation(String idEmployee, String idContract){
         this.employeeContractDao.deleteAsociation(Long.parseLong(idEmployee), idContract);
+    }
+
+    @Transactional(readOnly = true)
+    public EmployeeContract findByEmpCont(String idEmployee, String idContract){
+        return this.employeeContractDao.findByEmpCont(Long.parseLong(idEmployee), idContract);
     }
 
 }

@@ -38,4 +38,7 @@ public interface EmployeeContractDao extends JpaRepository<EmployeeContract, Lon
     @Query(nativeQuery = true, value = "DELETE FROM empleados_contratos WHERE id_empleado=?1 AND id_contrato=?2")
     void deleteAsociation(Long idEmployee, String idContract);
 
+    @Query(nativeQuery = true, value = "SELECT * FROM empleados_contratos WHERE id_empleado=?1 AND id_contrato=?2")
+    EmployeeContract findByEmpCont(Long idEmployee, String idContract);
+
 }

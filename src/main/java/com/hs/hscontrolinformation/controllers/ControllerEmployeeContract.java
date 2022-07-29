@@ -96,8 +96,30 @@ public class ControllerEmployeeContract {
     }
 
     @GetMapping("/deleteEmployee/{idEmployee}/{idContract}")
-    public String deleteAsociation(@PathVariable String idEmployee, @PathVariable String idContract){
+    public String deleteAsociation(@PathVariable String idEmployee, @PathVariable String idContract, RedirectAttributes redirectAttrs){
         ecServiceImp.deleteAsociation(idEmployee, idContract);
+        redirectAttrs.addFlashAttribute("mensaje", "✓ Empleado Desasociado Correctamente")
+                .addFlashAttribute("clase", "success");
         return "redirect:/abrirContrato/"+idContract;
+    }
+
+    @GetMapping("/modifyAsociation/{idContract}/{idEmployee}")
+    public String modifyAsociation(@PathVariable String idContract, @PathVariable String idEmployee, Model model){
+        EmployeeContract employeeContract = ecServiceImp.findByEmpCont(idEmployee, idContract);
+        idContractActual = idContract;
+        idEmployeeActual = Long.valueOf(idEmployee);
+        model.addAttribute("employeeContract", employeeContract);
+        return "modifyContractEmployee";
+    }
+
+    @PostMapping("/saveChangesEmpCont")
+    public String saveChanges(EmployeeContract employeeContract, RedirectAttributes redirectAttrs){
+        employeeContract.setContract(contractServiceImp.findById(this.idContractActual));
+        employeeContract.setEmployee(employeeService.findById(this.idEmployeeActual));
+        ecServiceImp.deleteAsociation(String.valueOf(employeeContract.getEmployee().getIdEmployee()), employeeContract.getContract().getIdContract());
+        ecServiceImp.save(employeeContract);
+        redirectAttrs.addFlashAttribute("mensaje", "✓ Asociación Editada Correctamente")
+                .addFlashAttribute("clase", "success");
+        return "redirect:/abrirContrato/"+this.idContractActual;
     }
 }

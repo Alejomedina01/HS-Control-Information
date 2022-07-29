@@ -12,6 +12,8 @@ import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
@@ -61,8 +63,9 @@ public class ControllerContract {
     }
 
     @GetMapping("/")
-    public String initial(Model model) {
+    public String initial(Model model, @AuthenticationPrincipal User user) {
         log.info("Ejecutando el controlador Spring MVC");
+        log.info("Usuario loggeado: " + user);
         return "index";
     }
 
