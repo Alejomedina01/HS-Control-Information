@@ -67,7 +67,7 @@ public class ControllerEmployee {
     }
 
     @PostMapping("/saveEmployee")
-    public String saveClient(@Valid Employee data, Errors errors, RedirectAttributes redirectAttrs) {
+    public String saveEmployee(@Valid Employee data, Errors errors, RedirectAttributes redirectAttrs) {
         if (errors.hasErrors()){
             return "addEmployee";
         }
@@ -75,8 +75,7 @@ public class ControllerEmployee {
             employeeService.save(data);
             redirectAttrs.addFlashAttribute("mensaje", "✓ Empleado Agregado Correctamente")
                     .addFlashAttribute("clase", "success");
-            log.info("Empleado agregado correctamente: " + " --Fecha: "  + LocalDate.now().toString());
-
+            log.info("Empleado agregado correctamente: Id" + data.getIdEmployee() + " Nombre: "+ data.getName() + " " + data.getLastname()  + " --Fecha: "  + LocalDate.now().toString());
         }else {
             redirectAttrs.addFlashAttribute("mensaje", "x Error al agregar empleado (id ya existe)")
                     .addFlashAttribute("clase", "danger");

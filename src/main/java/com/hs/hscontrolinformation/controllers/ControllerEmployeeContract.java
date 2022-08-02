@@ -40,15 +40,6 @@ public class ControllerEmployeeContract {
 
     private Long idEmployeeActual;
 
-    /*@GetMapping("/addEmployeeToContract/{idContract}")
-    public String asociateEmployeeContract(Contract contract, Model model){
-        contract = (Contract) contractServiceImp.find(contract);
-        model.addAttribute("contract", contract);
-        var employees = ecServiceImp.findPage(contract.getIdContract());
-        model.addAttribute("employees", employees);
-        log.info("La asociacion de los " + employees + " con el contrato: " + contract.getIdContract() + " --Fecha: "  + LocalDate.now().toString());
-        return "asociateEC";
-    }*/
     @GetMapping("/addEmployeeToContract/{idContract}")
     public String findClienForContract(Model model,@PathVariable("idContract") String idContract) {
         return getOnePageClients(model,1,idContract,null);
@@ -93,7 +84,7 @@ public class ControllerEmployeeContract {
     public String uploadAsociation(EmployeeContract employeeContract, RedirectAttributes redirectAttrs){
         employeeContract.setContract(contractServiceImp.findById(this.idContractActual));
         employeeContract.setEmployee(employeeService.findById(this.idEmployeeActual));
-        log.info("contrato cliente - " + this.idContractActual + " - " + this.idEmployeeActual  + " --Fecha: "  + LocalDate.now().toString());
+        log.info("se agrego el empleado - " + this.idEmployeeActual + " al contrato - " + this.idContractActual  + " --Fecha: "  + LocalDate.now().toString());
         ecServiceImp.save(employeeContract);
         redirectAttrs.addFlashAttribute("mensaje", "✓ Empleado Asociado al Contrato")
                 .addFlashAttribute("clase", "success");
@@ -104,6 +95,7 @@ public class ControllerEmployeeContract {
     @GetMapping("/deleteEmployee/{idEmployee}/{idContract}")
     public String deleteAsociation(@PathVariable String idEmployee, @PathVariable String idContract, RedirectAttributes redirectAttrs){
         ecServiceImp.deleteAsociation(idEmployee, idContract);
+        log.info("se elimino el empleado - " + idEmployee + " del contrato - " + idContract  + " --Fecha: "  + LocalDate.now().toString());
         redirectAttrs.addFlashAttribute("mensaje", "✓ Empleado Desasociado Correctamente")
                 .addFlashAttribute("clase", "success");
         return "redirect:/abrirContrato/"+idContract;
@@ -114,7 +106,13 @@ public class ControllerEmployeeContract {
         EmployeeContract employeeContract = ecServiceImp.findByEmpCont(idEmployee, idContract);
         idContractActual = idContract;
         idEmployeeActual = Long.valueOf(idEmployee);
+        Date contractDate = contractServiceImp.findById(idContractActual).getContractDate();
+        Date finalContractDate = contractServiceImp.findById(idContractActual).getReceivalDateAct();
+        LocalDate actualDate = LocalDate.now();
         model.addAttribute("employeeContract", employeeContract);
+        model.addAttribute("actualDate", actualDate);
+        model.addAttribute("contractDate", contractDate);
+        model.addAttribute("finalContractDate", finalContractDate);
         return "modifyContractEmployee";
     }
 
@@ -124,6 +122,7 @@ public class ControllerEmployeeContract {
         employeeContract.setEmployee(employeeService.findById(this.idEmployeeActual));
         ecServiceImp.deleteAsociation(String.valueOf(employeeContract.getEmployee().getIdEmployee()), employeeContract.getContract().getIdContract());
         ecServiceImp.save(employeeContract);
+        log.info("se editó la asociacion del empleado - " + this.idEmployeeActual + " del contrato - " + this.idContractActual  + " --Fecha: "  + LocalDate.now().toString());
         redirectAttrs.addFlashAttribute("mensaje", "✓ Asociación Editada Correctamente")
                 .addFlashAttribute("clase", "success");
         return "redirect:/abrirContrato/"+this.idContractActual;

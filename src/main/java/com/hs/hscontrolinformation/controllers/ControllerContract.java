@@ -131,8 +131,7 @@ public class ControllerContract {
     @GetMapping("/addContract/")
     public String addNewContract(Model model) {
         LocalDate actual = LocalDate.now();
-        log.info("fecha " + actual.toString());
-        model.addAttribute("nevo contrato actual", actual);
+        log.info("Se confirmo cliente para crear contrato --" + actual.toString());
         return "addContract";
     }
 
