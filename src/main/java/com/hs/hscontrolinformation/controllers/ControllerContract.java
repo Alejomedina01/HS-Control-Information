@@ -30,7 +30,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @org.springframework.stereotype.Controller
-@Slf4j
 public class ControllerContract {
 
     Logger log = LoggerFactory.getLogger(ControllerContract.class);
@@ -260,7 +259,6 @@ public class ControllerContract {
         model.addAttribute("totalValue", calculateTotalValue(contract.getInitialValue(),contract.getAditionalValue()));
         model.addAttribute("pendingValue", calculatePendingValue(contract.getInitialValue(),contract.getAditionalValue(),contract.getInvoicedValue()));
         model.addAttribute("client", clientContract);
-        model.addAttribute("employees", employees);
         log.info("Se abrio el contrato : " + contract.getIdContract() + " --Fecha: "  +  LocalDate.now().toString());
 
         return "specificDataContract";
