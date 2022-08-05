@@ -33,7 +33,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/client/{idPersona}")
                 .hasRole("ADMIN")
-                .antMatchers("/", "/Clients/", "/Contracts/", "/Contracts", "/Clients", "/addNewContract", "/addNewContract/", "/abrir/**", "/editar/**", "/eliminar","/eliminar/","/deleteFile","/deleteFile/")
+                .antMatchers("/", "/Clients/", "/Contracts/", "/Contracts", "/Employees", "/Employees/", "/Clients", "/addNewContract", "/addNewContract/", "/abrir/**", "/editar/**", "/eliminar","/eliminar/","/deleteFile","/deleteFile/", "/findClient/**", "/addContract/", "/saveContract/", "/saveContract",
+                        "/addNewClient/", "/addNewClient", "/saveClient/", "/saveClient", "/abrirCliente/**", "/editarCliente/**", "/saveChangesClient", "/saveChangesClient/", "/addNewEmployee/", "/addNewEmployee", "/saveEmployee", "/saveEmployee/", "/abrirEmpleado/**", "/editarEmpleado/**", "/saveChangesEmployee/",
+                        "/saveChangesEmployee", "/addEmployeeToContract/**", "/crearAsociacion/**", "/saveEmployeeContract/", "/saveEmployeeContract", "/contractFiles/**", "/addFileContract/**", "/modifyAsociation/**", "/deleteEmployee/**", "/replaceFileDocument/**", "/saveChangesEmpCont", "/saveChangesEmpCont/")
                 .hasAnyRole("ADMIN")
                 .and()
                 .formLogin()
