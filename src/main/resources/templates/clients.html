@@ -29,14 +29,13 @@
                             <div class="col-md-3">
                                 <h5>&nbsp;Buscar Cliente</h5>
                             </div>
-                            <form th:action="@{/Employees}"
+                            <form th:action="@{/Clients}"
                                   method="GET" class="was-validated">
                                 <div class="input-group mb-3 col-md-auto">
-                                    <input type="text" id="myInput" name="myInput" class="form-control"
+                                    <input type="text" id="myInput" test-id="idClient" name="myInput" class="form-control"
                                            placeholder="Ingrese palabra clave">
                                     <div class="input-group-append">
-                                        <button class="btn btn-success" test-id="searchClient"
-                                                type="submit">Buscar</button>
+                                        <button class="btn btn-success" test-id="searchClient" type="submit">Buscar</button>
                                     </div>
                                     <script>
                                         $(document).ready(function () {
@@ -84,19 +83,19 @@
                             <li class="page-item p-2">N° Total Items: [[${totalItems}]] Pagina [[${currentPage}]] de
                                 [[${totalPages}]]
                             </li>
-                            <li class="page-item">
+                            <li class="page-item" test-id="first">
                                 <a class="page-link btn btn-light" th:if="${currentPage > 1}"
                                    th:href="@{'/Clients/page/1'}">Primera</a>
                                 <span class="page-link btn btn-light" th:unless="${currentPage > 1}">Primera</span>
                             </li>
 
-                            <li class="page-item">
+                            <li class="page-item" test-id="previous">
                                 <a class="page-link btn btn-light" th:if="${currentPage > 1}"
                                    th:href="@{'/Clients/page/' + ${currentPage - 1}}">Anterior</a>
                                 <span class="page-link btn btn-light" th:unless="${currentPage > 1}">Anterior</span>
                             </li>
 
-                            <li class="page-item pagination">
+                            <li class="page-item pagination" test-id="numberPage">
                                 <span th:each="i: ${#numbers.sequence(1, totalPages)}">
                                     <a class=" page-item page-link btn btn-light page-item" th:if="${i != currentPage}"
                                        th:href="@{'/Clients/page/' + ${i}}">[[${i}]]</a>
@@ -104,14 +103,14 @@
                                           th:unless="${i != currentPage}">[[${i}]]</span>
                                 </span>
                             </li>
-                            <li class="page-item">
+                            <li class="page-item" test-id="next">
                                 <a class="page-link btn btn-light" th:if="${currentPage < totalPages}"
                                    th:href="@{'/Clients/page/' + ${currentPage + 1}}">Siguiente</a>
                                 <span class="page-link btn btn-light"
                                       th:unless="${currentPage < totalPages}">Siguiente</span>
                             </li>
 
-                            <li class="page-item">
+                            <li class="page-item" test-id="last">
                                 <a class="page-link btn btn-light" th:if="${currentPage < totalPages}"
                                    th:href="@{'/Clients/page/' + ${totalPages}}">Ultima</a>
                                 <span class="page-link btn btn-light"

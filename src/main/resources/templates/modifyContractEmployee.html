@@ -32,14 +32,14 @@
                         </div>
                         <div th:if="${finalContractDate != null}" class="form-group">
                             <label for="finalDate">Fecha de terminación</label>
-                            <input type="date" id="fechaTerminacion1" th:value="${employeeContract.finalDate}" class="form-control" th:max="${finalContractDate}"  name="finalDate">
+                            <input type="date" id="fechaTerminacion1" test-id="finalDate" th:value="${employeeContract.finalDate}" class="form-control" th:max="${finalContractDate}"  name="finalDate">
                         </div>
                         <div th:if="${finalContractDate == null}" class="form-group">
                             <label for="finalDate">Fecha de terminación</label>
-                            <input type="date" id="fechaTerminacion2" th:value="${employeeContract.finalDate}" class="form-control" th:max="${actualDate}" name="finalDate">
+                            <input type="date" test-id="finalDate" id="fechaTerminacion2" th:value="${employeeContract.finalDate}" class="form-control" th:max="${actualDate}" name="finalDate">
                         </div>
                         <div class="modal-footer">
-                            <button test-id="saveChangesEmpCont" class="btn btn-primary" type="submit">Agregar</button>
+                            <button test-id="saveChangesEmpCont" class="btn btn-primary" type="submit">Guardar Cambios</button>
                         </div>
                     </div>
                 </form>

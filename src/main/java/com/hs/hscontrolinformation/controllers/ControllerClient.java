@@ -26,12 +26,10 @@ public class ControllerClient {
     @GetMapping("/Clients")
     public String showClients(Model model,String myInput){
         var clients = service.list();
-        log.info("ingreso busqueda: "+myInput);
         if (myInput == null || myInput.isEmpty()){
             return getOnePage(model, 1);
         }
         clients = service.findByKeyword(myInput);
-        log.info("tamaño de busquedad:"+clients.size());
         model.addAttribute("currentPage", 1);
         model.addAttribute("totalPages", 1);
         model.addAttribute("totalItems", clients.size());

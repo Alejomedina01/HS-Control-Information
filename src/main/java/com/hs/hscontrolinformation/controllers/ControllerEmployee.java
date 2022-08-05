@@ -32,12 +32,10 @@ public class ControllerEmployee {
     @GetMapping("/Employees")
     public String showEmployees(Model model,String myInput){
         var employees = employeeService.list();
-        log.info("ingreso busqueda: "+myInput);
         if (myInput == null || myInput.isEmpty()){
             return getOnePage(model, 1);
         }
         employees = employeeService.findByKeyword(myInput);
-        log.info("tamaño de busquedad:"+employees.size());
         model.addAttribute("currentPage", 1);
         model.addAttribute("totalPages", 1);
         model.addAttribute("totalItems", employees.size());

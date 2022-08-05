@@ -31,7 +31,7 @@
                         </tr>
                         <tr>
                             <td><b>Nombre del Proyecto</b></td>
-                            <td th:text="${contract.getProjectName()}"></td>
+                            <td test-id="projectName" th:text="${contract.getProjectName()}"></td>
                         </tr>
                         <tr>
                             <td><b>Ciudad</b></td>
@@ -155,14 +155,19 @@
                     <h4>Empleados Asociados</h4>
                 </div>
                 <br>
-                <div th:if="${employees != null and !employees.isEmpty()}">
                     <div class="search-box">
                         <div class="row">
                             <div class="col-md-3">
                                 <h5>&nbsp;Buscar Empleado</h5>
                             </div>
-                            <div class="col-md-9">
-                                <input type="text" id="myInput" class="form-control" placeholder="Ingrese palabra clave">
+                            <form th:action="@{/abrirContrato/{idContract}/1 (idContract=${contract.idContract})}"
+                                  method="GET" class="was-validated">
+                            <div class="input-group mb-3 col-md-auto">
+                                <input type="text" id="myInput" name="myInput" class="form-control" placeholder="Ingrese palabra clave">
+                                <div class="input-group-append">
+                                    <button class="btn btn-success" test-id="searchClient"
+                                            type="submit">Buscar</button>
+                                </div>
                                 <script>
                                     $(document).ready(function () {
                                         $("#myInput").on("keyup", function () {
@@ -174,9 +179,11 @@
                                     });
                                 </script>
                             </div>
+                            </form>
                         </div>
                     </div>
                     <br>
+                <div th:if="${employees != null and !employees.isEmpty()}">
                     <table id="dtBasicExample" class="table table-striped">
                         <thead class="thead-dark">
                         <tr>
@@ -202,13 +209,53 @@
                                 <a th:href="@{/abrirEmpleado/} + ${employee.split(',')[0]}" test-id="openEmployee" class="btn btn-outline-success">Abrir</a>
                             </td>
                             <td>
-                                <a th:href="@{/modifyAsociation/{idContract}/{idEmployee} (idEmployee=${employee.split(',')[0]}, idContract=${contract.idContract})}" class="btn btn-outline-warning">Editar</a>
+                                <a th:href="@{/modifyAsociation/{idContract}/{idEmployee} (idEmployee=${employee.split(',')[0]}, idContract=${contract.idContract})}"class="btn btn-outline-warning" test-id="editAsociation">Editar</a>
                             </td>
                             <td>
                                 <a th:href="@{/deleteEmployee/{idEmployee}/{idContract} (idEmployee=${employee.split(',')[0]}, idContract=${contract.idContract})}" class="btn btn-outline-danger">Desasociar</a>
                             </td>
                         </tbody>
                     </table>
+                    <nav class="form-inline">
+                        <ul class="pagination">
+                            <li class="page-item p-2">N° Total Items: [[${totalItems}]] Pagina [[${currentPage}]] de
+                                [[${totalPages}]]
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link btn btn-light" th:if="${currentPage > 1}"
+                                   th:href="@{'/abrirContrato/'+${contract.getIdContract()} +'/1'}">Primera</a>
+                                <span class="page-link btn btn-light" th:unless="${currentPage > 1}">Primera</span>
+                            </li>
+
+                            <li class="page-item">
+                                <a class="page-link btn btn-light" th:if="${currentPage > 1}"
+                                   th:href="@{'/abrirContrato/'+${contract.getIdContract()} +'/'+ ${currentPage - 1}}">Anterior</a>
+                                <span class="page-link btn btn-light" th:unless="${currentPage > 1}">Anterior</span>
+                            </li>
+
+                            <li class="page-item pagination">
+                                <span th:each="i: ${#numbers.sequence(1, totalPages)}">
+                                    <a class=" page-item page-link btn btn-light page-item" th:if="${i != currentPage}"
+                                       th:href="@{'/abrirContrato/'+${contract.getIdContract()} +'/'+ ${i}}">[[${i}]]</a>
+                                    <span class="page-item page-link btn btn-light page-item"
+                                          th:unless="${i != currentPage}">[[${i}]]</span>
+                                </span>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link btn btn-light" th:if="${currentPage < totalPages}"
+                                   th:href="@{'/abrirContrato/'+${contract.getIdContract()} +'/'+ ${currentPage + 1}}">Siguiente</a>
+                                <span class="page-link btn btn-light"
+                                      th:unless="${currentPage < totalPages}">Siguiente</span>
+                            </li>
+
+                            <li class="page-item">
+                                <a class="page-link btn btn-light" th:if="${currentPage < totalPages}"
+                                   th:href="@{'/abrirContrato/'+${contract.getIdContract()} +'/'+${totalPages}}">Ultima</a>
+                                <span class="page-link btn btn-light"
+                                      th:unless="${currentPage < totalPages}">Ultima</span>
+                            </li>
+                        </ul>
+                    </nav>
                 </div>
                 <div class="text-center p-2" th:if="${employees == null or employees.isEmpty()}">
                     <span>No hay empleados asociados</span>

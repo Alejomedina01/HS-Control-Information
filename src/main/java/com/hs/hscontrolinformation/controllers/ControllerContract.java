@@ -71,12 +71,11 @@ public class ControllerContract {
 
     @GetMapping("/Contracts")
     public String showContracts(Model model,String myInput) {
-        log.info("ingreso busqueda: "+myInput);
         if (myInput == null || myInput.isEmpty()){
             return getOnePageContracts(model, 1);
         }
         var contractsSearch = contractService.findByKeyword(myInput);
-        log.info("tamaño de busquedad:"+contractsSearch.size());
+        //log.info("tamaño de la lista: "+contractsSearch.size()+" keyWord"+ myInput);
         model.addAttribute("currentPage", 1);
         model.addAttribute("totalPages", 1);
         model.addAttribute("totalItems", contractsSearch.size());
@@ -96,12 +95,10 @@ public class ControllerContract {
     }
     @GetMapping("/addNewContract/")
     public String findClienForContract(Model model,String myInput) {
-        log.info("ingreso busqueda: "+myInput);
         if (myInput == null || myInput.isEmpty()){
             return getOnePageClients(model, 1);
         }
         var clients = clientService.findByKeyword(myInput);
-        log.info("tamaño de busquedad:"+clients.size());
         model.addAttribute("currentPage", 1);
         model.addAttribute("totalPages", 1);
         model.addAttribute("totalItems", clients.size());
@@ -138,7 +135,7 @@ public class ControllerContract {
             redirectAttrs.addFlashAttribute("mensaje", "x Error al agregar documento (nombre ya existe)")
                     .addFlashAttribute("clase", "danger");
         }
-        return "redirect:/abrirContrato/"+ contract.getIdContract();
+        return "redirect:/abrirContrato/"+ contract.getIdContract()+"/1";
     }
 
     private void saveDocumentStorage(Contract contract, MultipartFile file, Document document){
@@ -222,23 +219,42 @@ public class ControllerContract {
             }
         }
     }
-    @GetMapping("/abrirContrato/{idContract}")
-    public String openContract(Contract contract, Model model) {
-        contract = (Contract) contractService.find(contract);
+
+    @GetMapping("/abrirContrato/{idContract}/{pageNumber}")
+    public String openContract(Model model,@PathVariable("idContract") String idContract,
+                               @PathVariable("pageNumber") int currentPage,
+                               String myInput) {
+        Contract contract = contractService.findById(idContract);
         String idClient = contractService.findClientIdFromContract(contract.getIdContract());
         Client clientContract = clientService.findById(idClient);
+        MyPage<String> myPage;
         List<Document> documentsContract=null;
         if(documentService.getTotalCountDocuments()>0){
             documentsContract=documentService.findAllDocumentsOneContract(contract.getIdContract());
         }
-        var employees = contractService.getEmployeesAsociated(contract.getIdContract());
+        myPage = getStringMyPage(model, idContract, currentPage,myInput);
+        model.addAttribute("totalPages", myPage.getNumberPages());
+        model.addAttribute("totalItems", myPage.getTotalItems());
+        model.addAttribute("employees", myPage.getContent());
         model.addAttribute("documents",documentsContract);
         model.addAttribute("contract", contract);
         model.addAttribute("totalValue", calculateTotalValue(contract.getInitialValue(),contract.getAditionalValue()));
         model.addAttribute("pendingValue", calculatePendingValue(contract.getInitialValue(),contract.getAditionalValue(),contract.getInvoicedValue()));
         model.addAttribute("client", clientContract);
-        model.addAttribute("employees", employees);
         return "specificDataContract";
+    }
+
+    private MyPage<String> getStringMyPage(Model model, String idContract, int currentPage,String keyWord) {
+        MyPage<String> myPage;
+        model.addAttribute("currentPage", 1);
+        if(keyWord!=null && !keyWord.isEmpty()){
+            return contractService.getEmployeesByKeyWork(idContract,keyWord);
+        }
+        if(currentPage <1){
+            return contractService.getEmployeesAsociated(idContract,1);
+        }
+        model.addAttribute("currentPage", currentPage);
+        return contractService.getEmployeesAsociated(idContract, currentPage);
     }
 
     private Double calculateTotalValue(Double contractValue, Double aditionalValue){
@@ -254,7 +270,7 @@ public class ControllerContract {
         contract = (Contract) contractService.find(contract);
         boolean isAsociated = false;
         if(documentService.getTotalCountDocuments()>0) {
-            isAsociated = (contractService.getEmployeesAsociated(contract.getIdContract()).size() > 0 || documentService.findAllDocumentsOneContract(contract.getIdContract()).size() > 0);
+            isAsociated = (contractService.getEmployeesAsociated(contract.getIdContract(),1).getContent().size() > 0 || documentService.findAllDocumentsOneContract(contract.getIdContract()).size() > 0);
         }
         LocalDate actual = LocalDate.now();
         log.info("edicion contrato id:"+ contract.getIdContract()+"  fecha modi:" + actual.toString());

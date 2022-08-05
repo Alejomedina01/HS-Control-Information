@@ -37,15 +37,6 @@ public class ControllerEmployeeContract {
 
     private Long idEmployeeActual;
 
-    /*@GetMapping("/addEmployeeToContract/{idContract}")
-    public String asociateEmployeeContract(Contract contract, Model model){
-        contract = (Contract) contractServiceImp.find(contract);
-        model.addAttribute("contract", contract);
-        var employees = ecServiceImp.findPage(contract.getIdContract());
-        model.addAttribute("employees", employees);
-        log.info("e - " + employees);
-        return "asociateEC";
-    }*/
     @GetMapping("/addEmployeeToContract/{idContract}")
     public String findClienForContract(Model model,@PathVariable("idContract") String idContract) {
         return getOnePageClients(model,1,idContract,null);
@@ -92,7 +83,7 @@ public class ControllerEmployeeContract {
         ecServiceImp.save(employeeContract);
         redirectAttrs.addFlashAttribute("mensaje", "✓ Empleado Asociado al Contrato")
                 .addFlashAttribute("clase", "success");
-        return "redirect:/abrirContrato/"+this.idContractActual;
+        return "redirect:/abrirContrato/"+this.idContractActual+"/1";
     }
 
     @GetMapping("/deleteEmployee/{idEmployee}/{idContract}")
@@ -100,7 +91,7 @@ public class ControllerEmployeeContract {
         ecServiceImp.deleteAsociation(idEmployee, idContract);
         redirectAttrs.addFlashAttribute("mensaje", "✓ Empleado Desasociado Correctamente")
                 .addFlashAttribute("clase", "success");
-        return "redirect:/abrirContrato/"+idContract;
+        return "redirect:/abrirContrato/"+idContract+"/1";
     }
 
     @GetMapping("/modifyAsociation/{idContract}/{idEmployee}")
@@ -120,6 +111,6 @@ public class ControllerEmployeeContract {
         ecServiceImp.save(employeeContract);
         redirectAttrs.addFlashAttribute("mensaje", "✓ Asociación Editada Correctamente")
                 .addFlashAttribute("clase", "success");
-        return "redirect:/abrirContrato/"+this.idContractActual;
+        return "redirect:/abrirContrato/"+this.idContractActual+"/1";
     }
 }

@@ -17,7 +17,7 @@
                         <div class="card-header">
                             <h4 >Registrar Cliente</h4>
                         </div>
-                        <form th:action="@{/saveClient}" th:object="${client}" 
+                        <form id="form-add-client" th:action="@{/saveClient}" th:object="${client}"
                                  method="POST" class="was-validated">
                             <div class="modal-body">
                                 <div class="form-group">
