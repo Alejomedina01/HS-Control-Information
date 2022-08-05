@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.LocalDate;
 import java.util.Date;
@@ -60,13 +63,14 @@ public class ControllerEmployeeContract {
         model.addAttribute("employees", page.getContent());
         return "asociateEC";
     }
+
     @GetMapping("/crearAsociacion/{idContract}/{idEmployee}")
     public String createAsociation(@PathVariable String idContract, @PathVariable String idEmployee, Model model){
         idContractActual = idContract;
         idEmployeeActual = Long.valueOf(idEmployee);
         Date contractDate = contractServiceImp.findById(idContractActual).getContractDate();
         Date finalContractDate = contractServiceImp.findById(idContractActual).getReceivalDateAct();
-        log.info(finalContractDate + "");
+        log.info("Se crea la asociancon con" +finalContractDate  + " --Fecha: "  + LocalDate.now().toString());
         LocalDate actualDate = LocalDate.now();
         model.addAttribute("idContract", idContract);
         model.addAttribute("idEmployee", idEmployee);
@@ -80,15 +84,18 @@ public class ControllerEmployeeContract {
     public String uploadAsociation(EmployeeContract employeeContract, RedirectAttributes redirectAttrs){
         employeeContract.setContract(contractServiceImp.findById(this.idContractActual));
         employeeContract.setEmployee(employeeService.findById(this.idEmployeeActual));
+        log.info("se agrego el empleado - " + this.idEmployeeActual + " al contrato - " + this.idContractActual  + " --Fecha: "  + LocalDate.now().toString());
         ecServiceImp.save(employeeContract);
         redirectAttrs.addFlashAttribute("mensaje", "✓ Empleado Asociado al Contrato")
                 .addFlashAttribute("clase", "success");
+        log.info("Contrato asociado "+ employeeContract.getContract().getIdContract()  + "empleado asociado "+ employeeContract.getEmployee().getIdEmployee()+ " --Fecha: "  + LocalDate.now().toString());
         return "redirect:/abrirContrato/"+this.idContractActual+"/1";
     }
 
     @GetMapping("/deleteEmployee/{idEmployee}/{idContract}")
     public String deleteAsociation(@PathVariable String idEmployee, @PathVariable String idContract, RedirectAttributes redirectAttrs){
         ecServiceImp.deleteAsociation(idEmployee, idContract);
+        log.info("se elimino el empleado - " + idEmployee + " del contrato - " + idContract  + " --Fecha: "  + LocalDate.now().toString());
         redirectAttrs.addFlashAttribute("mensaje", "✓ Empleado Desasociado Correctamente")
                 .addFlashAttribute("clase", "success");
         return "redirect:/abrirContrato/"+idContract+"/1";
@@ -99,7 +106,13 @@ public class ControllerEmployeeContract {
         EmployeeContract employeeContract = ecServiceImp.findByEmpCont(idEmployee, idContract);
         idContractActual = idContract;
         idEmployeeActual = Long.valueOf(idEmployee);
+        Date contractDate = contractServiceImp.findById(idContractActual).getContractDate();
+        Date finalContractDate = contractServiceImp.findById(idContractActual).getReceivalDateAct();
+        LocalDate actualDate = LocalDate.now();
         model.addAttribute("employeeContract", employeeContract);
+        model.addAttribute("actualDate", actualDate);
+        model.addAttribute("contractDate", contractDate);
+        model.addAttribute("finalContractDate", finalContractDate);
         return "modifyContractEmployee";
     }
 
@@ -109,6 +122,7 @@ public class ControllerEmployeeContract {
         employeeContract.setEmployee(employeeService.findById(this.idEmployeeActual));
         ecServiceImp.deleteAsociation(String.valueOf(employeeContract.getEmployee().getIdEmployee()), employeeContract.getContract().getIdContract());
         ecServiceImp.save(employeeContract);
+        log.info("se editó la asociacion del empleado - " + this.idEmployeeActual + " del contrato - " + this.idContractActual  + " --Fecha: "  + LocalDate.now().toString());
         redirectAttrs.addFlashAttribute("mensaje", "✓ Asociación Editada Correctamente")
                 .addFlashAttribute("clase", "success");
         return "redirect:/abrirContrato/"+this.idContractActual+"/1";
