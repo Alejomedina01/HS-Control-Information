@@ -126,6 +126,6 @@ public class ControllerClient {
                 .addFlashAttribute("clase", "success");
         log.info("Se edito correctamente el cliente: "+ client.getIdClient() + " --Fecha: "  + LocalDate.now().toString());
 
-        return "redirect:/Clients";
+        return "redirect:/abrirCliente/"+client.getIdClient();
     }
 }

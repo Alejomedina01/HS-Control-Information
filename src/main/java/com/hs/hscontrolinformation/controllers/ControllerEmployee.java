@@ -119,6 +119,6 @@ public class ControllerEmployee {
         redirectAttrs.addFlashAttribute("mensaje", "✓ Empleado Editado Correctamente")
                 .addFlashAttribute("clase", "success");
         log.info("Se edita correctamente al empleado: "+employee.getIdEmployee() + " --Fecha: "  + LocalDate.now().toString());
-        return "redirect:/Employees";
+        return "redirect:/abrirEmpleado/"+employee.getIdEmployee();
     }
 }
