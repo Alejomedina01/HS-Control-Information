@@ -130,6 +130,7 @@ public class ControllerContract {
     public String addNewContract(Model model) {
         LocalDate actual = LocalDate.now();
         log.info("Se confirmo cliente para crear contrato --" + actual.toString());
+        model.addAttribute("actual",actual);
         return "addContract";
     }
 
@@ -309,7 +310,7 @@ public class ControllerContract {
                 .addFlashAttribute("clase", "success");
         log.info("Contrato editadado correctamente: " + contract.getIdContract()+ " --Fecha: "  +  LocalDate.now().toString());
 
-        return "redirect:/Contracts";
+        return "redirect:/abrirContrato/"+contract.getIdContract();
     }
 
     @GetMapping("/eliminar")
