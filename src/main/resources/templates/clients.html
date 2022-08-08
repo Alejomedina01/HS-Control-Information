@@ -23,7 +23,7 @@
                     <h4>Listado Clientes</h4>
                 </div>
                 <br>
-                <div th:if="${clients != null and !clients.isEmpty()}">
+                <div>
                     <div class="search-box">
                         <div class="row">
                             <div class="col-md-3">
@@ -62,7 +62,7 @@
                             <th>Enlace</th>
                         </tr>
                         </thead>
-                        <tbody>
+                        <tbody th:if="${clients != null and !clients.isEmpty()}">
 
                         <tr th:each="client : ${clients}" test-id="datasClient">
                             <td th:text="${client.getIdClient()}"></td>
@@ -78,6 +78,9 @@
                         </tr>
                         </tbody>
                     </table>
+                    <div class="text-center p-2" th:if="${clients == null or clients.isEmpty()}">
+                        <span>No existen clientes relacionados con la busqueda</span>
+                    </div>
                     <nav class="form-inline">
                         <ul class="pagination">
                             <li class="page-item p-2">N° Total Items: [[${totalItems}]] Pagina [[${currentPage}]] de

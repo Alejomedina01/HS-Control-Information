@@ -40,5 +40,7 @@ public interface EmployeeContractDao extends JpaRepository<EmployeeContract, Lon
 
     @Query(nativeQuery = true, value = "SELECT * FROM empleados_contratos WHERE id_empleado=?1 AND id_contrato=?2")
     EmployeeContract findByEmpCont(Long idEmployee, String idContract);
+    @Query(nativeQuery = true, value = "SELECT count(ec.id_employee_contract) FROM empleados_contratos ec WHERE id_contrato=?1")
+    long countAllEmployeesByOneContract(String idContract);
 
 }

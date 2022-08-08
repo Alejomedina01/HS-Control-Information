@@ -29,7 +29,7 @@ public class ContractServiceImp implements ServiceTemplate<Contract> {
 
     @Transactional(readOnly = true)
     public MyPage<String> findPage(int pageNumber){
-        double maxItems=4;
+        double maxItems=15;
         MyPage<String> myPage=new MyPage<>();
         long total= contractDao.count();
         List<String> contracts=contractDao.findBasicDataContract((long)((pageNumber-1)*maxItems) , (int) maxItems);
@@ -73,11 +73,12 @@ public class ContractServiceImp implements ServiceTemplate<Contract> {
 
     @Transactional(readOnly = true)
     public MyPage<String> getEmployeesAsociated(String idContract,int page){
-        double maxItems=4;
+        double maxItems=15;
         MyPage<String> myPage=new MyPage();
         long totalEmployees= contractDao.countEmployeesAsociated(idContract);
         List<String> employees = contractDao.getEmployeesAsociated(idContract,(long)((page-1)*maxItems) ,(int)maxItems);
-        myPage.setNumberPages((int) Math.ceil(totalEmployees/maxItems));
+        int numberPage=(int) Math.ceil(totalEmployees/maxItems);
+        myPage.setNumberPages(numberPage==0?1:numberPage);
         myPage.setTotalItems(totalEmployees);
         myPage.setContent(employees);
         return myPage;

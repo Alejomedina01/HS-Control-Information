@@ -109,6 +109,7 @@ public class ControllerContract {
         model.addAttribute("totalPages", 1);
         model.addAttribute("totalItems", clients.size());
         model.addAttribute("clients", clients);
+        model.addAttribute("client", null);
         log.info("Se encontro al cliente por " +myInput + " --Fecha: "  + LocalDate.now().toString());
         return "findClient";
     }
@@ -269,9 +270,6 @@ public class ControllerContract {
         model.addAttribute("currentPage", 1);
         if(keyWord!=null && !keyWord.isEmpty()){
             return contractService.getEmployeesByKeyWork(idContract,keyWord);
-        }
-        if(currentPage <1){
-            return contractService.getEmployeesAsociated(idContract,1);
         }
         model.addAttribute("currentPage", currentPage);
         return contractService.getEmployeesAsociated(idContract, currentPage);

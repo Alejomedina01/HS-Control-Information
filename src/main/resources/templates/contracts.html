@@ -23,7 +23,7 @@
                     <h4>Listado Contratos</h4>
                 </div>
                    <br>
-                <div th:if="${contracts != null and !contracts.isEmpty()}">
+                <div>
                     <div class="search-box">
                         <div class="row">
                             <div class="col-md-3">
@@ -61,7 +61,7 @@
                             <th>Enlace</th>
                         </tr>
                         </thead>
-                        <tbody>
+                        <tbody th:if="${contracts != null and !contracts.isEmpty()}">
                         <tr test-id="rowtable" th:each="contract : ${contracts}">
                             <td test-id="idContract" th:text="${contract.split(',')[0]}">Mostrar Id</td>
                             <td th:text="${contract.split(',')[1]}">Mostrar Nombre</td>
@@ -73,6 +73,9 @@
                         </tr>
                         </tbody>
                     </table>
+                    <div class="text-center p-2" th:if="${contracts == null or contracts.isEmpty()}">
+                        <span>No existen contratos relacionados con la busqueda</span>
+                    </div>
                     <nav class="form-inline">
                         <ul class="pagination">
                             <li class="page-item p-2">N° Total Items: [[${totalItems}]] Pagina [[${currentPage}]] de

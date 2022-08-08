@@ -89,7 +89,7 @@
                             <td th:if="${contract.split(',')[4] != 'null'}" th:text="${contract.split(',')[4]}"></td>
                             <td th:if="${contract.split(',')[4] == 'null'}" th:text="${'No Concretada'}"></td>
                             <td>
-                                <a th:href="@{/abrirContrato/} + ${contract.split(',')[0]}" test-id="openContract" class="btn btn-outline-success">Abrir</a>
+                                <a th:href="@{/abrirContrato/} + ${contract.split(',')[0]}+@{/1}" test-id="openContract" class="btn btn-outline-success">Abrir</a>
                             </td>
                         </tr>
                         </tbody>

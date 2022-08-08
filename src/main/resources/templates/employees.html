@@ -23,7 +23,7 @@
                     <h4>Listado Empleados</h4>
                 </div>
                 <br>
-                <div th:if="${employees != null and !employees.isEmpty()}">
+                <div>
                     <div class="search-box">
                         <div class="row">
                             <div class="col-md-3">
@@ -64,7 +64,7 @@
                             <th>Enlace</th>
                         </tr>
                         </thead>
-                        <tbody>
+                        <tbody th:if="${employees != null and !employees.isEmpty()}">
                         <tr test-id="datasEmployee" th:each="employee : ${employees}">
                             <td th:text="${employee.getIdEmployee()}"></td>
                             <td th:text="${employee.getName() + ' ' + employee.getLastname()}"></td>
@@ -77,6 +77,9 @@
                             </td>
                         </tbody>
                     </table>
+                    <div class="text-center p-2" th:if="${employees == null or employees.isEmpty()}">
+                        <span>No existen empleados relacionados con la busqueda</span>
+                    </div>
                     <nav class="form-inline">
                         <ul class="pagination">
                             <li class="page-item p-2">N° Total Items: [[${totalItems}]] Pagina [[${currentPage}]] de

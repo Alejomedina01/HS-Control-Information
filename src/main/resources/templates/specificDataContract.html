@@ -183,7 +183,7 @@
                         </div>
                     </div>
                     <br>
-                <div th:if="${employees != null and !employees.isEmpty()}">
+                <div>
                     <table id="dtBasicExample" class="table table-striped">
                         <thead class="thead-dark">
                         <tr>
@@ -197,7 +197,7 @@
                             <th>Eliminar</th>
                         </tr>
                         </thead>
-                        <tbody>
+                        <tbody th:if="${employees != null and !employees.isEmpty()}">
                         <tr th:each="employee : ${employees}">
                             <td th:text="${employee.split(',')[0]}"></td>
                             <td th:text="${employee.split(',')[1] + ' ' + employee.split(',')[2]}"></td>
@@ -216,6 +216,9 @@
                             </td>
                         </tbody>
                     </table>
+                    <div class="text-center p-2" th:if="${employees == null or employees.isEmpty()}">
+                        <span>No hay empleados asociados con el criterio buscado</span>
+                    </div>
                     <nav class="form-inline">
                         <ul class="pagination">
                             <li class="page-item p-2">N° Total Items: [[${totalItems}]] Pagina [[${currentPage}]] de
@@ -256,9 +259,6 @@
                             </li>
                         </ul>
                     </nav>
-                </div>
-                <div class="text-center p-2" th:if="${employees == null or employees.isEmpty()}">
-                    <span>No hay empleados asociados</span>
                 </div>
             </div>
         </div>

@@ -35,7 +35,8 @@ public class ClientImplService implements ServiceTemplate<Client>{
     }
     @Transactional(readOnly = true)
     public Page<Client> findPage(int pageNumber){
-        Pageable pageable = PageRequest.of(pageNumber - 1,4);
+        double maxItems=15;
+        Pageable pageable = PageRequest.of(pageNumber - 1,(int) maxItems);
         return repository.findAll(pageable);
     }
 
