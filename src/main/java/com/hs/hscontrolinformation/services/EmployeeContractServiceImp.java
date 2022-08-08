@@ -44,7 +44,7 @@ public class EmployeeContractServiceImp implements ServiceTemplate<EmployeeContr
         return null;
     }
 
-    private static final   double maxItems=4;
+    private static final   double maxItems=15;
 
     @Transactional(readOnly = true)
     public EmployeeContract find(EmployeeContract employeeContract) {
@@ -54,18 +54,19 @@ public class EmployeeContractServiceImp implements ServiceTemplate<EmployeeContr
     @Transactional(readOnly = true)
     public MyPage<String> findPage(String idContract,int pageNumber){
         MyPage<String> myPage=new MyPage<>();
-        long total = employeeDao.count()-employeeContractDao.count();
+        long total = employeeDao.count() - employeeContractDao.countAllEmployeesByOneContract(idContract);
         List<String> employees=employeeContractDao.getEmployeesNotAsociated(idContract,(long)((pageNumber-1)*maxItems) , (int) maxItems);
         myPage.setTotalItems(total);
-        myPage.setNumberPages((int) Math.ceil(total/maxItems));
+        int numberPage=(int) Math.ceil(total/maxItems);
+        myPage.setNumberPages(numberPage==0?1:numberPage);
+        System.out.println("numero de pagina------------"+myPage.getNumberPages());
         myPage.setContent(employees);
         return myPage;
     }
     public MyPage<String> findByKeyword(String idContract,String keyword){
         MyPage<String> myPage=new MyPage<>();
-        long total = employeeDao.count()-employeeContractDao.count();
-        myPage.setTotalItems(total);
         List<String> employees=employeeContractDao.findAllByKeyWord(idContract,"%"+keyword.toLowerCase()+"%");
+        myPage.setTotalItems(employees.size());
         myPage.setNumberPages(1);
         myPage.setContent(employees);
         return myPage;

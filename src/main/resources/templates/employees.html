@@ -23,7 +23,7 @@
                     <h4>Listado Empleados</h4>
                 </div>
                 <br>
-                <div th:if="${employees != null and !employees.isEmpty()}">
+                <div>
                     <div class="search-box">
                         <div class="row">
                             <div class="col-md-3">
@@ -64,7 +64,7 @@
                             <th>Enlace</th>
                         </tr>
                         </thead>
-                        <tbody>
+                        <tbody th:if="${employees != null and !employees.isEmpty()}">
                         <tr test-id="datasEmployee" th:each="employee : ${employees}">
                             <td th:text="${employee.getIdEmployee()}"></td>
                             <td th:text="${employee.getName() + ' ' + employee.getLastname()}"></td>
@@ -77,24 +77,27 @@
                             </td>
                         </tbody>
                     </table>
+                    <div class="text-center p-2" th:if="${employees == null or employees.isEmpty()}">
+                        <span>No existen empleados relacionados con la busqueda</span>
+                    </div>
                     <nav class="form-inline">
                         <ul class="pagination">
                             <li class="page-item p-2">N° Total Items: [[${totalItems}]] Pagina [[${currentPage}]] de
                                 [[${totalPages}]]
                             </li>
-                            <li class="page-item">
+                            <li class="page-item" test-id="first">
                                 <a class="page-link btn btn-light" th:if="${currentPage > 1}"
                                    th:href="@{'/Employees/page/1'}">Primera</a>
                                 <span class="page-link btn btn-light" th:unless="${currentPage > 1}">Primera</span>
                             </li>
 
-                            <li class="page-item">
+                            <li class="page-item" test-id="previous">
                                 <a class="page-link btn btn-light" th:if="${currentPage > 1}"
                                    th:href="@{'/Employees/page/' + ${currentPage - 1}}">Anterior</a>
                                 <span class="page-link btn btn-light" th:unless="${currentPage > 1}">Anterior</span>
                             </li>
 
-                            <li class="page-item pagination">
+                            <li class="page-item pagination" test-id="numberPage">
                                 <span th:each="i: ${#numbers.sequence(1, totalPages)}">
                                     <a class=" page-item page-link btn btn-light page-item" th:if="${i != currentPage}"
                                        th:href="@{'/Employees/page/' + ${i}}">[[${i}]]</a>
@@ -102,14 +105,14 @@
                                           th:unless="${i != currentPage}">[[${i}]]</span>
                                 </span>
                             </li>
-                            <li class="page-item">
+                            <li class="page-item" test-id="next">
                                 <a class="page-link btn btn-light" th:if="${currentPage < totalPages}"
                                    th:href="@{'/Employees/page/' + ${currentPage + 1}}">Siguiente</a>
                                 <span class="page-link btn btn-light"
                                       th:unless="${currentPage < totalPages}">Siguiente</span>
                             </li>
 
-                            <li class="page-item">
+                            <li class="page-item" test-id="last">
                                 <a class="page-link btn btn-light" th:if="${currentPage < totalPages}"
                                    th:href="@{'/Employees/page/' + ${totalPages}}">Ultima</a>
                                 <span class="page-link btn btn-light"

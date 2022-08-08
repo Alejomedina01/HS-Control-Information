@@ -89,7 +89,7 @@ public class ControllerEmployeeContract {
         redirectAttrs.addFlashAttribute("mensaje", "✓ Empleado Asociado al Contrato")
                 .addFlashAttribute("clase", "success");
         log.info("Contrato asociado "+ employeeContract.getContract().getIdContract()  + "empleado asociado "+ employeeContract.getEmployee().getIdEmployee()+ " --Fecha: "  + LocalDate.now().toString());
-        return "redirect:/abrirContrato/"+this.idContractActual;
+        return "redirect:/abrirContrato/"+this.idContractActual+"/1";
     }
 
     @GetMapping("/deleteEmployee/{idEmployee}/{idContract}")
@@ -98,7 +98,7 @@ public class ControllerEmployeeContract {
         log.info("se elimino el empleado - " + idEmployee + " del contrato - " + idContract  + " --Fecha: "  + LocalDate.now().toString());
         redirectAttrs.addFlashAttribute("mensaje", "✓ Empleado Desasociado Correctamente")
                 .addFlashAttribute("clase", "success");
-        return "redirect:/abrirContrato/"+idContract;
+        return "redirect:/abrirContrato/"+idContract+"/1";
     }
 
     @GetMapping("/modifyAsociation/{idContract}/{idEmployee}")
@@ -125,6 +125,6 @@ public class ControllerEmployeeContract {
         log.info("se editó la asociacion del empleado - " + this.idEmployeeActual + " del contrato - " + this.idContractActual  + " --Fecha: "  + LocalDate.now().toString());
         redirectAttrs.addFlashAttribute("mensaje", "✓ Asociación Editada Correctamente")
                 .addFlashAttribute("clase", "success");
-        return "redirect:/abrirContrato/"+this.idContractActual;
+        return "redirect:/abrirContrato/"+this.idContractActual+"/1";
     }
 }

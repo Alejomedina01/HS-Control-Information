@@ -79,10 +79,6 @@ public class ControllerClient {
             log.info("El cliente ya existe con el id "+ data.getIdClient() + " --Fecha: "  + LocalDate.now().toString());
 
         }
-        service.save(data);
-        redirectAttrs.addFlashAttribute("mensaje", "✓ Cliente Agregado Correctamente")
-                .addFlashAttribute("clase", "success");
-        log.info("Se guardo correctamente el cliente: "+ data.getIdClient() + " --Fecha: "  + LocalDate.now().toString());
         return "redirect:/Clients";
     }
 
@@ -99,6 +95,9 @@ public class ControllerClient {
     @GetMapping("/abrirCliente/{idClient}")
     public String openClient(Client data, Model model){
         Client client = (Client) service.findById(data.getIdClient());
+        if(client == null){
+            return "redirect:/Clients";
+        }
         var contracts = service.findBasicDataContract(data.getIdClient());
         model.addAttribute("client", client);
         model.addAttribute("contracts", contracts);
@@ -109,6 +108,9 @@ public class ControllerClient {
     @GetMapping("/editarCliente/{idClient}")
     public String editClient(Client data, Model model){
         Client client = (Client) service.findById(data.getIdClient());
+        if(client == null){
+            return "redirect:/Clients";
+        }
         boolean isAsociated = service.findBasicDataContract(data.getIdClient()).size() > 0;
         model.addAttribute("isAsociated", isAsociated);
         model.addAttribute("client", client);

@@ -49,7 +49,8 @@ public class EmployeeServiceImp implements ServiceTemplate<Employee> {
     }
     @Transactional(readOnly = true)
     public Page<Employee> findPage(int pageNumber){
-        Pageable pageable = PageRequest.of(pageNumber - 1,4);
+        double maxItems=15;
+        Pageable pageable = PageRequest.of(pageNumber - 1,(int)maxItems);
         return employeeDao.findAll(pageable);
     }
     @Transactional(readOnly = true)

@@ -96,6 +96,9 @@ public class ControllerEmployee {
     @GetMapping("/abrirEmpleado/{idEmployee}")
     public String openEmployee(Employee data, Model model){
         Employee employee = (Employee) employeeService.findById(data.getIdEmployee());
+        if(employee == null){
+            return "redirect:/Employees";
+        }
         var contracts = employeeService.findBasicDataContract(data.getIdEmployee());
         model.addAttribute("employee", employee);
         model.addAttribute("contracts", contracts);
@@ -105,6 +108,9 @@ public class ControllerEmployee {
     @GetMapping("/editarEmpleado/{idEmployee}")
     public String editEmployee(Employee data, Model model){
         Employee employee = (Employee) employeeService.find(data);
+        if(employee == null){
+            return "redirect:/Employees";
+        }
         boolean isAsociated = employeeService.findBasicDataContract(data.getIdEmployee()).size() > 0;
         model.addAttribute("isAsociated", isAsociated);
         model.addAttribute("empleado", employee);

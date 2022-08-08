@@ -22,7 +22,7 @@
                     <h4>Listado Empleados</h4>
                 </div>
                 <br>
-                <div th:if="${employees != null and !employees.isEmpty()}">
+                <div>
                     <div class="search-box">
                         <div class="row">
                             <div class="col-md-3">
@@ -34,7 +34,7 @@
                                     <input type="text" id="myInput" name="myInput" class="form-control"
                                            placeholder="Ingrese palabra clave" th:value="${keyWordSearch}">
                                     <div class="input-group-append">
-                                        <button class="btn btn-success" test-id="searchEmployees"
+                                        <button class="btn btn-success" test-id="searchEmployee"
                                                 type="submit">Buscar
                                         </button>
                                     </div>
@@ -63,7 +63,7 @@
                             <th>Enlace</th>
                         </tr>
                         </thead>
-                        <tbody>
+                        <tbody th:if="${employees != null and !employees.isEmpty()}">
                         <tr th:each="employee : ${employees}">
                             <td th:text="${employee.split(',')[0]}"></td>
                             <td th:text="${employee.split(',')[1] + ' ' + employee.split(',')[2]}"></td>
@@ -76,6 +76,9 @@
                             </td>
                         </tbody>
                     </table>
+                    <div class="text-center p-2" th:if="${employees == null or employees.isEmpty()}">
+                        <span>No quedan empleados por añadir</span>
+                    </div>
                     <nav class="form-inline">
                         <ul class="pagination">
                             <li class="page-item p-2">N° Total Items: [[${totalItems}]] Pagina [[${currentPage}]] de
@@ -116,9 +119,6 @@
                             </li>
                         </ul>
                     </nav>
-                </div>
-                <div class="text-center p-2" th:if="${employees == null or employees.isEmpty()}">
-                    <span>No quedan empleados por añadir</span>
                 </div>
             </div>
         </div>
