@@ -31,7 +31,8 @@ public class ClientImplService implements ServiceTemplate<Client>{
     @Override
     @Transactional(readOnly = false)
     public void save(Client data) {
-        repository.save(data);
+        System.out.println(data.toString());
+        repository.updateClient(data.getEmail(), data.getClientName(), data.getNumberPhone(), data.getIdClient());
     }
     @Transactional(readOnly = true)
     public Page<Client> findPage(int pageNumber){
