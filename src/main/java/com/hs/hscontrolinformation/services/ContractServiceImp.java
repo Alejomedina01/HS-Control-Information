@@ -61,11 +61,6 @@ public class ContractServiceImp implements ServiceTemplate<Contract> {
         return contractDao.findById(contract.getIdContract()).orElse(null);
     }
 
-    @Transactional
-    public void updateContractToClientId(String idClient, String idContract){
-        contractDao.updateContractToClientId(idClient, idContract);
-    }
-
     @Transactional(readOnly = true)
     public String findClientIdFromContract(String idContract){
         return contractDao.findClientIdFromContract(idContract);

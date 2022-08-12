@@ -10,9 +10,6 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface  DocumentDao extends JpaRepository<Document,Long>{
-    @Modifying
-    @Query(nativeQuery = true,value = "UPDATE documento SET id_contrato = ?1 WHERE id_document = ?2")
-    void updateDocumentToContractId(String idContract, Long idDocument);
 
     @Query(nativeQuery = true,value = "SELECT * FROM documento WHERE id_contrato = ?1")
     List<Document>findAllDocumentsOneContract(String idContract);
@@ -22,7 +19,6 @@ public interface  DocumentDao extends JpaRepository<Document,Long>{
 
     @Query(nativeQuery = true,value = "SELECT dc.id_contrato FROM documento AS dc WHERE id_document = ?1")
     long findIdContractForDocument(Long idDocument);
-
     @Query(nativeQuery = true, value = "SELECT * FROM documento WHERE id_contrato = ?1 AND name_file LIKE ?2")
     Document findDocumentUniqName(String idContract, String nameFile);
 }

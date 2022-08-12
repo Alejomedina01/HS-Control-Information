@@ -32,4 +32,9 @@ public class Document implements Serializable{
 
     @Column(name = "expiration_date")
     private String expirationDate;
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = false)
+    @JoinColumn(name = "id_Contrato", referencedColumnName = "id_Contrato")
+    private Contract contract;
+
 }

@@ -17,9 +17,6 @@ public interface ContractDao extends JpaRepository<Contract, String> {
             "ON cn.id_cliente = cl.id_cliente \n" +
             "LIMIT ?2 offset ?1 \n", nativeQuery = true)
     List<String> findBasicDataContract(long startIndex,int maxContracts);
-    @Modifying
-    @Query(nativeQuery = true,value = "UPDATE contrato SET id_cliente = ?1 WHERE id_contrato = ?2")
-    void updateContractToClientId(String idClient, String idContract);
 
     @Query(nativeQuery = true, value = "SELECT id_cliente FROM contrato WHERE id_contrato = ?1")
     String findClientIdFromContract(String idContract);

@@ -29,8 +29,4 @@ public class Client implements Serializable {
 
     @Column(name = "numero_telefono_cliente")
     private Long numberPhone;
-
-    @OneToMany
-    @JoinColumn(name = "id_cliente")
-    private List<Contract> contractList;
 }

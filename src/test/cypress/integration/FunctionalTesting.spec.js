@@ -55,11 +55,6 @@ describe('functional testing second sprint', function () {
         cy.get('input[test-id="projectName"]').clear()
         cy.get('input[test-id="projectName"]').type('construccion de barandal')
         cy.get('button[test-id="saveChangesContract"]').click()
-        cy.get('input[id="myInput"]').type('88888')
-        cy.get('button[test-id="searchContract"]').click()
-        cy.contains('88888').parent('tr').within(() => {
-            cy.get('td').eq(4).contains('a', 'Abrir').click()
-        })
         cy.get('td[test-id="projectName"]').should('contain', 'construccion de barandal')
     })
     it('Consultar contrato', () => {
@@ -255,43 +250,34 @@ describe('functional testing second sprint', function () {
             cy.get('td').eq(4).contains('a', 'Abrir').click()
         })
         cy.get('[test-id="editAsociation"]').click()
-        cy.get('[test-id="finalDate"]').type('2022-11-11')
+        cy.get('[test-id="finalDate"]').type('2022-08-11')
         cy.get('[test-id="saveChangesEmpCont"]').click()
         cy.contains('44444').parent('tr').within(() => {
-            cy.get('td').eq(4).should('contain','2022-11-11')
+            cy.get('td').eq(4).should('contain','2022-08-11')
         })
     })
-    it('Paginacion de tabla de contratos', () => {
+    it.only('Paginacion de tabla de contratos', () => {
         cy.get('[test-id="contracts"]').click()
-        cy.get('[test-id="numberPage"]').within(() => {
-            cy.contains('2').click()
-        })
         cy.get('[test-id="first"]').click()
         cy.get('[test-id="next"]').click()
         cy.get('[test-id="previous"]').click()
         cy.get('[test-id="last"]').click()
     })
-    it('Paginacion de tabla de clientes', () => {
+    it.only('Paginacion de tabla de clientes', () => {
         cy.get('[test-id="clients"]').click()
-        cy.get('[test-id="numberPage"]').within(() => {
-            cy.contains('2').click()
-        })
         cy.get('[test-id="first"]').click()
         cy.get('[test-id="next"]').click()
         cy.get('[test-id="previous"]').click()
         cy.get('[test-id="last"]').click()
     })
-    it('Paginacion de tabla de Empledos', () => {
+    it.only('Paginacion de tabla de Empledos', () => {
         cy.get('[test-id="employees"]').click()
-        cy.get('[test-id="numberPage"]').within(() => {
-            cy.contains('2').click()
-        })
         cy.get('[test-id="first"]').click()
         cy.get('[test-id="next"]').click()
         cy.get('[test-id="previous"]').click()
         cy.get('[test-id="last"]').click()
     })
-    it('Editar asociación entre empleado y contrato', () => {
+    it('Seleccionar cliente de un nuevo contrato desde la tabla de existentes', () => {
         cy.get('[test-id="contracts"]').click()
         cy.get('[test-id="addContract"]').click();
         cy.get('[test-id="bodyTable"]').children().first().contains('a', 'Seleccionar').click()
@@ -318,7 +304,7 @@ describe('functional testing second sprint', function () {
             cy.get('input[name="idContract"]').then($el => $el[0].checkValidity()).should('be.true')
         })
     })
-    it.only('Permitir el ingreso de valores decimales en campos de precio', () => {
+    it('Permitir el ingreso de valores decimales en campos de precio', () => {
         cy.get('[test-id="contracts"]').click()
         cy.get('[test-id="addContract"]').click();
         cy.get('input[test-id="idClient"]').type('33333')

@@ -152,10 +152,11 @@ public class ControllerContract {
 
     private void saveDocumentStorage(Contract contract, MultipartFile file, Document document){
         contract = (Contract) contractService.find(contract);
+        document.setContract(contract);
         String fullName = saveFileContract( file, document.getNameFile());
         document.setFullName(fullName);
-        documentService.saveDocument(document);
-        documentService.updateDocumentToContractId(contract.getIdContract(), document.getIdDocument());
+        document.setContract(contract);
+        documentService.save(document);
         log.info("Se agrego un documento con el nombre " +document.getNameFile()+ " Al contrato: "+ contract.getIdContract() + " --Fecha: "  + LocalDate.now().toString());
 
     }
@@ -176,8 +177,8 @@ public class ControllerContract {
             return "addContract";
         }
         if (contractService.findById(contract.getIdContract()) == null && this.client != null){
+            contract.setClient(this.client);
             contractService.save(contract);
-            contractService.updateContractToClientId(this.client.getIdClient(), contract.getIdContract());
             redirectAttrs.addFlashAttribute("mensaje", "✓ Contrato Agregado Correctamente")
                     .addFlashAttribute("clase", "success");
             log.info("Contrato agregado correctamente " + " --Fecha: "  +  LocalDate.now().toString());
@@ -207,8 +208,9 @@ public class ControllerContract {
         serviceAws.deleteFile(document.getFullName());
         String fullName = saveFileContract(file, document.getNameFile());
         document.setFullName(fullName);
+        document.setContract(contract);
         serviceAws.generatePresignedUrl(document);
-        documentService.saveDocument(document);
+        documentService.save(document);
         redirectAttrs.addFlashAttribute("mensaje", "✓ Documento Reemplazado Correctamente")
                 .addFlashAttribute("clase", "success");
         log.info("Documento remplazado correctamente: " + document.getNameFile()+ " En el contrato: " + contract.getIdContract()+ " --Fecha: "  +  LocalDate.now().toString());
@@ -235,7 +237,9 @@ public class ControllerContract {
             if(document.getPresignedUrl()== null ||
                     Long.parseLong(document.getExpirationDate())< (Instant.now().toEpochMilli())-(1000*60*60)){
                     serviceAws.generatePresignedUrl(document);
-                    documentService.saveDocument(document);
+                    Contract contract= contractService.find(document.getContract());
+                    document.setContract(contract);
+                    documentService.save(document);
             }
         }
     }
@@ -311,6 +315,8 @@ public class ControllerContract {
         if (errors.hasErrors()) {
             return "modificar";
         }
+        String idClient = contractService.findClientIdFromContract(contract.getIdContract());
+        contract.setClient(clientService.findById(idClient));
         contractService.save(contract);
         redirectAttrs.addFlashAttribute("mensaje", "✓ Contrato Editado Correctamente")
                 .addFlashAttribute("clase", "success");

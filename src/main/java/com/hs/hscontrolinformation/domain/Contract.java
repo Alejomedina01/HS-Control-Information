@@ -70,18 +70,7 @@ public class Contract implements Serializable {
     @Column(name = "estado_contrato")
     private String contractState;
 
-    @OneToMany
-    @JoinColumn(name = "id_contrato")
-    private List<Document> documentsList;
-
-
-/*    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "contract")
-    private List<EmployeeContract> employeeContracts;
-
-    public List<Employee> getEmployees(){
-        return getEmployeeContracts()
-                .stream()
-                .map(employeeContract -> employeeContract.getEmployee())
-                .collect(Collectors.toList());
-    }*/
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = false)
+    @JoinColumn(name = "id_Cliente", referencedColumnName = "id_Cliente")
+    private Client client;
 }

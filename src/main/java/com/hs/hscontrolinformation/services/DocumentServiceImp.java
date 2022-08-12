@@ -17,11 +17,6 @@ public class DocumentServiceImp implements ServiceTemplate<Document>{
     private DocumentDao repository;
 
     @Transactional
-    public void updateDocumentToContractId(String idContract,Long idDocument){
-        log.info(idContract + " aqui es el metodo de la implementacion");
-        repository.updateDocumentToContractId(idContract,idDocument);
-    }
-    @Transactional
     public List<Document> findAllDocumentsOneContract(String idContract){
         return repository.findAllDocumentsOneContract(idContract);
     }
@@ -43,11 +38,6 @@ public class DocumentServiceImp implements ServiceTemplate<Document>{
     @Transactional(readOnly = false)
     public void save(Document data) {
         repository.save(data);
-    }
-    
-    @Transactional(readOnly = false)
-    public Document saveDocument(Document data) {
-        return repository.save(data);
     }
 
     @Override
